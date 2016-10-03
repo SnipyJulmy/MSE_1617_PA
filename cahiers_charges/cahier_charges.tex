@@ -1,0 +1,302 @@
+% ==============================
+% Authors of the LaTeX template:
+%   - Sylvain Julmy
+%   - Marc Demierre
+% ==============================
+
+\documentclass[a4paper,11pt]{report}
+
+% General tools
+\usepackage{etoolbox}
+
+\usepackage[utf8]{inputenc}
+
+% Fonts
+\usepackage[T1]{fontenc}
+
+% LaTeX modern fonts
+% \usepackage{lmodern}
+
+% Sans serif
+%\usepackage{tgheros}
+
+% Serif
+%\usepackage[bitstream-charter]{mathdesign}
+
+% Monospace
+\usepackage{sourcecodepro}
+
+% Bibtex and biblatex for references
+\usepackage[autostyle]{csquotes}
+\usepackage[backend=biber,
+    style=chem-angew,
+    sortlocale=en_GB,
+    natbib=true,
+    url=false, 
+    doi=true,
+    eprint=false
+]{biblatex}
+\addbibresource{biblatex-res.bib}
+
+% Glossary
+\usepackage[xindy,toc]{glossaries}
+
+% Language
+\usepackage[english]{babel}
+\usepackage{blindtext}
+
+% Page style
+\usepackage{fullpage} % page margins to 1.5cm
+\usepackage{fancyhdr} % headers and footers
+
+% Colors & graphics
+\usepackage[table]{xcolor}    % colors
+\usepackage[pdftex]{graphicx} % graphics importing
+
+% Misc
+\usepackage{titlesec} % section titles formatting
+\usepackage{minted}   % code highlighting
+\usepackage{pdflscape}   % landscape
+\usepackage{tikz}     % charts in LaTeX
+\usepackage{amsmath}  % better math
+\usepackage{float}    % floats
+\usepackage[small,justification=centering]{caption}
+\usepackage{microtype} % typographic improvements
+
+% Gantt diagramm
+\usepackage{pgfgantt}
+
+% Paragraphs
+\usepackage{parskip}
+\usepackage[defaultlines=3,all]{nowidow}
+
+% Chapter titles
+% Remove space before title
+\titlespacing{\chapter}{0pt}{*-4}{*3}
+% Remove "Chapter N" and use a sans-serif font
+\titleformat{\chapter}[hang]{\bf\huge}{\thechapter}{1pc}{}
+% Change chapter page style
+\patchcmd{\chapter}{plain}{fancy}{}{}
+
+% Tables
+\usepackage{multirow}
+
+% Cross-references
+\usepackage{hyperref}
+
+% Metadata
+% --------
+\input{metadata}
+
+% Header and footer
+% -----------------
+\pagestyle{fancy}
+\lhead[]{\Course}
+\chead[]{}
+\rhead[]{\Place, \today}
+
+\setlength{\headheight}{14pt}
+\setlength{\headsep}{14pt}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+% Code styles for highlighting
+% ----------------------------
+
+% How to use (replace 'java' with language name):
+% - code blocks:
+%     \begin{javacode}
+%     CODE
+%     \end{javacode}
+% - files:
+%     full: \javafile{PATH}
+%     extract: \javafile[startline=x, endline=y]{PATH}
+% TODO: inline?
+
+% Java
+\newminted{java}{frame=single, framesep=6pt, breaklines=true, fontsize=\scriptsize}
+\newmintedfile{java}{frame=single, framesep=6pt, breaklines=true, fontsize=\scriptsize}
+
+% Scala
+\newminted{scala}{frame=single, framesep=6pt, breaklines=true, fontsize=\scriptsize}
+\newmintedfile{scala}{frame=single, framesep=6pt, breaklines=true, fontsize=\scriptsize}
+
+% Python
+\newminted{python}{frame=single, framesep=6pt, breaklines=true, fontsize=\scriptsize}
+\newmintedfile{python}{frame=single, framesep=6pt, breaklines=true, fontsize=\scriptsize}
+
+% VHDL
+\newminted{vhdl}{frame=single,framesep=6pt, breaklines=true, fontsize=\scriptsize}
+\newmintedfile{vhdl}{frame=single, framesep=6pt, breaklines=true, fontsize=\scriptsize}
+
+% Plain text
+\newminted{text}{frame=single, framesep=6pt, breaklines=true, breakanywhere, fontsize=\scriptsize}
+\newmintedfile{text}{frame=single, framesep=6pt, breaklines=true, breakanywhere, fontsize=\scriptsize}
+
+% Document
+% --------
+\begin{document}
+
+\begin{titlepage}
+    \begin{center}
+
+        % only works if a paragraph has started.
+        \includegraphics[width=0.8\textwidth]{img/mse_logo}~\\[1.5cm]
+        \textsc{\Large \School}\\[0.25cm]
+        \textsc{\Large \Faculty}\\[1.5cm]
+        \textsc{\LARGE \Course}\\[1cm]
+
+        {\bfseries \huge \Project\\[1cm]}
+
+        % Title
+        \HRule \\[0.4cm]
+        { \Huge \bfseries \Title\\[0.4cm] }
+        \HRule \\[1.5cm]
+
+        % Author and supervisor
+        \begin{minipage}[t]{0.4\textwidth}
+            \begin{flushleft} \Large
+                \emph{Author:}\\ \Authors
+            \end{flushleft}
+        \end{minipage}
+        \begin{minipage}[t]{0.4\textwidth}
+            \begin{flushright} \Large
+                \emph{Supervisor:}\\\Supervisors
+            \end{flushright}
+        \end{minipage}~\\[1.5cm]
+
+        \begin{center}
+            \includegraphics[scale=0.7]{img/logo_hes-so}
+        \end{center}
+
+        \vfill
+
+        % Bottom of the page
+        {\large \Place, \today}
+
+    \end{center}
+\end{titlepage}
+
+\chapter{Context}
+
+SpinalHDL is a programming language to describe digital hardware and generate the corresponding VHDL/Verilog file\cite{github-spinalhdl}. SpinalHDL is written in Scala as a DSL (Domain Specific Language) and has multiple advantages\cite{github-spinalhdl} from that :
+
+\begin{itemize}
+    \item No restriction to the genericity of your hardware description by using Scala constructs
+    \item No more endless wiring. Create and connect complex buses like AXI in one line.
+    \item Evolving capabilities. Create your own buses definition and abstraction layer.
+    \item Reduce code size by a high factor, especially for wiring. Allowing you to have a better visibility, more productivity and fewer headaches.
+    \item Free and user friendly IDE. Thanks to scala world for auto-completion, error highlight, navigation shortcut and many others
+    \item Extract information from your digital design and then generate files that contain information about some latency and addresses
+    \item Bidirectional translation between any data type and bits. Useful to load a complex data structure from a CPU interface.
+    \item Check for you that there is no combinational loop / latch
+    \item Check that there is no unintentional cross clock domain 
+\end{itemize}
+
+The code \ref{lst:spinalhdl_example_and_gate} shows a AND gate written with SpinalHDL with the corresponding generated VHDL code, we could see the similarity between the two code.
+
+\begin{listing}
+    \centering
+    
+    \begin{minipage}[c]{0.45\textwidth}
+    \begin{scalacode}
+    import spinal.core._
+
+    class AND extends Component
+    {
+        val io = new Bundle
+        {
+            val a = in Bool
+            val b = in Bool
+            val c = out Bool
+        }
+
+        io.c := io.a & io.b
+    }    
+    \end{scalacode}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[c]{0.45\textwidth}
+    \begin{vhdlcode}
+    entity AND_1 is
+        port( 
+            io_a : in std_logic;
+            io_b : in std_logic;
+            io_c : out std_logic 
+        );
+    end AND_1;
+
+    architecture arch of AND_1 is
+
+    begin
+      io_c <= (io_a and io_b);
+    end arch;
+    \end{vhdlcode}
+    \end{minipage}
+    \caption{Example of a AND gate written in SpinalHDL and the corresponding generated VHDL code}
+    \label{lst:spinalhdl_example_and_gate}
+\end{listing}
+
+\chapter{Goal}
+
+The goal of the project is to produce an application which is analysing a spinalhdl program in order to produce a block diagramm of the corresponding hardware description. This application should offer the following activities :
+
+\begin{itemize}
+    \item Display the complete graph of the programm
+    \item Navigate through all the hierarchical level of the programm (Component inside another component)
+    \item The edges should display some information about the signals :
+    \begin{itemize}
+        \item type
+        \item input or output
+        \item ...
+    \end{itemize}
+    \item A bidirectional navigability between the application and the source code
+\end{itemize}
+
+The application is going to be develop, firstable, in a standalone version and next we could develop and plugin version to Eclipse or IntelliJ for example.
+
+\chapter{Activities}
+
+The following activities are going to be done during the project :
+
+\begin{itemize}
+    \item Do the Workshop about SpinalHDL in order to understand the basics.
+    \item Analyse of some example to understand the abstract syntax tree of SpinalHDL.
+    \item Generate without computer the blocks from some SpinalHDL/VHDL code.
+    \item Analyse and comparison of some viewing library.
+    \item Specification and implementation of the diagramm generator.
+    \item Specification and implementation of the tests.
+    \item Article redaction.
+    \item Report redaction.
+\end{itemize}
+
+\begin{landscape}
+
+    \chapter{Planning}
+
+    \begin{ganttchart}[
+            vgrid,
+        hgrid,
+        link/.style={[-to, line width=1pt, blue}    
+        ]
+        {1}{16}
+        \gantttitle{PA : 2016 - 2017}{16} \\
+        \gantttitlelist{1,...,16}{1} \\
+
+        \ganttbar{Hands on with SpinalHDL : Workshop}{1}{1} \\
+        \ganttlinkedbar{Analyse and understanding of the abstract syntax tree of SpinalHDL}{2}{2} \\
+        \ganttlinkedbar{Generation without computer of some abstract syntax tree of SpinalHDL}{3}{3} \\
+        \ganttlinkedbar{Analyse and comparison of some viewing library}{4}{5} \\
+        \ganttlinkedbar{Specification and implementation of the diagramm generator}{6}{11} \\
+        \ganttlinkedbar{Specification and implementation of the tests}{11}{13} \\
+        \ganttlinkedbar{Article redaction}{14}{16} \\
+        \ganttbar{Report redaction}{1}{16} \\
+
+    \end{ganttchart}
+
+\end{landscape}
+
+\printbibliography
+
+\end{document}
+
