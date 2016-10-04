@@ -14,7 +14,7 @@ object Main
     {
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer")
 
-        val report = SpinalConfig(targetDirectory = "vhdl").generateVhdl(new HierarchicComponent)
+        val report = SpinalConfig(targetDirectory = "vhdl").generateVhdl(new BasicComponent)
 
         parseAstTree(report.toplevel)
     }
@@ -25,7 +25,7 @@ object Main
         {
             component.getAllIo.foreach
             {
-                n : spinal.core.BaseType =>
+                n: spinal.core.BaseType =>
                 {
                     println(s"${"\t" * level}${n.toString()}")
                     if (n.isInput)
@@ -42,17 +42,22 @@ object Main
                         if (n.getInput(0) != null)
                         {
                             val label = n.getInput(0).toString()
-                            addEdge(g, component.definitionName, n.getInput(0).component.definitionName,label = label)
+                            addEdge(g, component.definitionName, n.getInput(0).component.definitionName, label = label)
                         }
 
                         println(s"${"\t" * (level + 1)}-> input from $from")
                     }
                     else if (n.isOutput)
                     {
-                        n.getInputs.foreach
-                        { n_input =>
-                            println(s"${"\t" * (level + 1)}${n_input.toString()} nb inputs : ${n.getInputsCount}")
-                        }
+                        if (n.consumers.isEmpty)
+                            println(s"${"\t" * (level + 1)}-> Root Component output")
+                        else
+                            n.consumers.foreach
+                            { n_consumers =>
+                                val label = s"${n.toString()} --> ${n_consumers.toString()}"
+                                println(s"${"\t" * (level + 1)}-> output to ${n_consumers.toString()}")
+                                addEdge(g,n_consumers.component.definitionName,n.component.definitionName,label = label)
+                            }
                     }
                 }
             }
@@ -77,13 +82,13 @@ object Main
             {
                 val edge: org.graphstream.graph.Edge = graph.addEdge(from + to + start.toString, to, from, true)
                 edge.addAttribute("ui.label", label)
-                edge.addAttribute("ui.style","text-background-mode : plain;")
+                edge.addAttribute("ui.style", "text-background-mode : plain;")
                 //for java/scala interaction
                 //noinspection RemoveRedundantReturn
                 return
             }
             else
-                addEdge(graph, from, to, start = start + 1,label = label)
+                addEdge(graph, from, to, start = start + 1, label = label)
 
         }
 
@@ -91,6 +96,6 @@ object Main
 
         parseComponent(root, 0, g)
 
-        // g.display(true)
+        g.display(true)
     }
 }
