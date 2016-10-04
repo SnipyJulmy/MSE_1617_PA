@@ -16,21 +16,51 @@ object Main
 
     def parseAstTree(root: Component): Unit =
     {
-        def parseIO(component: Component, level : Int): Unit =
+        def parseIO(component: Component, level: Int): Unit =
         {
-            component.getAllIo.foreach(n => println(s"${"\t" * level}${n.toString()}"))
+            component.getAllIo.foreach
+            {
+                n =>
+                {
+                    println(s"${"\t" * level}${n.toString()}")
+                    if (n.isInput)
+                    {
+                        val from =
+                        {
+                            val tmp = n.getInput(0)
+                            if (tmp == null)
+                                "Root Component input"
+                            else
+                                tmp.toString()
+                        }
+
+                        println(s"${"\t" * (level + 1)}-> input from $from")
+                    }
+                    else if (n.isOutput)
+                    {
+                        val to =
+                        {
+                            if(n.component.parent == null)
+                                "Root component output"
+                            else
+                                "???"
+                        }
+                        println(s"${"\t" * (level + 1)}-> output to $to")
+                    }
+                }
+            }
         }
 
-        def parseComponent(crt : Component, level : Int) : Unit =
+        def parseComponent(crt: Component, level: Int): Unit =
         {
             println("\t" * level + crt.definitionName)
-            println(s"${"\t" * level }{")
-            parseIO(crt,level + 1)
-            println(s"${"\t" * level }}")
+            println(s"${"\t" * level}{")
+            parseIO(crt, level + 1)
+            println(s"${"\t" * level}}")
 
-            crt.children.foreach(parseComponent(_,level + 1))
+            crt.children.foreach(parseComponent(_, level + 1))
         }
 
-        parseComponent(root,0)
+        parseComponent(root, 0)
     }
 }
