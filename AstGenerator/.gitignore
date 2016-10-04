@@ -1,2 +1,6 @@
 .idea
 target
+Supprimerait src/main/java/
+Supprimerait src/main/resources/
+Supprimerait src/main/scala-2.11/
+Supprimerait src/test/
