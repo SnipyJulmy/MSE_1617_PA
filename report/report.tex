@@ -69,9 +69,9 @@
 
 % Chapter titles
 % Remove space before title
-\titlespacing{\chapter}{0pt}{*-4}{*3}
+%\titlespacing{\chapter}{0pt}{*-4}{*3}
 % Remove "Chapter N" and use a sans-serif font
-\titleformat{\chapter}[hang]{\bf\huge}{\thechapter}{1pc}{}
+%\titleformat{\chapter}[hang]{\bf\huge}{\thechapter}{1pc}{}
 % Change chapter page style
 \patchcmd{\chapter}{plain}{fancy}{}{}
 
@@ -169,97 +169,79 @@
 \end{titlepage}
 
 % Uncomment this for a table of contents
-%\tableofcontents
-%\newpage
 
-\chapter{Example content}
+\tableofcontents
+\newpage
 
-\section{Text}
+\chapter{Introduction} %{{{
+\label{cha:Introduction}
 
-\blindtext
+\section{Context} %{{{
+\label{sec:Context}
 
-\blinditemize
+%}}} section Context
 
-\blindtext
+\section{Goal} %{{{
+\label{sec:Goal}
 
-\blindenumerate
+%}}} section Goal
 
-\blindtext
+\section{Document overview} %{{{
+\label{sec:Document overview}
 
-\blinddescription
+%}}} section Document overview
 
-\blindtext
+%}}} chapter Introduction 
 
-\blindlistlist[3]{itemize}
+\chapter{SpinalHDL} %{{{
+\label{cha:SpinalHDL}
 
-\section{Figures}
+\section{AST} %{{{
+\label{sec:AST}
 
-This is a figure set to 40\% width:
+%}}} section AST
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.4\textwidth]{img/logo_hes-so}
-    
-    \caption{Caption}
-\end{figure}
+\section{Internal representation} %{{{
+\label{sec:Internal representation}
 
-\section{Source code}
+%}}} section Internal representation
 
-Example Java code:
+\section{A first overview} %{{{
+\label{sec:A first overview}
 
-\begin{javacode}
-import java.util.LinkedList;
- 
-public class AddElementsAtStartEndLinkedListExample {
- 
-  public static void main(String[] args) {
- 
-    //create LinkedList object
-    LinkedList lList = new LinkedList();
-   
-    //add elements to LinkedList
-    lList.add("1");
-    lList.add("2");
-    lList.add("3");
-    lList.add("4");
-    lList.add("5");
-   
-    System.out.println("LinkedList contains : " + lList);
-   
-    /*
-     * To add an element at the beginning of the LinkedList, use
-     * void addFirst(Object obj) method.
-     *
-     * This method inserts object at the beginning of the LinkedList.
-     */
-   
-     lList.addFirst("0");
-     System.out.println("After inserting 0 at beginning, LinkedList contains :"
-     + lList);
- 
-    /*
-     * To append an element at end of the LinkedList, use
-     * void addLast(Object obj) method.
-     *
-     * This method append specified element at the end of the LinkedList.
-     */    
-   
-     lList.addLast("6");
-     System.out.println("After appending 0 at end, LinkedList contains :" + lList);
- 
-  }
-}
-\end{javacode}
+%}}} section A first overview
 
-You can also import a file instead f inlining the code. See the minted documentation for examples.
+%}}} chapter SpinalHDL
 
-\chapter{Second chapter}
+\chapter{Viewing library} %{{{
+\label{cha:Viewing library}
 
-A new chapter will begin on a new page.
+\section{Graphstream} %{{{
+\label{sec:Graphstream}
 
-Is there is a citation for \cite{hesso-latextemplate-pa}
+%}}} section Graphstream
 
-\blindtext
+%}}} chapter Viewing library 
+
+\chapter{Specification} %{{{
+\label{cha:Specification}
+
+%}}} chapter Specification 
+
+\chapter{Implementation} %{{{
+\label{cha:Implementation}
+
+%}}} chapter Implementation 
+
+\chapter{Tests} %{{{
+\label{cha:Tests}
+
+%}}} chapter Tests 
+
+\chapter{Conclusion} %{{{
+\label{cha:Conclusion}
+
+%}}} chapter Conclusion 
 
 \printbibliography
 

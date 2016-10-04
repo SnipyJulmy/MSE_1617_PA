@@ -1,4 +1,4 @@
-TEX = pdflatex -shell-escape -interaction=nonstopmode -file-line-error
+TEX = pdflatex -shell-escape -file-line-error
 BIB = biber
 NAME = report
 TEXFILE = ${NAME}.tex
