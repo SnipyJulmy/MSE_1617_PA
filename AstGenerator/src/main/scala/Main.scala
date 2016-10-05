@@ -1,5 +1,7 @@
 import org.graphstream.graph.Graph
 import org.graphstream.graph.implementations.{DefaultGraph, MultiGraph}
+import org.graphstream.ui.layout.HierarchicalLayout
+import org.graphstream.ui.view._
 import spinal.core.SpinalConfig
 import spinal.core._
 
@@ -10,16 +12,48 @@ import spinal.core._
 //noinspection FieldFromDelayedInit
 object Main
 {
+
+
     def main(args: Array[String])
     {
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer")
 
         val report = SpinalConfig(targetDirectory = "vhdl").generateVhdl(new BasicComponent)
 
-        parseAstTree(report.toplevel)
+        // generateComponentIODiagram(report.toplevel)
+        generateASTDiagram(report.toplevel)
     }
 
-    def parseAstTree(root: Component): Unit =
+    def generateASTDiagram(root: Component): Unit =
+    {
+        def generateAST(component: Component, level: Int): Unit =
+        {
+            def parseNode(node: Node, level: Int): Unit =
+            {
+                if(node == null)
+                    return
+                println(s"${"\t" * (level + 1)}${node.toString()}")
+                node.getInputs.foreach
+                { n_i =>
+                    //println(s"${"\t" * (level + 2)}${n_i}")
+                    parseNode(n_i,level = level + 1)
+                }
+            }
+            println(s"${"\t" * level}{")
+            component.nodes.foreach(parseNode(_, level))
+            println(s"${"\t" * level}}")
+        }
+
+        def parseComponent(component: Component, level: Int = 0): Unit =
+        {
+            println(s"${"\t" * level}${component.definitionName}")
+            generateAST(component, level)
+            component.children.foreach(parseComponent(_, level = level + 1))
+        }
+        parseComponent(component = root)
+    }
+
+    def generateComponentIODiagram(root: Component): Unit =
     {
         def parseIO(component: Component, level: Int, g: Graph): Unit =
         {
@@ -56,7 +90,7 @@ object Main
                             { n_consumers =>
                                 val label = s"${n.toString()} --> ${n_consumers.toString()}"
                                 println(s"${"\t" * (level + 1)}-> output to ${n_consumers.toString()}")
-                                addEdge(g,n_consumers.component.definitionName,n.component.definitionName,label = label)
+                                addEdge(g, n_consumers.component.definitionName, n.component.definitionName, label = label)
                             }
                     }
                 }
@@ -96,6 +130,8 @@ object Main
 
         parseComponent(root, 0, g)
 
-        g.display(true)
+        val viewer = g.display(true)
+        val view = viewer.getDefaultView
+        view.resizeFrame(800, 600)
     }
 }
