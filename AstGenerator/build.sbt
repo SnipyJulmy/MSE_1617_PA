@@ -11,3 +11,6 @@ libraryDependencies ++= Seq(
     "org.graphstream" % "gs-ui" % "1.3"
 )
 
+scalacOptions ++= Seq(
+    "-language:postfixOps"
+)
