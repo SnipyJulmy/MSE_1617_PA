@@ -1,0 +1,98 @@
+\chapter{Introduction} %{{{
+\label{cha:Introduction}
+
+VHDL is an electronic design and hardware design language used to describe digital and signals systems such as field-programmable gate arrays and integrated circuits\cite{wiki-vhdl}. It's an old langague (VHDL was created in the 80's) which is complicated, verbose and confusing (the double meaning of the "sequential" construction).
+
+The SpinalHDL language has been created to offer a more plaisant way to code in VHDL and this project is a contribution to these language as an additionnal tools, which gravited around the language itself.
+
+\section{Context} %{{{
+\label{sec:Context}
+
+SpinalHDL is a programming language to describe digital hardware and generate the corresponding in VHDL (or Verilog). SpinalHDL is written in Scala as a DSL (Domain Specific Language) and has multiple advantages\cite{github-spinalhdl} :
+\begin{itemize}
+    \item No restriction to the genericity of your hardware description by using Scala constructs
+    \item No more endless wiring. Create and connect complex buses like AXI in one line.
+    \item Evolving capabilities. Create your own buses definition and abstraction layer.
+    \item Reduce code size by a high factor, especially for wiring. Allowing you to have a better visibility, more productivity and fewer headaches.
+    \item Free and user friendly IDE. Thanks to scala world for auto-completion, error highlight, navigation shortcut and many others
+    \item Extract information from your digital design and then generate files that contain information about some latency and addresses
+    \item Bidirectional translation between any data type and bits. Useful to load a complex data structure from a CPU interface.
+    \item Check for you that there is no combinational loop / latch
+    \item Check that there is no unintentional cross clock domain 
+\end{itemize}
+
+The code \ref{lst:spinalhdl_example_and_gate} shows a AND gate written with SpinalHDL with the corresponding generated VHDL code, we could see the similarity between the two code.
+
+\begin{listing} % {{{
+    \centering
+    
+    \begin{minipage}[c]{0.45\textwidth}
+    \begin{scalacode}
+    import spinal.core._
+
+    class AND extends Component
+    {
+        val io = new Bundle
+        {
+            val a = in Bool
+            val b = in Bool
+            val c = out Bool
+        }
+
+        io.c := io.a & io.b
+    }    
+    \end{scalacode}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[c]{0.45\textwidth}
+    \begin{vhdlcode}
+    entity AND_1 is
+        port( 
+            io_a : in std_logic;
+            io_b : in std_logic;
+            io_c : out std_logic 
+        );
+    end AND_1;
+
+    architecture arch of AND_1 is
+
+    begin
+      io_c <= (io_a and io_b);
+    end arch;
+    \end{vhdlcode}
+    \end{minipage}
+    \caption{Example of a AND gate written in SpinalHDL and the corresponding generated VHDL code}
+    \label{lst:spinalhdl_example_and_gate}
+\end{listing} %}}}
+
+%}}} section Context
+
+\section{Goal} %{{{
+\label{sec:Goal}
+
+The goal of the project is to produce an application which is analysing a spinalhdl program in order to produce a block diagramm of the corresponding hardware description. This application should offer the following activities :
+
+\begin{itemize}
+    \item Display the complete graph of the programm
+    \item Navigate through all the hierarchical level of the programm (Component inside another component)
+    \item The edges should display some information about the signals :
+    \begin{itemize}
+        \item type
+        \item input or output
+        \item ...
+    \end{itemize}
+    \item A bidirectional navigability between the application and the source code
+\end{itemize}
+
+The application is going to be develop, firstable, in a standalone version and next could be develop into a plugin version for Eclipse or IntelliJ.
+
+%}}} section Goal
+
+\section{Document overview} %{{{
+\label{sec:Document overview}
+
+TODO
+
+%}}} section Document overview
+
+%}}} chapter Introduction 

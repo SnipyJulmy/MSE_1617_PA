@@ -1,0 +1,59 @@
+\chapter{Specification} %{{{
+\label{cha:Specification}
+
+TODO
+
+
+\section{Goals} %{{{
+\label{sec:Goals}
+
+TODO
+
+
+%}}} section Goals
+
+\section{Use case} %{{{
+\label{sec:Use case}
+
+\begin{tikzpicture}
+
+    \umlactor[x=0,y=3,name=user]{SpinalHDL user}
+    \begin{umlsystem}[x=3,y=0]{KlugHDL}
+        \umlusecase[x=5,y=5,name=UCA]{Generate a component diagram}
+        \umlusecase[x=5,y=4,name=UCB]{View a component diagram}
+        \umlusecase[x=5,y=3,name=UCC]{Go the the exact line from the diagram}
+        \umlusecase[x=5,y=2,name=UCD]{Zoom inside the diagram}
+        \umlusecase[x=5,y=1,name=UCE]{Navigate trough the hierarchical level}
+        \umlusecase[x=5,y=0,name=UCF]{Navigate trough the component at the same level}
+        \umlusecase[x=5,y=-1,name=UCG]{Go to the component from the code line}
+    \end{umlsystem}
+    
+    \umlassoc{SpinalHDL user}{UCA}
+    \umlassoc{SpinalHDL user}{UCB}
+    \umlassoc{SpinalHDL user}{UCC}
+    \umlassoc{SpinalHDL user}{UCD}
+    \umlassoc{SpinalHDL user}{UCE}
+    \umlassoc{SpinalHDL user}{UCF}
+    \umlassoc{SpinalHDL user}{UCG}
+    
+
+\end{tikzpicture}
+
+TODO
+
+
+
+%}}} section Use case
+
+\section{Facts sheets} %{{{
+\label{sec:Facts sheets}
+
+TODO
+
+
+%}}} section Facts sheets
+
+
+%}}} chapter Specification 
+
+
