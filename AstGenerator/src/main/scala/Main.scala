@@ -1,9 +1,7 @@
+import dotGenerator.SpinalDotGenerator
 import org.graphstream.graph.Graph
-import org.graphstream.graph.implementations.{DefaultGraph, MultiGraph}
-import org.graphstream.ui.layout.HierarchicalLayout
-import org.graphstream.ui.view._
-import spinal.core.SpinalConfig
-import spinal.core._
+import org.graphstream.graph.implementations.MultiGraph
+import spinal.core.{SpinalConfig, _}
 
 /**
   * Created by snipy on 02.10.16.
@@ -12,16 +10,18 @@ import spinal.core._
 //noinspection FieldFromDelayedInit
 object Main
 {
-
-
     def main(args: Array[String])
     {
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer")
 
-        val report = SpinalConfig(targetDirectory = "vhdl").generateVhdl(new BasicComponent)
+        val report = SpinalConfig(targetDirectory = "vhdl").generateVhdl(new HierarchicComponent)
 
-        // generateComponentIODiagram(report.toplevel)
-        generateASTDiagram(report.toplevel)
+        //generateComponentIODiagram(report.toplevel)
+        //generateASTDiagram(report.toplevel)
+
+        SpinalDotGenerator("dot","HierarcicComponent.dot",report.toplevel)
+            .generateDotFile()
+            .generatePdfFile()
     }
 
     def generateASTDiagram(root: Component): Unit =
@@ -30,13 +30,12 @@ object Main
         {
             def parseNode(node: Node, level: Int): Unit =
             {
-                if(node == null)
+                if (node == null)
                     return
                 println(s"${"\t" * (level + 1)}${node.toString()}")
                 node.getInputs.foreach
                 { n_i =>
-                    //println(s"${"\t" * (level + 2)}${n_i}")
-                    parseNode(n_i,level = level + 1)
+                    parseNode(n_i, level = level + 1)
                 }
             }
             println(s"${"\t" * level}{")
