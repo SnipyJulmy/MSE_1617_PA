@@ -4,7 +4,7 @@
 		module="astgenerator-build"
 		revision="0.1-SNAPSHOT"
 		status="integration"
-		publication="20161007150349"
+		publication="20161007152514"
 		e:sbtVersion="0.13" e:scalaVersion="2.10"
 	>
 		<description>
