@@ -7,7 +7,7 @@ import spinal.core.Component
   * Created by snipy on 06.10.16.
   */
 
-case class SpinalDotGenerator(targetDirectory: String, filename: String, rootComponent: Component)
+case class SpinalDotGenerator(rootComponent: Component, filename: String, targetDirectory: String)
 {
     private type GNode = org.graphstream.graph.Node
     private type GEdge = org.graphstream.graph.Edge
@@ -26,11 +26,13 @@ case class SpinalDotGenerator(targetDirectory: String, filename: String, rootCom
         val nRootInput: GNode = graph.addNode(rI)
         nRootInput.addAttribute("label", rI)
         nRootInput.addAttribute("name", rI)
+        nRootInput.addAttribute("level",new Integer(0))
 
         // Add root component output
         val nRootOutput: GNode = graph.addNode(rO)
         nRootOutput.addAttribute("label", rO)
         nRootOutput.addAttribute("name", rO)
+        nRootOutput.addAttribute("level",new Integer(0))
 
         parseComponent(rootComponent)
         parseIO(rootComponent)
@@ -99,18 +101,39 @@ case class SpinalDotGenerator(targetDirectory: String, filename: String, rootCom
         component.children.foreach(parseIO)
     }
 
-    private def parseComponent(component: Component): Unit =
+    private def parseComponent(component: Component, level : Int = 1): Unit =
     {
         println(s"${component.definitionName}")
-        component.children.foreach(parseComponent)
+        component.children.foreach(parseComponent(_,level = level + 1))
         val n: GNode = graph.addNode(component.definitionName)
         n.addAttribute("label", component.definitionName)
         n.addAttribute("name", component.definitionName)
+        n.addAttribute("level",new Integer(level))
     }
 
     private def addDotNode(n: GNode): Unit =
     {
-        dotFileManager.write(s"""${n.getAttribute("name")} [label="${n.getAttribute("label")}", shape=box]""")
+        val label = n.getId match
+        {
+            case `rI` =>
+                s"""label="Top Level Input" """
+            case `rO` =>
+                s"""label="Top Level Output" """
+            case _ =>
+                s"""label="${n.getAttribute("label")} | level = ${n.getAttribute("level")}" """
+        }
+
+        val shape = n.getId match
+        {
+            case `rI` =>
+                s"""shape=none"""
+            case `rO` =>
+                s"""shape=none"""
+            case _ =>
+                s"""shape=box"""
+        }
+
+        dotFileManager.write(s"""${n.getAttribute("name")} [$label , $shape]""")
     }
 
     private def addEdge(from: String, to: String, start: Int = 0): Unit =
