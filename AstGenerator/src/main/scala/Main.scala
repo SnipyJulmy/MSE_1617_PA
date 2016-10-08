@@ -19,7 +19,7 @@ object Main
         //generateComponentIODiagram(report.toplevel)
         //generateASTDiagram(report.toplevel)
 
-        SpinalDotGenerator("dot","HierarcicComponent.dot",report.toplevel)
+        SpinalDotGenerator(rootComponent = report.toplevel,filename = "HierarchicComponent.dot",targetDirectory = "dot")
             .generateDotFile()
             .generatePdfFile()
     }
