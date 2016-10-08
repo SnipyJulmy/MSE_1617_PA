@@ -14,7 +14,8 @@ case class Dot2PdfGenerator(filepath: String)
         if (file.exists())
         {
             val output = filepath.replace(".dot",".pdf")
-            val result = s"dot -Tpdf $filepath -o $output " !!
+            // val result = s"dot -Tpdf $filepath -o $output " !!
+            val result = s"circo -s -Tpdf $filepath -o $output " !!
 
             if (!result.isEmpty)
             {
