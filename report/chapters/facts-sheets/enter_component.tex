@@ -1,19 +1,20 @@
 \begin{flushleft}
-    \textsc{\huge View the component diagram}\\[0.5cm]
+    \textsc{\huge Enter a component}\\[0.5cm]
 
     \BlackLine
     \textsc{\Large 1 : Identification summary}\\[0.3cm]
 
-        \textbf{\large Abstract} : The user want to display and view the component diagram of his program \\[0.1cm]
+        \textbf{\large Abstract} : The user want to enter inside a component (zoom in) in order to show the sub-component \\[0.1cm]
 
-        \textbf{\large Authors} : Sylvain Julmy \\[0.3cm]			
+        \textbf{\large Authors} : Sylvain Julmy \\[0.3cm]
 
-        \textbf{\large Actors} : SpinalHDL user \\[0.1cm]	
+        \textbf{\large Actors} : SpinalHDL user \\[0.1cm]
+
     \begin{minipage}{0.40\textwidth}
         \begin{flushleft}	
             \textbf{\large Creation date} : 12.10.2016 \\[0.1cm]
 
-            \textbf{\large Modification date} : 21.10.2016 \\[0.1cm]
+            \textbf{\large Modification date} : 18.10.2016 \\[0.1cm]
         \end{flushleft}
     \end{minipage}
     \begin{minipage}{0.40\textwidth}
@@ -27,26 +28,25 @@
     \BlackLine
     \textsc{\Large 2 : Sequence description}\\[0.3cm]
 
-    \textbf{\large Precondition :} The RTL has been generated without compilation error and the user has enter the correct option for the compilation.
+    \textbf{\large Precondition :} The diagram is generated and open.
 
     \textbf{\large  Standard progress :}
     \begin{enumerate}[nosep]
-        \item The user compile is program
-        \item The diagram is displayed by the system
+        \item The User double click on a component
+        \item The system display the inside of the component
     \end{enumerate}
 
-    \textbf{\large Postcondition :} The diagram is display.
+    \textbf{\large Postcondition :} The double clicked component is maximize and is now the "root" component of the window.
 
     \BlackLine
     \textsc{\Large 3 : HCI needing (Optional)}\\[0.3cm]
-
     \begin{itemize}
-        \item A diagram of the component of the user program
+        \item A visualization of the component and the sub-component
     \end{itemize}
 
     \BlackLine
     \textsc{\Large 4 : Complementary remarks}\\[0.3cm]
 
-    The diagram could be generated but not necessarily display by the user.
+    Except the leaf component which has no sub-component and the BlackBox, every component are zoomable.
 
 \end{flushleft}

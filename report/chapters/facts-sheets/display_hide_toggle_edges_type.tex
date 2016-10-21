@@ -1,20 +1,19 @@
 \begin{flushleft}
-    \textsc{\huge Enter a component}\\[0.5cm]
+    \textsc{\huge Display, hide and toggle the view of the edge's type}\\[0.5cm]
 
     \BlackLine
     \textsc{\Large 1 : Identification summary}\\[0.3cm]
 
-        \textbf{\large Abstract} : The user want to enter inside a component in order to show the sub-component \\[0.1cm]
+        \textbf{\large Abstract} : The user want to see the types of some edges\\[0.1cm]
 
-        \textbf{\large Authors} : Sylvain Julmy \\[0.3cm]
+        \textbf{\large Authors} : Sylvain Julmy \\[0.3cm]			
 
-        \textbf{\large Actors} : SpinalHDL user \\[0.1cm]
-
+        \textbf{\large Actors} : SpinalHDL user \\[0.1cm]	
     \begin{minipage}{0.40\textwidth}
         \begin{flushleft}	
             \textbf{\large Creation date} : 12.10.2016 \\[0.1cm]
 
-            \textbf{\large Modification date} : 18.10.2016 \\[0.1cm]
+            \textbf{\large Modification date} : 14.10.2016 \\[0.1cm]
         \end{flushleft}
     \end{minipage}
     \begin{minipage}{0.40\textwidth}
@@ -28,24 +27,26 @@
     \BlackLine
     \textsc{\Large 2 : Sequence description}\\[0.3cm]
 
-    \textbf{\large Precondition :} The component diagram is Open
+    \textbf{\large Precondition :} The diagram is generated and open.
 
     \textbf{\large  Standard progress :}
     \begin{enumerate}[nosep]
-        \item The User double click on a component
-        \item The system display the inside of the component
+        \item The user click on "Show types"
+        \item The diagram display the types of the edges
     \end{enumerate}
 
-    \textbf{\large Postcondition :} The double clicked component is maximize and is now the "root" component of the window
+    \textbf{\large Postcondition :} The types of the selected edges are display.
 
     \BlackLine
     \textsc{\Large 3 : HCI needing (Optional)}\\[0.3cm]
-
-    A visualization of the component and the sub-component.
+    The system needs the following HCI element :
+    \begin{itemize}
+        \item A toggable button "Show types"
+    \end{itemize}
 
     \BlackLine
     \textsc{\Large 4 : Complementary remarks}\\[0.3cm]
 
-
+    All the edges are affected by this operation
 
 \end{flushleft}

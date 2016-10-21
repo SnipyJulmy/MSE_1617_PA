@@ -1,10 +1,10 @@
 \begin{flushleft}
-    \textsc{\huge View the component diagram}\\[0.5cm]
+    \textsc{\huge Filter the view}\\[0.5cm]
 
     \BlackLine
     \textsc{\Large 1 : Identification summary}\\[0.3cm]
 
-        \textbf{\large Abstract} : The user want to display and view the component diagram of his program \\[0.1cm]
+        \textbf{\large Abstract} : The user want to filter the view (including the hierarchical tree view) to see a specific kind of component \\[0.1cm]
 
         \textbf{\large Authors} : Sylvain Julmy \\[0.3cm]			
 
@@ -27,26 +27,24 @@
     \BlackLine
     \textsc{\Large 2 : Sequence description}\\[0.3cm]
 
-    \textbf{\large Precondition :} The RTL has been generated without compilation error and the user has enter the correct option for the compilation.
+    \textbf{\large Precondition :} The diagram is generated and open.
 
     \textbf{\large  Standard progress :}
     \begin{enumerate}[nosep]
-        \item The user compile is program
-        \item The diagram is displayed by the system
+        \item The user enter the text specific to a component (class name)
+        \item The view turn gray the component who arent matching the text
     \end{enumerate}
 
-    \textbf{\large Postcondition :} The diagram is display.
+    \textbf{\large Postcondition :} The element who aren't matching the introduce pattern are grayscale.
 
     \BlackLine
     \textsc{\Large 3 : HCI needing (Optional)}\\[0.3cm]
 
     \begin{itemize}
-        \item A diagram of the component of the user program
+        \item A writable textfield
     \end{itemize}
 
     \BlackLine
     \textsc{\Large 4 : Complementary remarks}\\[0.3cm]
-
-    The diagram could be generated but not necessarily display by the user.
 
 \end{flushleft}

@@ -1,10 +1,10 @@
 \begin{flushleft}
-    \textsc{\huge View the component diagram}\\[0.5cm]
+    \textsc{\huge Generate the RTL}\\[0.5cm]
 
     \BlackLine
     \textsc{\Large 1 : Identification summary}\\[0.3cm]
 
-        \textbf{\large Abstract} : The user want to display and view the component diagram of his program \\[0.1cm]
+        \textbf{\large Abstract} : The user want to generate the RTL of his SpinalHDL program\\[0.1cm]
 
         \textbf{\large Authors} : Sylvain Julmy \\[0.3cm]			
 
@@ -27,26 +27,31 @@
     \BlackLine
     \textsc{\Large 2 : Sequence description}\\[0.3cm]
 
-    \textbf{\large Precondition :} The RTL has been generated without compilation error and the user has enter the correct option for the compilation.
+    \textbf{\large Precondition :}
 
     \textbf{\large  Standard progress :}
     \begin{enumerate}[nosep]
-        \item The user compile is program
-        \item The diagram is displayed by the system
+        \item The user compile his code using the command \verb|sbt compile|
+        \item The RTL is generated
     \end{enumerate}
 
-    \textbf{\large Postcondition :} The diagram is display.
+    \textbf{\large  Exception sequence :}\\
+    E1 : Start at point 1 of standard progress
+    \begin{enumerate}[nosep]
+        \item There is a compilation error
+        \item Case is ended
+    \end{enumerate}
+
+    \textbf{\large Postcondition :} The RTL is generated
 
     \BlackLine
     \textsc{\Large 3 : HCI needing (Optional)}\\[0.3cm]
 
-    \begin{itemize}
-        \item A diagram of the component of the user program
-    \end{itemize}
+    There is no HCI needing because everything is done by SBT.
 
     \BlackLine
     \textsc{\Large 4 : Complementary remarks}\\[0.3cm]
 
-    The diagram could be generated but not necessarily display by the user.
+    Generate the RTL is not a job done by KlugHDL but by SpinalHDL.
 
 \end{flushleft}
