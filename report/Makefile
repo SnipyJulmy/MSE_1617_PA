@@ -36,6 +36,7 @@ clean :
 
 clean_all : clean
 	@rm ${PDFFILE} || true 
+	@rm *.pdf || true
 
 view :
 	okular ${PDFFILE} &
