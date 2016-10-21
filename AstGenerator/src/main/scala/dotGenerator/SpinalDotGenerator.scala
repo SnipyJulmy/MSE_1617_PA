@@ -1,7 +1,7 @@
 package dotGenerator
 
 import org.graphstream.graph.implementations.MultiGraph
-import spinal.core.Component
+import spinal.core.{BaseType, Component, Node}
 
 /**
   * Created by snipy on 06.10.16.
@@ -19,20 +19,21 @@ case class SpinalDotGenerator(rootComponent: Component, filename: String, target
     private val rI = "RootComponentInput"
     private val rO = "RootComponentOutput"
 
-
     def generateDotFile(): SpinalDotGenerator =
     {
+        dotFileManager.write("digraph g {")
+        dotFileManager.write("splines=ortho")
         // Add root component input
         val nRootInput: GNode = graph.addNode(rI)
         nRootInput.addAttribute("label", rI)
         nRootInput.addAttribute("name", rI)
-        nRootInput.addAttribute("level",new Integer(0))
+        nRootInput.addAttribute("level", new Integer(0))
 
         // Add root component output
         val nRootOutput: GNode = graph.addNode(rO)
         nRootOutput.addAttribute("label", rO)
         nRootOutput.addAttribute("name", rO)
-        nRootOutput.addAttribute("level",new Integer(0))
+        nRootOutput.addAttribute("level", new Integer(0))
 
         parseComponent(rootComponent)
         parseIO(rootComponent)
@@ -43,6 +44,7 @@ case class SpinalDotGenerator(rootComponent: Component, filename: String, target
         {
             addDotNode(graph.getNode(i))
         }
+        dotFileManager.write("}")
         dotFileManager.close()
         this
     }
@@ -101,14 +103,14 @@ case class SpinalDotGenerator(rootComponent: Component, filename: String, target
         component.children.foreach(parseIO)
     }
 
-    private def parseComponent(component: Component, level : Int = 1): Unit =
+    private def parseComponent(component: Component, level: Int = 1): Unit =
     {
         println(s"${component.definitionName}")
-        component.children.foreach(parseComponent(_,level = level + 1))
+        component.children.foreach(parseComponent(_, level = level + 1))
         val n: GNode = graph.addNode(component.definitionName)
         n.addAttribute("label", component.definitionName)
         n.addAttribute("name", component.definitionName)
-        n.addAttribute("level",new Integer(level))
+        n.addAttribute("level", new Integer(level))
     }
 
     private def addDotNode(n: GNode): Unit =
@@ -120,7 +122,7 @@ case class SpinalDotGenerator(rootComponent: Component, filename: String, target
             case `rO` =>
                 s"""label="Top Level Output" """
             case _ =>
-                s"""label="${n.getAttribute("label")} | level = ${n.getAttribute("level")}" """
+                s"""label="${n.getAttribute("label")}| level = ${n.getAttribute("level")}" """
         }
 
         val shape = n.getId match

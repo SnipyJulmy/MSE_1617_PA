@@ -21,8 +21,7 @@ case class DotFileManager(filename: String, directoryPath: String)
     if (!file.exists())
         file.createNewFile()
     private val pw = new PrintWriter(file)
-    pw.write("digraph g {\n")
-    pw.write("splines=ortho\n")
+
 
     def write(str: String): DotFileManager =
     {
@@ -32,7 +31,6 @@ case class DotFileManager(filename: String, directoryPath: String)
 
     def close(): DotFileManager =
     {
-        pw.write("}\n")
         pw.flush()
         pw.close()
         this
