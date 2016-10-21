@@ -34,10 +34,10 @@
 *.run.xml
 *.bcf
 *.pyg
+*.dot
 
 # Minted
 _minted*
 
 # Generated pdf
-report.pdf
-
+*.pdf
