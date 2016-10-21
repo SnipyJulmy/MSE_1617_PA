@@ -16,15 +16,6 @@ object Main
 
         val report = SpinalConfig(targetDirectory = "vhdl").generateVhdl(new HierarchicComponent)
 
-        //generateComponentIODiagram(report.toplevel)
-        //generateASTDiagram(report.toplevel)
-
-        /*
-        ComponentGenerator(report.toplevel, filename = "HierarchicComponent.dot", targetDirectory = "dot")
-            .generateDotFile()
-            .generatePdfFile()
-            */
-
         SpinalDotGenerator(rootComponent = report.toplevel, filename = "HierarchicComponent.dot", targetDirectory = "dot")
             .generateDotFile()
             .generatePdfFile()
