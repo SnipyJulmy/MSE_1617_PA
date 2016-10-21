@@ -1,14 +1,17 @@
 \chapter{Introduction} %{{{
 \label{cha:Introduction}
 
-VHDL is an electronic design and hardware design language used to describe digital and signals systems such as field-programmable gate arrays and integrated circuits\cite{wiki-vhdl}. It's an old langague (VHDL was created in the 80's) which is complicated, verbose and confusing (the double meaning of the "sequential" construction).
+A program is a sequence of mathematical instruction which are written by a human and executed by a computer.
+The VHDL langage has been created to describe digital and signals systems such as field-programmable gate arrays and integrated circuits\cite{wiki-vhdl}. The problem is that the VHDL is an old langague, he is verbose and sometimes tricky to understand.
 
-The SpinalHDL language has been created to offer a more plaisant way to code in VHDL and this project is a contribution to these language as an additionnal tools, which gravited around the language itself.
+SpinalHDL has been created to fight thos disadvantage. The main goal of a DSL (Domain Specific Langage) is to offer a more plaisant way to code and that's what dose SpinalHDL. Has written before, the code is written by a human and by using SpinalHDL, the human became happier than using just the VHDL.
+
+KlugHDL is an another tools to make the human happiest, it's a component diagram generator which offer some
 
 \section{Context} %{{{
 \label{sec:Context}
 
-SpinalHDL is a programming language to describe digital hardware and generate the corresponding in VHDL (or Verilog). SpinalHDL is written in Scala as a DSL (Domain Specific Language) and has multiple advantages\cite{github-spinalhdl} :
+SpinalHDL is a programming language to describe digital hardware and generate the corresponding in VHDL (or Verilog). SpinalHDL is written in Scala as a DSL and has multiple advantages\cite{github-spinalhdl} :
 \begin{itemize}
     \item No restriction to the genericity of your hardware description by using Scala constructs
     \item No more endless wiring. Create and connect complex buses like AXI in one line.

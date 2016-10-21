@@ -1,18 +1,84 @@
 \chapter{Viewing library} %{{{
 \label{cha:Viewing library}
 
-TODO
+This chapter will present some visualization library which could be use to generate and interract with the component diagram. The comparison between those library is based on the features we want to offer to the KlugHDL user (see chapter \ref{sec:Goal}). In order to compare those viewing library, we end by discuting the point of the evaluation and the evaluation of all the library mentinnoed.
 
-\section{No library : JavaFX} %{{{
-\label{sec:No library : JavaFX}
+For the presentation of each of those library for graph visualization, we would use the same graph showed in figure \ref{fig:graph-base-model}.
 
-%}}} section No library : JavaFX
+\begin{figure}[] % {{{ figure
+    \centering
+    \fbox{
+        \digraph[scale=0.5]{GraphBaseModel}{
+               node [shape=record];
+                graph [rankdir=LR, 
+                       ranksep="1", 
+                       nodesep="1"];
+                AndGate [label="{{<a>io.a|<b>io.b}|AndGate|{<c>io.c}}"];
+                OrGate [label="{{<a>io.a|<b>io.b}|OrGate|{<c>io.c}}"];
+                Input [label="{Input|{<a>io.a|<b>io.b}}"];
+                Output [label="{{<c>io.c}|Output}"];
+                Input:a -> AndGate:a [label="Bool"];
+                Input:b -> AndGate:b [label="Bool"];
+                Input:a -> OrGate:a [label="Bool"];
+                Input:b -> OrGate:b [label="Bool"];
+                OrGate:c -> Output:c [label="Bool"];
+                AndGate:c -> Output:c [label="Bool"];
+        }
+    }
+    \caption{Graph model for the viewing library comparison}
+    \label{fig:graph-base-model}
+\end{figure} % }}}
 
-\section{Graphstream} %{{{
+\section{GraphStream} %{{{
 \label{sec:Graphstream}
 
-TODO
+GraphStream is a Java library for the modeling and analysis of dynamic graphs\cite{graphstream}. The goal of the library is to provide a way to represents graphs and work on it\cite{graphstream}. GraphStream is an active project hosted by the university of Le Havre in France.
 
+\subsection{Implementation} %{{{
+\label{sub:Implementation}
+
+The figure \ref{fig:base-graph-model-graphstream} show the base graph model realized with the GraphStream library.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/graphstream-base-model-example}
+    \caption{The base graph model rendering using graphstream}
+    \label{fig:base-graph-model-graphstream}
+\end{figure}
+
+The source code is available in the listing \ref{lst:graphstream-test} in appendices.
+
+%}}} subsection Implementation
+
+\subsection{Remarks} %{{{
+\label{sub:Remarks}
+
+With GraphStream, there is no way to control some visual features which are very interresing for hardware component visualisation : the splines of the edges and the anchor position on the node. There is no way to have a node with sub-node like in the base graph model in figure \ref{fig:graph-base-model}.
+
+An another special case is the label on the edges. With GraphStream, we could add some label on the edges like in listings \ref{lst:graphstream-edge-label}, but we can't add multiple ones. To add multiple label we need to use sprite like in listing \ref{lst:graphstream-edge-sprite}.
+
+\begin{listing}[h] % {{{
+    \centering
+    \javafile{../GraphstreamTest/src/examples/EdgesLabel.java}
+    \caption{Add a label on an edge with GraphStream}
+    \label{lst:graphstream-edge-label}
+\end{listing} %}}}
+
+\begin{listing}[h] % {{{
+    \centering
+    \javafile{../GraphstreamTest/src/examples/SpriteEdgesExample.java}
+    \caption{Add two label on an edge with GraphStream}
+    \label{lst:graphstream-edge-sprite}
+\end{listing} %}}}
+
+%}}} subsection Remarks
+
+By the way GraphStream ownes some another features which could be usefull to design an application :
+\begin{itemize}
+    \item View integration using Swing
+    \item Human-Computer interaction with the view
+    \item A complete CSS interpretation to personalize the nodes, edges,...
+\end{itemize}
 
 %}}} section Graphstream
 

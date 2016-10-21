@@ -5,11 +5,11 @@ TEXFILE = ${NAME}.tex
 PDFFILE = ${NAME}.pdf
 BCFFILE = ${NAME}.bcf
 
-.PHONY: all clean clean_all
+.PHONY: all clean clean_all view tex
 
 all : ${PDFFILE}
 
-${PDFFILE} : ${TEXFILE}
+${PDFFILE} : clean_all
 	${TEX} ${NAME}
 	${BIB} ${NAME}
 	${TEX} ${NAME} 
@@ -31,7 +31,14 @@ clean :
 	@rm *.bcf || true
 	@rm -rf _minted* || true
 	@rm *.glsdefs || true
+	@rm *.dot || true
+	@rm *.ps || true
 
 clean_all : clean
 	@rm ${PDFFILE} || true 
-	
+
+view :
+	okular ${PDFFILE} &
+
+tex : clean_all
+	${TEX} ${NAME}

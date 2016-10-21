@@ -43,6 +43,8 @@
 % Colors & graphics
 \usepackage[table]{xcolor}    % colors
 \usepackage[pdftex]{graphicx} % graphics importing
+\usepackage[pdf]{graphviz}
+\usepackage{auto-pst-pdf}
 
 % Misc
 \usepackage{titlesec} % section titles formatting
@@ -50,9 +52,16 @@
 \usepackage{lscape}   % landscape
 \usepackage{tikz}     % charts in LaTeX
 \usepackage{amsmath}  % better math
+\usepackage{amsfonts}
+\usepackage{amssymb}
 \usepackage{float}    % floats
 \usepackage[small,justification=centering]{caption}
 \usepackage{microtype} % typographic improvements
+
+\usepackage[shortlabels]{enumitem}
+
+% Appendix
+\usepackage[toc,page]{appendix}
 
 % UML
 \usepackage{extra-package/tikz-uml}
@@ -90,6 +99,8 @@
 \setlength{\headsep}{14pt}
 
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+\newcommand{\BlackLine}{\noindent\rule[0.5ex]{\linewidth}{1pt}\\}
 
 % Code styles for highlighting
 % ----------------------------
@@ -172,8 +183,52 @@
 \newpage
 
 \input{chapters/introduction}
+\input{chapters/analysis}
+\input{chapters/viewing-library}
+\input{chapters/specifications}
+\input{chapters/implementations}
+\input{chapters/tests}
+\input{chapters/conclusion}
 
 \printbibliography
+
+\begin{appendices}
+
+\chapter{Listings}
+    \label{cha:appendix-lst}
+    \javafile{../GraphstreamTest/src/Main.java}
+    \captionof{listing}{Implementation of the base graph model using Graphstream
+    \label{lst:graphstream-test}}
+
+
+\chapter{Facts sheet : Generate a component diagram}
+\input{chapters/facts-sheets/generate_component_diagram}
+
+\chapter{Facts sheet : Display the type of some edge}
+\input{chapters/facts-sheets/display_edge_type}
+
+\chapter{Facts sheet : Hide the type of some edge}
+\input{chapters/facts-sheets/hide_edge_type}
+
+\chapter{Facts sheet : Enter a component}
+\input{chapters/facts-sheets/enter_inside_component}
+
+\chapter{Facts sheet : Exit a component}
+\input{chapters/facts-sheets/exit_from_component}
+
+\chapter{Facts sheet : Go to the matching component from the source file}
+\input{chapters/facts-sheets/goto_component_from_file}
+
+\chapter{Facts sheet : Go to the matching code from a component}
+\input{chapters/facts-sheets/goto_line_from_diagram}
+
+\chapter{Facts sheet : View a component diagram}
+\input{chapters/facts-sheets/view_component_diagram}
+
+\chapter{Facts sheet : Zoom inside a component diagram}
+\input{chapters/facts-sheets/zoom_inside_diagram}
+
+\end{appendices}
 
 \end{document}
 
