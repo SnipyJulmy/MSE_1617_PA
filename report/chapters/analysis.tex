@@ -1,0 +1,145 @@
+\chapter{Analysis} %{{{
+\label{cha:Analysis}
+
+In this chapter, we would discuss about the "What do we want ?" questions. It means what need the final product based on the Goal of the project. The other part is about the actual state of SpinalHDL. We are not presenting all of the implementation or conception, just a small part which is usefull for this project. FInally, we introduce the concept of Component and AST (Abstract Syntax Tree).
+
+\section{What do we want ?} %{{{
+\label{sec:What do we want ?}
+
+Based on the goal of the project at section \ref{sec:Goal}, we expose what the end user of SpinalHDL want to do with KlugHDL. The figure \ref{fig:use_case_klughdl} show the use case of KlugHDL.
+
+TODO : change use case
+
+\begin{figure}[] %{{{
+    \centering
+
+    \begin{tikzpicture}
+
+        \umlactor[x=0,y=2,name=user]{SpinalHDL user}
+        \umlactor[x=14,y=2,name=idea]{Intellij IDE}
+
+        \begin{umlsystem}[x=2,y=0]{KlugHDL}
+            \umlusecase[x=5,y=5,name=UCA]{Generate a component diagram}
+            \umlusecase[x=5,y=4,name=UCB]{View a component diagram}
+            \umlusecase[x=5,y=3,name=UCC]{Go the the exact line from the diagram}
+            \umlusecase[x=5,y=2,name=UCD]{Go to the component from the code line}
+            \umlusecase[x=5,y=1,name=UCE]{Zoom inside the diagram}
+            \umlusecase[x=5,y=0,name=UCF]{Enter a component}
+            \umlusecase[x=5,y=-1,name=UCG]{Go out of a component}
+            \umlusecase[x=5,y=-2,name=UCH]{Display the edges type}
+            \umlusecase[x=5,y=-3,name=UCI]{Hide the edges type}
+        \end{umlsystem}
+
+        \umlassoc{SpinalHDL user}{UCA}
+        \umlassoc{SpinalHDL user}{UCB}
+        \umlassoc{SpinalHDL user}{UCC}
+        \umlassoc{SpinalHDL user}{UCD}
+        \umlassoc{SpinalHDL user}{UCE}
+        \umlassoc{SpinalHDL user}{UCF}
+        \umlassoc{SpinalHDL user}{UCG}
+        \umlassoc{SpinalHDL user}{UCH}
+        \umlassoc{SpinalHDL user}{UCI}
+        \umlassoc{Intellij IDE}{UCC}
+        \umlassoc{Intellij IDE}{UCD}
+
+    \end{tikzpicture}
+
+    \caption{Use case of KlugHDL}
+    \label{fig:use_case_klughdl}
+\end{figure} % }}}
+
+%}}} section What do we want ?
+
+\section{SpinalHDL} %{{{
+\label{sec:SpinalHDL}
+
+As explain in chapter \ref{cha:Introduction}, SpinalHDL is a DSL for VHDL programmation. SpinalHDL run with various internal construction such as an AST or a Component Tree. Those are the majors element needed for the diagram generation.
+
+\subsection{Component} % {{{
+\label{sub:Component}
+
+A SpinalHDL's component is the base class of every SpinalHDL Program, like in the listing \ref{lst:spinalhdl_example_and_gate}. Like in Verilog and VHDL, you can define components that could be used to build a design hierarchy. But unlike them, you don’t need to bind them at instantiation \cite{github-spinalhdl}. That's why there is just one component against the architecture and entity combination in VHDL.
+
+The component is the main part of the SpinalHDL architecture for this project because all the component are linked together with :
+\begin{itemize}
+    \item a parent-children relationship
+    \item a brother relationship
+\end{itemize}
+
+A component could contains and communicate with an other component, that's the parent-children relationship, and a component could communicate with the component contained by his parent, that's the brother relationship. This two relation could be seen in listing \ref{lst:HierarchicComponent-solo}. The component is communication with their children which are communicationg between them.
+
+\begin{listing} % {{{
+    \centering
+    \begin{scalacode}
+    class ParentChildrenBrother extends Component
+    {
+        val andGate = new AndGate
+        val xorGate = new XorGate
+        val andXorGate1 = new AndXorGate
+        val orGate = new OrGate
+        val andXorGate2 = new AndXorGate
+
+        val io = new Bundle
+        {
+            val a = in Bool
+            val b = in Bool
+            val c = in Bool
+            val d = out Bool
+            val e = out Bool
+        }
+
+        andGate.io.a := io.a            // children communication example
+        andGate.io.b := io.b
+        xorGate.io.a := io.b
+        xorGate.io.b := io.c
+
+        orGate.io.a := andGate.io.c     // brother communication example
+        orGate.io.b := xorGate.io.c     
+
+        andXorGate1.io.a := io.a
+        andXorGate1.io.b := io.b
+
+        andXorGate2.io.a := io.a
+        andXorGate2.io.b := io.b
+
+        io.d := andGate.io.c & xorGate.io.c & orGate.io.c
+        io.e := andXorGate1.io.c | andXorGate1.io.d | andXorGate2.io.c | andXorGate2.io.d
+    }
+    \end{scalacode}
+    \caption{caption}
+    \label{lst:HierarchicComponent-solo}
+\end{listing} %}}}
+
+A component could have other element inside him too, like Area or Function. But they are not relevant for the diagram generation.
+
+%}}} subsection Component
+
+\subsection{Abstract Syntax Tree} % {{{
+\label{sub:Abstract Syntax Tree}
+
+An abstract syntax tree is a tree where the node are marked by operator and the leaf are marked by the operand of those operator. For example, the expression $5 * 2 + 3$ has his equivalent AST showed in the figure \ref{fig:ast-example}.
+
+\begin{figure}[] %{{{ ast-example
+    \centering
+    \fbox{
+        \digraph[scale=0.5]{AstExample}{
+            rankdir=BT;
+            plus[label="+"];
+            mul[label="*"];
+            2 -> plus;
+            3 -> plus;
+            5 -> mul;
+            plus -> mul;
+        }
+    }
+    \caption{AST of the expression $5 * 2 + 3$}
+    \label{fig:ast-example}
+\end{figure} % }}}
+
+The AST is important because he is using to recover all the input and the output of a component, including the source of each input's component. To do that, we just need to recursively walk inside the AST of a SpinalHDL program.
+
+%}}} subsection Abstract Syntax Tree
+
+%}}} section SpinalHDL
+
+%}}} chapter Analysis 
