@@ -8,9 +8,9 @@ class HierarchicComponent extends Component
 {
     val andGate = new AndGate
     val xorGate = new XorGate
-    val andXorGate1 = new AndXor
+    val andXorGate1 = new AndXorGate
     val orGate = new OrGate
-    val andXorGate2 = new AndXor
+    val andXorGate2 = new AndXorGate
 
     val io = new Bundle
     {
@@ -74,7 +74,7 @@ class XorGate extends Component
     io.c := io.a & io.b
 }
 
-class AndXor extends Component
+class AndXorGate extends Component
 {
     val xorGate = new XorGate
     val andGate = new AndGate

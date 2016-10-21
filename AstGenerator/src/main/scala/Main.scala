@@ -19,9 +19,22 @@ object Main
         //generateComponentIODiagram(report.toplevel)
         //generateASTDiagram(report.toplevel)
 
-        SpinalDotGenerator(rootComponent = report.toplevel,filename = "HierarchicComponent.dot",targetDirectory = "dot")
+        /*
+        ComponentGenerator(report.toplevel, filename = "HierarchicComponent.dot", targetDirectory = "dot")
             .generateDotFile()
             .generatePdfFile()
+            */
+
+        SpinalDotGenerator(rootComponent = report.toplevel, filename = "HierarchicComponent.dot", targetDirectory = "dot")
+            .generateDotFile()
+            .generatePdfFile()
+    }
+
+    def iterateOverBaseType(node: Node)(gen: BaseType => Unit): Unit = node match
+    {
+        case null =>
+        case bt: BaseType => gen(bt); node.onEachInput(iterateOverBaseType(_)(gen))
+        case _ => node.onEachInput(iterateOverBaseType(_)(gen))
     }
 
     def generateASTDiagram(root: Component): Unit =
