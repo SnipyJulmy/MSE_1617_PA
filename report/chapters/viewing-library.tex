@@ -9,20 +9,20 @@ For the presentation of each of those library for graph visualization, we would 
     \centering
     \fbox{
         \digraph[scale=0.5]{GraphBaseModel}{
-               node [shape=record];
-                graph [rankdir=LR, 
-                       ranksep="1", 
-                       nodesep="1"];
-                AndGate [label="{{<a>io.a|<b>io.b}|AndGate|{<c>io.c}}"];
-                OrGate [label="{{<a>io.a|<b>io.b}|OrGate|{<c>io.c}}"];
-                Input [label="{Input|{<a>io.a|<b>io.b}}"];
-                Output [label="{{<c>io.c}|Output}"];
-                Input:a -> AndGate:a [label="Bool"];
-                Input:b -> AndGate:b [label="Bool"];
-                Input:a -> OrGate:a [label="Bool"];
-                Input:b -> OrGate:b [label="Bool"];
-                OrGate:c -> Output:c [label="Bool"];
-                AndGate:c -> Output:c [label="Bool"];
+            node [shape=record];
+            graph [rankdir=LR, 
+                   ranksep="1", 
+                   nodesep="1"];
+            AndGate [label="{{<a>io.a : Bool|<b>io.b : Bool}|AndGate|{<c>io.c : Bool}}"];
+            OrGate [label="{{<a>io.a : Bool|<b>io.b : Bool}|OrGate|{<c>io.c : Bool}}"];
+            Input [label="{Input|{<a>io.a : Bool|<b>io.b : Bool}}"];
+            Output [label="{{<c>io.c : Bool}|Output}"];
+            Input:a -> AndGate:a;
+            Input:b -> AndGate:b;
+            Input:a -> OrGate:a;
+            Input:b -> OrGate:b;
+            OrGate:c -> Output:c;
+            AndGate:c -> Output:c;
         }
     }
     \caption{Graph model for the viewing library comparison}
