@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Draw2D example</title>
+    <script src="lib/draw2d/lib/jquery-1.12.0.min.js"></script>
+    <script src="lib/draw2d/lib/jquery.autoresize.js"></script>
+    <script src="lib/draw2d/lib/jquery.contextmenu.js"></script>
+    <script src="lib/draw2d/lib/jquery-touch_punch.js"></script>
+
+    <script src="lib/draw2d/lib/canvg.js"></script>
+    <script src="lib/draw2d/lib/Class.js"></script>
+    <script src="lib/draw2d/lib/json2.js"></script>
+    <script src="lib/draw2d/lib/pathfinding-browser.min.js"></script>
+    <script src="lib/draw2d/lib/raphael.js"></script>
+    <script src="lib/draw2d/lib/rgbcolor.js"></script>
+    <script src="lib/draw2d/lib/shifty.js"></script>
+    <script src="lib/draw2d/lib/StackBlur.js"></script>
+    <script src="lib/draw2d/src/draw2d.js"></script>
+    <script src="src/ComponentShape.js"></script>
+</head>
+<body>
+
+<div id="gfx_holder1" style="width:3000px; height:3000px;">
+</div>
+
+<script>
+
+    $(document).ready(function () {
+
+        var canvas = new draw2d.Canvas("gfx_holder1");
+
+        var andGate = new ComponentShape({
+            x: 300,
+            y: 300,
+            bgColor: '#ffffff'
+        });
+
+        var orGate = new ComponentShape({
+            x: 300,
+            y: 100,
+            bgColor: '#ffffff'
+        });
+
+        var input = new ComponentShape({
+            x: 100,
+            y: 200,
+            bgColor: '#ffffff'
+        });
+
+        var output = new ComponentShape({
+            x: 500,
+            y: 200,
+            bgColor: '#ffffff'
+        });
+
+
+        andGate.setName("AndGate");
+        orGate.setName("OrGate");
+        input.setName("Input");
+        output.setName("Output");
+
+        andGate.addPort("io.a","input");
+        andGate.addPort("io.b","input");
+        andGate.addPort("io.c","output");
+
+        orGate.addPort("io.a","input");
+        orGate.addPort("io.b","input");
+        orGate.addPort("io.c","output");
+
+        input.addPort("io.a","output");
+        input.addPort("io.b","output");
+
+        output.addPort("io.c","input");
+
+        canvas.add(andGate);
+        canvas.add(orGate);
+        canvas.add(input);
+        canvas.add(output);
+
+        canvas.add(newConnection(input.getPort("io.a"),andGate.getPort("io.a")));
+        canvas.add(newConnection(input.getPort("io.b"),andGate.getPort("io.b")));
+        canvas.add(newConnection(input.getPort("io.a"),orGate.getPort("io.a")));
+        canvas.add(newConnection(input.getPort("io.b"),orGate.getPort("io.b")));
+
+        canvas.add(newConnection(andGate.getPort("io.c"),output.getPort("io.c")))
+        canvas.add(newConnection(orGate.getPort("io.c"),output.getPort("io.c")))
+
+    });
+
+    function newConnection(srcPort, targetPort) {
+        var c = new draw2d.Connection();
+        c.setSource(srcPort);
+        c.setTarget(targetPort);
+        return c
+    }
+
+</script>
+
+</body>
+</html>
