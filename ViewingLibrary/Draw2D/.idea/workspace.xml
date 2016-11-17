@@ -2,23 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8dfe7842-e0b2-4ed6-abed-66dfd37a0af1" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../KlugHDL/src/main/scala/klughdl/FileManager.scala" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../KlugHDL/src/main/scala/klughdl/KlugHDLComponent.scala" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../KlugHDL/src/main/scala/klughdl/KlugHDLModel.scala" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../KlugHDL/src/main/scala/klughdl/Port.scala" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/dagre_DefinitelyTyped.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../GraphstreamTest/src/Main.java" afterPath="$PROJECT_DIR$/../../GraphstreamTest/src/Main.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../KlugHDL/.gitignore" afterPath="$PROJECT_DIR$/../../KlugHDL/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../KlugHDL/.idea/misc.xml" afterPath="$PROJECT_DIR$/../../KlugHDL/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../KlugHDL/.idea/modules/klughdl.iml" afterPath="$PROJECT_DIR$/../../KlugHDL/.idea/modules/klughdl.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../KlugHDL/build.sbt" afterPath="$PROJECT_DIR$/../../KlugHDL/build.sbt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../KlugHDL/src/main/scala/Main.scala" afterPath="$PROJECT_DIR$/../../KlugHDL/src/main/scala/Main.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/Draw2D.iml" afterPath="$PROJECT_DIR$/.idea/Draw2D.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../KlugHDL/src/main/scala/klughdl/FileManager.scala" afterPath="$PROJECT_DIR$/../../KlugHDL/src/main/scala/klughdl/FileManager.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../KlugHDL/src/main/scala/klughdl/KlugHDLComponent.scala" afterPath="$PROJECT_DIR$/../../KlugHDL/src/main/scala/klughdl/KlugHDLComponent.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../KlugHDL/src/main/scala/klughdl/KlugHDLModel.scala" afterPath="$PROJECT_DIR$/../../KlugHDL/src/main/scala/klughdl/KlugHDLModel.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../KlugHDL/src/main/scala/klughdl/Port.scala" afterPath="$PROJECT_DIR$/../../KlugHDL/src/main/scala/klughdl/Port.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/draw2d/examples/code_snippets/shape_db/app/TableShape.js" afterPath="$PROJECT_DIR$/lib/draw2d/examples/code_snippets/shape_db/app/TableShape.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ComponentShape.js" afterPath="$PROJECT_DIR$/src/ComponentShape.js" />
     </list>
     <ignored path="Draw2D.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -46,8 +37,8 @@
           <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/index.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="450">
-                  <caret line="107" column="37" selection-start-line="107" selection-start-column="37" selection-end-line="107" selection-end-column="37" />
+                <state relative-caret-position="234">
+                  <caret line="95" column="33" selection-start-line="95" selection-start-column="33" selection-end-line="95" selection-end-column="33" />
                   <folding>
                     <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                   </folding>
@@ -330,12 +321,12 @@
       <workItem from="1478868950083" duration="4421000" />
       <workItem from="1479204317265" duration="1472000" />
       <workItem from="1479369528148" duration="2773000" />
-      <workItem from="1479372338311" duration="188000" />
+      <workItem from="1479372338311" duration="974000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="34771000" />
+    <option name="totallyTimeSpent" value="35557000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1044" extended-state="6" />
@@ -728,8 +719,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="107" column="37" selection-start-line="107" selection-start-column="37" selection-end-line="107" selection-end-column="37" />
+        <state relative-caret-position="234">
+          <caret line="95" column="33" selection-start-line="95" selection-start-column="33" selection-end-line="95" selection-end-column="33" />
           <folding>
             <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>

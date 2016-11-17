@@ -1,3 +1,5 @@
+package klughdl.components
+
 import spinal.core._
 
 /**

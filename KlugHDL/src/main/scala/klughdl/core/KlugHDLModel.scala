@@ -1,4 +1,4 @@
-package klughdl
+package klughdl.core
 
 import spinal.core.Component
 
@@ -11,9 +11,17 @@ class KlugHDLModel
 {
     var components : Map[Component,KlugHDLComponent] = Map()
 
-    def addComponent(component: Component) : Unit = components += (component -> KlugHDLComponent(component.definitionName,component.parent))
+    def addComponent(component: Component) : Unit = {
+        components += (component -> KlugHDLComponent(component.definitionName,component.parent))
+    }
 
-    def getComponent(component: Component) : KlugHDLComponent = components(component)
+    def getKlugHDLComponent(component: Component) : KlugHDLComponent = {
+        components(component)
+    }
+
+    def addPort(component: Component, port: Port) = {
+        components(component).addPort(port)
+    }
 
     def generateJs() : Unit =
     {
