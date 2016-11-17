@@ -5,14 +5,13 @@ TableShape = draw2d.shape.layout.VerticalLayout.extend({
 	
     init : function(attr)
     {
-    	this._super($.extend({bgColor:"#dbddde", color:"#d7d7d7", stroke:1, radius:3},attr));
-        
-      
+    	this._super($.extend({bgColor:"#ffffff", color:"#000000", stroke:1, radius:3},attr));
+
         this.classLabel = new draw2d.shape.basic.Label({
             text:"ClassName", 
             stroke:1,
-            fontColor:"#5856d6",  
-            bgColor:"#f7f7f7", 
+            fontColor:"#000000",
+            bgColor:"#ffffff",
             radius: this.getRadius(), 
             padding:10,
             resizeable:true,
@@ -39,7 +38,7 @@ TableShape = draw2d.shape.layout.VerticalLayout.extend({
 	   	     radius:0,
 	   	     bgColor:null,
 	   	     padding:{left:10, top:3, right:10, bottom:5},
-	   	     fontColor:"#4a4a4a",
+	   	     fontColor:"#000000",
 	   	     resizeable:true,
              editor:new draw2d.ui.LabelEditor()
 	   	 });

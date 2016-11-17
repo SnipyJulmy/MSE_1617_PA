@@ -10,7 +10,7 @@ ComponentShape = draw2d.shape.layout.VerticalLayout.extend({
         var _this = this;
 
         this._super($.extend({
-            bgColor: "#ff0000",
+            bgColor: "#ffffff",
             color: "#000000",
             stroke: 1,
             radius: 3
@@ -19,8 +19,8 @@ ComponentShape = draw2d.shape.layout.VerticalLayout.extend({
         this.classLabel = new draw2d.shape.basic.Label({
             text: "ClassName",
             stroke: 1,
-            fontColor: "#5856d6",
-            bgColor: "#f7f7f7",
+            fontColor: "#000000",
+            bgColor: "#ffffff",
             radius: this.getRadius(),
             padding: 10,
             resizeable: true,
@@ -51,7 +51,7 @@ ComponentShape = draw2d.shape.layout.VerticalLayout.extend({
             radius: 90,
             bgColor: null,
             padding: {left: 10, top: 3, right: 10, bottom: 5},
-            fontColor: "#4a4a4a",
+            fontColor: "#000000",
             resizeable: true,
             onDoubleClick: function () {
                 _this.doubleClickCallBack()
