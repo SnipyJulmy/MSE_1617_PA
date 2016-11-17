@@ -17,7 +17,7 @@ object Main {
 
     parseComponentTree(report.toplevel)
 
-    val contents : String = klughdl.html.index("Snipy the Boss").toString()
+    val contents : String = klughdl.html.index().toString()
 
     val fileManager: FileManager = FileManager("index.html", "diagrams")
     fileManager.println(contents)
