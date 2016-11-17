@@ -1,7 +1,7 @@
 package klughdl
 
-import klughdl.components.HierarchicComponent
-import klughdl.core.{FileManager, KlugHDLModel, Port}
+import klughdl.components._
+import klughdl.core._
 import spinal.core._
 
 /**
@@ -17,7 +17,10 @@ object Main {
 
     parseComponentTree(report.toplevel)
 
+    val contents : String = klughdl.html.index("Snipy the Boss").toString()
+
     val fileManager: FileManager = FileManager("index.html", "diagrams")
+    fileManager.println(contents)
     fileManager.close()
   }
 
