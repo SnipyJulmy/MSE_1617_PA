@@ -60,12 +60,13 @@ public class Main
         addDirectedEdge("o","O","Bool","io.c");
         addDirectedEdge("a","O","Bool","io.c");
 
-        Layout layout = new org.graphstream.ui.layout.HierarchicalLayout();
-        Viewer viewer = new Viewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
-        GraphRenderer renderer = Viewer.newGraphRenderer();
-        viewer.addView(Viewer.DEFAULT_VIEW_ID,renderer);
-        viewer.enableAutoLayout(layout);
-        graph.display(true);
+        int addEdges = 100;
+        for(int i = 0; i < addEdges; i++)
+        {
+            addDirectedEdge("I","a","bool","io.a"+i);
+        }
+
+        graph.display();
     }
 
     private static void addDirectedEdge(String from, String to, String type, String signalName)
