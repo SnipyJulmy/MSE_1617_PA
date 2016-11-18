@@ -5,10 +5,10 @@ package klughdl.core
   * Created by snipy on 10.11.16.
   */
 sealed trait Port {
-
+  
   val name: String
   val hdlType: String
-
+  
   def getType: String = this match {
     case _: InputPort => "input"
     case _: OutputPort => "output"
@@ -16,10 +16,18 @@ sealed trait Port {
 }
 
 object Port {
-
+  
   def apply(name: String, io: String, hdlType: String): Port = io match {
     case "input" | "in" => new InputPort(name, hdlType)
     case "output" | "out" => new OutputPort(name, hdlType)
+  }
+  
+  def parsePort(rawPort : String) : String = {
+    rawPort
+      .replaceAll(" ","")
+      .split(":").head
+      .split("/").last
+      .replaceAll("_",".")
   }
 }
 
