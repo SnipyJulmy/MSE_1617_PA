@@ -22,12 +22,12 @@ object Port {
     case "output" | "out" => OutputPort(name, hdlType)
   }
   
-  def parsePort(rawPort : String) : String = {
+  def parsePort(rawPort: String): String = {
     rawPort
-      .replaceAll(" ","")
+      .replaceAll(" ", "")
       .split(":").head
       .split("/").last
-      .replaceAll("_",".")
+      .replaceAll("_", ".")
   }
 }
 

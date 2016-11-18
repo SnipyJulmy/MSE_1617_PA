@@ -34,8 +34,8 @@ class KlugHDLModel {
       .filter(entry => entry._1._1 != entry._2._1) // remove point on itself
       .filter(entry => !connections.toList.contains(entry.swap))
       .map { c =>
-      s"""canvas.add(newConnection(${c._1._1.id}.getPort("${c._1._2}"), ${c._2._1.id}.getPort("${c._2._2}")));"""
-    }.mkString("\n")
+        s"""canvas.add(newConnection(${c._1._1.id}.getPort("${c._1._2}"), ${c._2._1.id}.getPort("${c._2._2}")));"""
+      }.mkString("\n")
   }
   
   def getKlugHDLComponents = components.values.toList
