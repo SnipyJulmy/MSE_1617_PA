@@ -18,8 +18,8 @@ sealed trait Port {
 object Port {
   
   def apply(name: String, io: String, hdlType: String): Port = io match {
-    case "input" | "in" => new InputPort(name, hdlType)
-    case "output" | "out" => new OutputPort(name, hdlType)
+    case "input" | "in" => InputPort(name, hdlType)
+    case "output" | "out" => OutputPort(name, hdlType)
   }
   
   def parsePort(rawPort : String) : String = {
