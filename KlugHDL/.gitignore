@@ -79,4 +79,4 @@ hs_err_pid*
 # http://www.scala-sbt.org/release/docs/Getting-Started/Directories.html#configuring-version-control
 /vhdl/HierarchicComponent_tb.vhd
 /vhdl/HierarchicComponent.vhd
-diagrams/*
+/diagrams/index.html
