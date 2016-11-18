@@ -6,30 +6,45 @@
     <head>
         <meta charset="UTF-8">
         <title>KlugHDL</title>
+        <!--suppress HtmlUnknownTarget -->
         <script src="lib/draw2d/lib/jquery-1.12.0.min.js"></script>
+            <!--suppress HtmlUnknownTarget -->
         <script src="lib/draw2d/lib/jquery.autoresize.js"></script>
+            <!--suppress HtmlUnknownTarget -->
         <script src="lib/draw2d/lib/jquery.contextmenu.js"></script>
+            <!--suppress HtmlUnknownTarget -->
         <script src="lib/draw2d/lib/jquery-touch_punch.js"></script>
 
+            <!--suppress HtmlUnknownTarget -->
         <script src="lib/draw2d/lib/canvg.js"></script>
+            <!--suppress HtmlUnknownTarget -->
         <script src="lib/draw2d/lib/Class.js"></script>
+            <!--suppress HtmlUnknownTarget -->
         <script src="lib/draw2d/lib/json2.js"></script>
+            <!--suppress HtmlUnknownTarget -->
         <script src="lib/draw2d/lib/pathfinding-browser.min.js"></script>
+            <!--suppress HtmlUnknownTarget -->
         <script src="lib/draw2d/lib/raphael.js"></script>
+            <!--suppress HtmlUnknownTarget -->
         <script src="lib/draw2d/lib/rgbcolor.js"></script>
+            <!--suppress HtmlUnknownTarget -->
         <script src="lib/draw2d/lib/shifty.js"></script>
+            <!--suppress HtmlUnknownTarget -->
         <script src="lib/draw2d/lib/StackBlur.js"></script>
+            <!--suppress HtmlUnknownTarget -->
         <script src="lib/draw2d/src/draw2d.js"></script>
+            <!--suppress HtmlUnknownTarget -->
         <script src="src/ComponentShape.js"></script>
+            <!--suppress HtmlUnknownTarget -->
         <script src="lib/graphlib/graphlib.min.js"></script>
+            <!--suppress HtmlUnknownTarget -->
         <script src="lib/dagre/dagre.js"></script>
     </head>
     <body>
-            <!--suppress CssUnknownProperty -->
-        <div id="gfx_holder1" style="width: 3000px;
-            height: 3000px;"></div>
+        <div id="gfx_holder1" style="width: 3000px; height: 3000px;"></div>
     </body>
 
+    <!--suppress JSUnusedLocalSymbols -->
     <script>
 
             $(document).ready(function () {
@@ -43,14 +58,17 @@
 
                 // generate all node
                 @model.getKlugHDLComponents.map{ c =>
-                g.setNode(@Html(c.idStr), {label: "", width: 100, height: 100});
+                g.setNode(@Html(c.idStr), {label: "", width: 200, height: 200});
                 }
 
                 // generate all edges
-                // TODO
+                @model.connections.map{ c =>
+                g.setEdge(@Html(c._1._1.idStr), @Html(c._2._1.idStr));
+                }
 
                 dagre.layout(g);
 
+                // TODO : remove
                 g.nodes().forEach(function (v) {
                     console.log("Node " + v + ": " + JSON.stringify(g.node(v)));
                 });
@@ -62,8 +80,11 @@
                 }));
 
                 @model.getKlugHDLComponents.map{ c =>
-                @Html(c.toJs)
+                    @Html(c.toJs)
                 }
+
+                // generate connection
+                @Html(model.connectionToJs)
 
             });
 

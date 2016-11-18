@@ -60,7 +60,9 @@ ComponentShape = draw2d.shape.layout.VerticalLayout.extend({
             editor: new draw2d.ui.LabelEditor()
         });
 
-        var port = label.createPort(type);
+        // Todo change to type !!!!!
+        console.log(type);
+        var port = label.createPort("hybrid");
         port.setName(name);
 
         this.add(label);
