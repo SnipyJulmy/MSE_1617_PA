@@ -5,7 +5,7 @@ This chapter will present some visualization library which could be use to gener
 
 For the presentation of each of those library for graph visualization, we would use the same graph showed in figure \ref{fig:graph-base-model}.
 
-\begin{figure}[] % {{{ figure
+\begin{figure}[h] % {{{ figure
     \centering
     \fbox{
         \digraph[scale=0.5]{GraphBaseModel}{
@@ -25,7 +25,10 @@ For the presentation of each of those library for graph visualization, we would 
             AndGate:c -> Output:c;
         }
     }
-    \caption{Graph model for the viewing library comparison}
+    \caption[Graph model for the viewing library comparison]
+    {The graph model we will use for the incoming comparison
+    between several Viewing library. This model includes two logical component : a AND and a OR gate and two nodes
+    which are representing the input and output of the parent component}
     \label{fig:graph-base-model}
 \end{figure} % }}}
 
@@ -46,7 +49,7 @@ The figure \ref{fig:base-graph-model-graphstream} show the base graph model real
     \label{fig:base-graph-model-graphstream}
 \end{figure}
 
-The source code is available in the listing \ref{lst:graphstream-test} in appendices.
+TODO : code example of Graphstream
 
 %}}} subsection Implementation
 
@@ -59,80 +62,46 @@ An another special case is the label on the edges. With GraphStream, we could ad
 
 \begin{listing}[h] % {{{
     \centering
-    \javafile{../GraphstreamTest/src/examples/EdgesLabel.java}
+    \javafile{../ViewingLibrary/GraphstreamTest/src/examples/EdgesLabel.java}
     \caption{Add a label on an edge with GraphStream}
     \label{lst:graphstream-edge-label}
 \end{listing} %}}}
 
 \begin{listing}[h] % {{{
     \centering
-    \javafile{../GraphstreamTest/src/examples/SpriteEdgesExample.java}
+    \javafile{../ViewingLibrary/GraphstreamTest/src/examples/SpriteEdgesExample.java}
     \caption{Add two label on an edge with GraphStream}
     \label{lst:graphstream-edge-sprite}
 \end{listing} %}}}
 
 %}}} subsection Remarks
 
-By the way GraphStream ownes some another features which could be usefull to design an application :
+GraphStream ownes some another features which could be usefull to design an application :
 \begin{itemize}
     \item View integration using Swing
     \item Human-Computer interaction with the view
-    \item A complete CSS interpretation to personalize the nodes, edges,...
+    \item A complete CSS interpretation to personalize the nodes and the edges
 \end{itemize}
 
+The main problem using GraphStream is we need to indicates the component information using label on the edges. The figure \ref{fig:base-graph-model-graphstream} show four nodes and six connections, but
+if we have a more lot of edges between nodes, it would be difficult to see the types, like show in figure \ref{fig:graphstream-lot-of-edges}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/graphstream_lot_of_edges}
+    \caption[Label on multiple edges using Graphstream]{}
+    \label{fig:graphstream-lot-of-edges}
+\end{figure}
+
+
 %}}} section Graphstream
-
-\section{D3.js and C3.js} %{{{
-\label{sec:D3.js and C3.js}
-
-TODO
-
-
-%}}} section D3.js and C3.js
-
-\section{Vis.js} %{{{
-\label{sec:Vis.js}
-
-TODO
-
-
-%}}} section Vis.js
-
-\section{JGraphT} %{{{
-\label{sec:JGraphT}
-
-TODO
-
-
-%}}} section JGraphT
-
-\section{GraphViz} %{{{
-\label{sec:GraphViz}
-
-TODO
-
-
-%}}} section GraphViz
-
-\section{Prefuse} %{{{
-\label{sec:Prefuse}
-
-TODO
-
-
-%}}} section Prefuse
-
-\section{Processing} %{{{
-\label{sec:Processing}
-
-TODO
-
-%}}} section Processing
 
 \section{Draw2D} %{{{
 \label{sec:Draw2D}
 
 TODO
+
+\subsection{Drage}
 
 %}}} section Draw2D
 

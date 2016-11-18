@@ -10,23 +10,23 @@ Based on the goal of the project at section \ref{sec:Goal}, we expose what the e
 
 TODO : change use case
 
-\begin{figure}[] %{{{
+\begin{figure}[h] %{{{
     \centering
 
     \begin{tikzpicture}
 
-        \umlactor[x=0,y=2,name=user]{SpinalHDL user}
-        \umlactor[x=14,y=2,name=spinal]{SpinalHDL}
+        \umlactor[x=0,y=3,name=user]{SpinalHDL user}
+        \umlactor[x=0,y=0,name=spinal]{SpinalHDL}
 
-        \begin{umlsystem}[x=2,y=0]{KlugHDL}
-            \umlusecase[x=5,y=4,name=UCA]{Generate a component diagram}
-            \umlusecase[x=5,y=3,name=UCB]{View a component diagram}
-            \umlusecase[x=5,y=2,name=UCC]{Display, hide and toggle the hierarchical tree view of the programm}
-            \umlusecase[x=5,y=1,name=UCD]{Filter the Hierarchical view}
-            \umlusecase[x=5,y=0,name=UCE]{Enter a component}
-            \umlusecase[x=5,y=-1,name=UCF]{Go out of a component}
-            \umlusecase[x=5,y=-2,name=UCG]{Display, hide and toggle the view of the edge's type}
-            \umlusecase[x=5,y=-3,name=UCH]{Generate the RTL}
+        \begin{umlsystem}[x=3,y=0]{KlugHDL}
+            \umlusecase[x=4,y=6,name=UCA,width=180]{Generate a component diagram}
+            \umlusecase[x=4,y=4.9,name=UCB,width=180]{View a component diagram}
+            \umlusecase[x=4,y=3.7,name=UCC,width=180]{Display, hide and toggle the hierarchical tree view of the programm}
+            \umlusecase[x=4,y=2.6,name=UCD,width=180]{Filter the Hierarchical view}
+            \umlusecase[x=4,y=1.5,name=UCE,width=180]{Enter a component}
+            \umlusecase[x=4,y=0.4,name=UCF,width=180]{Go out of a component}
+            \umlusecase[x=4,y=-0.8,name=UCG,width=180]{Display, hide and toggle the view of the edge's type}
+            \umlusecase[x=4,y=-1.9,name=UCH,width=180]{Generate the RTL}
         \end{umlsystem}
 
         \umlassoc{SpinalHDL user}{UCA}
