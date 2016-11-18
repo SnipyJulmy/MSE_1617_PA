@@ -6,32 +6,39 @@ import spinal.core.Component
   * KlugHDL
   * Created by snipy on 10.11.16.
   */
-class KlugHDLComponent(val name: String, val parent: Component)
-{
-    private var ports: Set[Port] = Set()
+class KlugHDLComponent(val name: String, val parent: Component) {
 
-    def addPort(port: Port) =
-    {
-        ports = ports + port
-    }
+  val id: String = if (parent == null) s"${parent}_$name" else s"${parent.definitionName}_$name"
+  val idStr: String = s""""$id""""
+  private var ports: Set[Port] = Set()
 
-    def toJs: String =
-    {
+  def addPort(port: Port) = {
+    ports = ports + port
+  }
 
-        val declaration = s"var $name = new ComponentShape();\n"
-        val setName = s"$name.setName($name);\n"
-        val ports = generatePorts()
 
-        s"$declaration$setName$ports"
-    }
+  def toJs: String = {
+    val declaration = s"var $id = new ComponentShape();\n"
+    val setName = s"$id.setName($idStr);\n"
+    val ports = s"${generatePorts()}\n"
+    val layoutXY = s"$layoutX$layoutY\n"
+    val canvas = s"canvas.add($id);\n"
 
-    def generatePorts(): String =
-    {
-        ports.map(p => s"$name.addPort(${p.name},${p.getType});").mkString("\n")
-    }
+    println(layoutXY)
+
+    s"$declaration$setName$ports$layoutXY$canvas"
+  }
+
+  def layoutX: String = s"""$id.setX(g.node("$id").x);\n"""
+
+  def layoutY: String = s"""$id.setY(g.node("$id").y);\n"""
+
+  def generatePorts(): String = {
+    ports.map(p => s"""$id.addPort("${p.name}","${p.getType}");""").mkString("\n")
+  }
 }
 
-object KlugHDLComponent
-{
-    def apply(name: String, parent: Component): KlugHDLComponent = new KlugHDLComponent(name, parent)
+object KlugHDLComponent {
+
+  def apply(name: String, parent: Component): KlugHDLComponent = new KlugHDLComponent(name, parent)
 }

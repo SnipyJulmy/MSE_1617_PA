@@ -9,6 +9,7 @@ import spinal.core._
   * Created by snipy on 10.11.16.
   */
 object Main {
+
   val model: KlugHDLModel = new KlugHDLModel()
 
   def main(args: Array[String]) {
@@ -17,7 +18,7 @@ object Main {
 
     parseComponentTree(report.toplevel)
 
-    val contents : String = klughdl.html.index().toString()
+    val contents: String = klughdl.html.index(model).toString()
 
     val fileManager: FileManager = FileManager("index.html", "diagrams")
     fileManager.println(contents)

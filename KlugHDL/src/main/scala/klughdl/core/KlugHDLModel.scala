@@ -7,26 +7,28 @@ import spinal.core.Component
   * Created by snipy on 10.11.16.
   */
 
-class KlugHDLModel
-{
-    var components : Map[Component,KlugHDLComponent] = Map()
+class KlugHDLModel {
 
-    def addComponent(component: Component) : Unit = {
-        components += (component -> KlugHDLComponent(component.definitionName,component.parent))
-    }
+  var components: Map[Component, KlugHDLComponent] = Map()
 
-    def getKlugHDLComponent(component: Component) : KlugHDLComponent = {
-        components(component)
-    }
+  def addComponent(component: Component): Unit = {
+    components += (component -> KlugHDLComponent(component.definitionName, component.parent))
+  }
 
-    def addPort(component: Component, port: Port) = {
-        components(component).addPort(port)
-    }
+  def getKlugHDLComponent(component: Component): KlugHDLComponent = {
+    components(component)
+  }
 
-    def generateJs() : Unit =
-    {
-        val fileManager : FileManager = FileManager("output.js","diagrams")
-        fileManager.println(components.map((entry) => entry._2.toJs).mkString("\n"))
-        fileManager.close()
-    }
+  def addPort(component: Component, port: Port) = {
+    components(component).addPort(port)
+  }
+
+  def getKlugHDLComponents = components.values.toList
+
+  def generateJs(): Unit = {
+
+    val fileManager: FileManager = FileManager("output.js", "diagrams")
+    fileManager.println(components.map((entry) => entry._2.toJs).mkString("\n"))
+    fileManager.close()
+  }
 }
