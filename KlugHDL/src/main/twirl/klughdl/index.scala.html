@@ -69,11 +69,6 @@
 
                 dagre.layout(g);
 
-                // TODO : remove
-                g.nodes().forEach(function (v) {
-                    console.log("Node " + v + ": " + JSON.stringify(g.node(v)));
-                });
-
                 var canvas = new draw2d.Canvas("gfx_holder1");
 
                 canvas.installEditPolicy(new draw2d.policy.connection.DragConnectionCreatePolicy({
@@ -81,7 +76,7 @@
                 }));
 
                 @model.getKlugHDLComponents.map{ c =>
-                    @Html(c.toJs)
+                @Html(c.toJs)
                 }
 
                 // generate connection
@@ -91,7 +86,8 @@
 
             function createConnection() {
                 var con = new draw2d.Connection();
-                con.setRouter(new draw2d.layout.connection.ManhattanBridgedConnectionRouter());
+                con.setRouter(new draw2d.layout.connection.InteractiveManhattanConnectionRouter());
+                con.setTargetDecorator(new draw2d.decoration.connection.ArrowDecorator());
                 return con;
             }
 
