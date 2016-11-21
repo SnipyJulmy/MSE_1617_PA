@@ -77,6 +77,5 @@ hs_err_pid*
 ### SBT template
 # Simple Build Tool
 # http://www.scala-sbt.org/release/docs/Getting-Started/Directories.html#configuring-version-control
-/vhdl/HierarchicComponent_tb.vhd
-/vhdl/HierarchicComponent.vhd
 /diagrams/index.html
+/vhdl/

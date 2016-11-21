@@ -1,5 +1,7 @@
 package klughdl
 
+import java.io.File
+
 import klughdl.components._
 import klughdl.core._
 import spinal.core._
@@ -13,7 +15,13 @@ object Main {
   val model: KlugHDLModel = new KlugHDLModel()
   
   def main(args: Array[String]) {
-    
+
+    val vhdlOutputDir : File = new File("vhdl")
+    if(!vhdlOutputDir.exists())
+      vhdlOutputDir.mkdir()
+    else if(!vhdlOutputDir.isDirectory)
+      System.err.println(s"$vhdlOutputDir is not a directory")
+
     val report = SpinalConfig(targetDirectory = "vhdl").generateVhdl(new HierarchicComponent)
     
     parseComponentTree(report.toplevel)
