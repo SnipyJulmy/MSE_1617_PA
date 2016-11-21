@@ -94,19 +94,19 @@
         canvas.add(orGate);
 
         // TODO layout the edges ?
-        var c = newConnection(input.getPort("io.a"), andGate.getPort("io.a"));
-        canvas.add(c);
+        canvas.add(newConnection(input.getPort("io.a"), andGate.getPort("io.a")));
         canvas.add(newConnection(input.getPort("io.b"), andGate.getPort("io.b")));
         canvas.add(newConnection(input.getPort("io.a"), orGate.getPort("io.a")));
         canvas.add(newConnection(input.getPort("io.b"), orGate.getPort("io.b")));
 
         canvas.add(newConnection(andGate.getPort("io.c"), output.getPort("io.c")));
         canvas.add(newConnection(orGate.getPort("io.c"), output.getPort("io.c")));
+
     });
 
     function createConnection() {
         var con = new draw2d.Connection();
-        con.setRouter(new draw2d.layout.connection.ManhattanBridgedConnectionRouter());
+        con.setRouter(new draw2d.layout.connection.InteractiveManhattanConnectionRouter());
         return con;
     }
 
