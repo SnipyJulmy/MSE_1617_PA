@@ -17,7 +17,9 @@ object Main {
     val report = SpinalConfig(targetDirectory = "vhdl").generateVhdl(new HierarchicComponent)
     
     parseComponentTree(report.toplevel)
-    parsePortInput(report.toplevel)
+    parseConnection(report.toplevel)
+    
+    parseConnectionTest(report.toplevel)
     
     val contents: String = klughdl.html.index(model).toString()
     
@@ -40,7 +42,7 @@ object Main {
     }
   }
   
-  def parsePortInput(component: Component): Unit = {
+  def parseConnection(component: Component): Unit = {
     component.getAllIo.foreach { b: BaseType =>
       b.consumers.foreach { c =>
         if (c.component != b.component && c.getInputs.contains(b)) {
@@ -48,14 +50,34 @@ object Main {
           val portFrom = Port.parsePort(b.toString())
           val to = model.getKlugHDLComponent(c.component)
           val portTo = Port.parsePort(c.toString())
-          println(s"$from[$portFrom] -> $to[$portTo]")
+          // println(s"$from[$portFrom] -> $to[$portTo]")
           model.addConnection(from, portFrom, to, portTo)
         }
       }
     }
-    component.children.foreach(parsePortInput)
+    component.children.foreach(parseConnection)
   }
   
+  def parseInputs(node: Node): List[Node] = node match {
+    case bt: BaseType => List(bt) ::: node.getInputs.map(parseInputs).foldLeft(List(): List[Node])(_ ::: _)
+    case null => List()
+    case _ => node.getInputs.map(parseInputs).foldLeft(List(): List[Node])(_ ::: _)
+  }
+  
+  def parseConnectionTest(component: Component): Unit = {
+
+    for {
+      io <- component.getAllIo
+      inputs <- parseInputs(io)
+      from = model.getKlugHDLComponent(io.component)
+      portFrom = Port.parsePort(io.toString())
+      to = model.getKlugHDLComponent(inputs.component)
+      portTo = Port.parsePort(inputs.toString())
+    } model.addConnection(from, portFrom, to, portTo)
+
+    component.children.foreach(parseConnectionTest)
+  }
+
   def nameIoAndType(baseType: BaseType): (String, String, String) = {
     val full = baseType.toString().split("/").last
     val name = full.split(":").head.replaceAll(" ", "").replaceAll("_", ".")
