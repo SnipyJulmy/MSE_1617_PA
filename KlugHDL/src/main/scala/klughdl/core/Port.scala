@@ -23,11 +23,12 @@ object Port {
   }
   
   def parsePort(rawPort: String): String = {
-    rawPort
+    val tmp = rawPort
       .replaceAll(" ", "")
       .split(":").head
       .split("/").last
-      .replaceAll("_", ".")
+      .split("_")
+    s"${tmp(tmp.length-2)}.${tmp(tmp.length-1)}"
   }
 }
 
