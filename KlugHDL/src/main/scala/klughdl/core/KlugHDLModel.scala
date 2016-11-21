@@ -12,7 +12,8 @@ class KlugHDLModel {
   var components: Map[Component, KlugHDLComponent] = Map()
   var connections: Map[(KlugHDLComponent, String), (KlugHDLComponent, String)] = Map()
   
-  def addConnection(from: KlugHDLComponent, portFrom: String, to: KlugHDLComponent, portTo: String): Unit = {
+  def addConnection(from: KlugHDLComponent, portFrom: String, to: KlugHDLComponent, portTo: String, debug : String = ""): Unit = {
+    println(s"$debug $from[$portFrom] -> $to[$portTo]")
     connections += (from, portFrom) -> (to, portTo)
   }
   
