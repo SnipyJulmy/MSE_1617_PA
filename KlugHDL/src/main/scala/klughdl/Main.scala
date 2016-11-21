@@ -16,24 +16,23 @@ object Main {
   
   def main(args: Array[String]) {
 
-    val vhdlOutputDir : File = new File("vhdl")
-    if(!vhdlOutputDir.exists())
+    val vhdlOutputDir: File = new File("vhdl")
+    if (!vhdlOutputDir.exists())
       vhdlOutputDir.mkdir()
-    else if(!vhdlOutputDir.isDirectory)
+    else if (!vhdlOutputDir.isDirectory)
       System.err.println(s"$vhdlOutputDir is not a directory")
 
     val report = SpinalConfig(targetDirectory = "vhdl").generateVhdl(new HierarchicComponent)
     
     parseComponentTree(report.toplevel)
-    parseConnection(report.toplevel)
-    
     parseConnectionTest(report.toplevel)
+    parseOutputConnection(report.toplevel)
     
     val contents: String = klughdl.html.index(model).toString()
     
-    val fileManager: FileManager = FileManager("index.html", "diagrams")
-    fileManager.println(contents)
-    fileManager.close()
+    FileManager("index.html", "diagrams")
+      .println(contents)
+      .close()
   }
   
   def parseComponentTree(component: Component): Unit = {
@@ -76,14 +75,30 @@ object Main {
 
     for {
       io <- component.getAllIo
+      if io.isInput
       inputs <- parseInputs(io)
-      from = model.getKlugHDLComponent(io.component)
-      portFrom = Port.parsePort(io.toString())
-      to = model.getKlugHDLComponent(inputs.component)
-      portTo = Port.parsePort(inputs.toString())
-    } model.addConnection(from, portFrom, to, portTo)
+      from = model.getKlugHDLComponent(inputs.component)
+      portFrom = Port.parsePort(inputs.toString())
+      to = model.getKlugHDLComponent(io.component)
+      portTo = Port.parsePort(io.toString())
+      if from != to
+    } model.addConnection(from, portFrom, to, portTo,debug = "in")
 
     component.children.foreach(parseConnectionTest)
+  }
+
+  def parseOutputConnection(component: Component): Unit = {
+    for {
+      io <- component.getAllIo
+      if io.isOutput
+      consumer <- io.consumers
+      from = model.getKlugHDLComponent(io.component)
+      portFrom = Port.parsePort(io.toString())
+      to = model.getKlugHDLComponent(consumer.component)
+      portTo = Port.parsePort(consumer.toString())
+      if from != to
+    } model.addConnection(from,portFrom,to,portTo,debug = "out")
+    component.children.foreach(parseOutputConnection)
   }
 
   def nameIoAndType(baseType: BaseType): (String, String, String) = {
