@@ -17,5 +17,10 @@ class SmallComponent extends Component {
   val andGate = new AndGate
   andGate.io.a := io.a
   andGate.io.b := io.b
-  io.c := andGate.io.c
+
+  val orGate = new OrGate
+  orGate.io.a := io.a
+  orGate.io.b := io.b
+
+  io.c := orGate.io.c & andGate.io.c
 }
