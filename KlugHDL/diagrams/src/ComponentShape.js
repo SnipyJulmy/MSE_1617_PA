@@ -60,7 +60,6 @@ ComponentShape = draw2d.shape.layout.VerticalLayout.extend({
             editor: new draw2d.ui.LabelEditor()
         });
 
-        console.log(type);
         var port = label.createPort(type);
         port.setName(name);
 
