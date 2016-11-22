@@ -2,19 +2,25 @@ package klughdl.core
 
 import spinal.core.Component
 
+import scala.collection.mutable
+
 /**
   * KlugHDL
   * Created by snipy on 10.11.16.
   */
 
 class KlugHDLModel {
-  
+
+  var connections = new mutable.HashMap[
+    (KlugHDLComponent, String),
+    mutable.Set[(KlugHDLComponent, String)]
+    ] with mutable.MultiMap[(KlugHDLComponent, String), (KlugHDLComponent, String)]
+
   var components: Map[Component, KlugHDLComponent] = Map()
-  var connections: Map[(KlugHDLComponent, String), (KlugHDLComponent, String)] = Map()
-  
-  def addConnection(from: KlugHDLComponent, portFrom: String, to: KlugHDLComponent, portTo: String, debug : String = ""): Unit = {
+
+  def addConnection(from: KlugHDLComponent, portFrom: String, to: KlugHDLComponent, portTo: String, debug: String = ""): Unit = {
     println(s"$debug $from[$portFrom] -> $to[$portTo]")
-    connections += (from, portFrom) -> (to, portTo)
+    connections.addBinding((from, portFrom), (to, portTo))
   }
   
   def addComponent(component: Component): Unit = {
@@ -30,15 +36,26 @@ class KlugHDLModel {
   }
   
   def connectionToJs: String = {
-    connections
-      .toList.distinct.toMap // remove dupplicate
-      .filter(entry => entry._1._1 != entry._2._1) // remove point on itself
-      .filter(entry => !connections.toList.contains(entry.swap))
-      .map { c =>
-        s"""canvas.add(newConnection(${c._1._1.id}.getPort("${c._1._2}"), ${c._2._1.id}.getPort("${c._2._2}")));"""
-      }.mkString("\n")
+
+    (for {
+      entry <- connections
+      value <- entry._2
+    } yield KlugHDLConnection(entry._1, value))
+      .toList
+      .map(_.toJS)
+      .mkString("\n")
   }
-  
+
+  def connectionToJsLayout : String = {
+    (for {
+      entry <- connections
+      value <- entry._2
+    } yield KlugHDLConnection(entry._1, value))
+      .toList
+        .map(_.toJSLayout)
+      .mkString("\n")
+  }
+
   def getKlugHDLComponents = components.values.toList
   
   def generateJs(): Unit = {

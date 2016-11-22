@@ -62,10 +62,8 @@
                 g.setNode(@Html(c.idStr), {label: "", width: 200, height: 200});
                 }
 
-                // generate all edges
-                @model.connections.map{ c =>
-                g.setEdge(@Html(c._1._1.idStr), @Html(c._2._1.idStr));
-                }
+                // generate all edges for the layout
+                @Html(model.connectionToJsLayout)
 
                 dagre.layout(g);
 
