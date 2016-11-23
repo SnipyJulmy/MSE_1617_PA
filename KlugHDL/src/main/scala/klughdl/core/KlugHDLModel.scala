@@ -10,14 +10,13 @@ import scala.collection.mutable
   */
 
 class KlugHDLModel {
-
-  var connections = new mutable.HashMap[
-    (KlugHDLComponent, String),
-    mutable.Set[(KlugHDLComponent, String)]
-    ] with mutable.MultiMap[(KlugHDLComponent, String), (KlugHDLComponent, String)]
-
+  
+  var connections =
+    new mutable.HashMap[(KlugHDLComponent, String), mutable.Set[(KlugHDLComponent, String)]]
+      with mutable.MultiMap[(KlugHDLComponent, String), (KlugHDLComponent, String)]
+  
   var components: Map[Component, KlugHDLComponent] = Map()
-
+  
   def addConnection(from: KlugHDLComponent, portFrom: String, to: KlugHDLComponent, portTo: String, debug: String = ""): Unit = {
     println(s"$debug $from[$portFrom] -> $to[$portTo]")
     connections.addBinding((from, portFrom), (to, portTo))
@@ -36,30 +35,31 @@ class KlugHDLModel {
   }
   
   def connectionToJs: String = {
-
+    
     (for {
       entry <- connections
       value <- entry._2
     } yield KlugHDLConnection(entry._1, value))
       .toList
+      .distinct
       .map(_.toJS)
       .mkString("\n")
   }
-
-  def connectionToJsLayout : String = {
+  
+  def connectionToJsLayout: String = {
     (for {
       entry <- connections
       value <- entry._2
     } yield KlugHDLConnection(entry._1, value))
       .toList
-        .map(_.toJSLayout)
+      .distinct
+      .map(_.toJSLayout)
       .mkString("\n")
   }
-
-  def getKlugHDLComponents = components.values.toList
+  
+  def getKlugHDLComponents: List[KlugHDLComponent] = components.values.toList
   
   def generateJs(): Unit = {
-    
     val fileManager: FileManager = FileManager("output.js", "diagrams")
     fileManager.println(components.map((entry) => entry._2.toJs).mkString("\n"))
     fileManager.close()

@@ -15,13 +15,13 @@ object Main {
   val model: KlugHDLModel = new KlugHDLModel()
   
   def main(args: Array[String]) {
-
+    
     val vhdlOutputDir: File = new File("vhdl")
     if (!vhdlOutputDir.exists())
       vhdlOutputDir.mkdir()
     else if (!vhdlOutputDir.isDirectory)
       System.err.println(s"$vhdlOutputDir is not a directory")
-
+    
     val report = SpinalConfig(targetDirectory = "vhdl").generateVhdl(new HierarchicComponent)
     
     parseComponentTree(report.toplevel)
@@ -72,21 +72,23 @@ object Main {
   }
   
   def parseConnectionTest(component: Component): Unit = {
-
+    
     for {
       io <- component.getAllIo
       if io.isInput
-      inputs <- parseInputs(io)
-      from = model.getKlugHDLComponent(inputs.component)
-      portFrom = Port.parsePort(inputs.toString())
+      input <- parseInputs(io)
+      from = model.getKlugHDLComponent(input.component)
+      portFrom = Port.parsePort(input.toString())
       to = model.getKlugHDLComponent(io.component)
       portTo = Port.parsePort(io.toString())
       if from != to
-    } model.addConnection(from, portFrom, to, portTo,debug = "in")
-
+    } {
+      model.addConnection(from, portFrom, to, portTo, debug = "in")
+    }
+    
     component.children.foreach(parseConnectionTest)
   }
-
+  
   def parseOutputConnection(component: Component): Unit = {
     for {
       io <- component.getAllIo
@@ -97,10 +99,13 @@ object Main {
       to = model.getKlugHDLComponent(consumer.component)
       portTo = Port.parsePort(consumer.toString())
       if from != to
-    } model.addConnection(from,portFrom,to,portTo,debug = "out")
+    } {
+      model.addConnection(from, portFrom, to, portTo, debug = "out")
+      println(s"$from[$io] -> $to[$consumer]")
+    }
     component.children.foreach(parseOutputConnection)
   }
-
+  
   def nameIoAndType(baseType: BaseType): (String, String, String) = {
     val full = baseType.toString().split("/").last
     val name = full.split(":").head.replaceAll(" ", "").replaceAll("_", ".")

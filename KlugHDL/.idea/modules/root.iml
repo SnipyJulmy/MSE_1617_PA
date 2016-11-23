@@ -33,5 +33,6 @@
     <orderEntry type="library" name="SBT: com.typesafe.play:twirl-api_2.11:1.1.1:jar" level="project" />
     <orderEntry type="library" name="SBT: com.github.spinalhdl:spinalhdl-lib_2.11:0.10.5:jar" level="project" />
     <orderEntry type="library" name="SBT: com.github.spinalhdl:spinalhdl-core_2.11:0.10.5:jar" level="project" />
+    <orderEntry type="library" name="scala-sdk-2.11.7" level="application" />
   </component>
 </module>

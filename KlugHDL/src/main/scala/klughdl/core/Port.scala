@@ -28,7 +28,7 @@ object Port {
       .split(":").head
       .split("/").last
       .split("_")
-    s"${tmp(tmp.length-2)}.${tmp(tmp.length-1)}"
+    s"${tmp(tmp.length - 2)}.${tmp(tmp.length - 1)}"
   }
 }
 
