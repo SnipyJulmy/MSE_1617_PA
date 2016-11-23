@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="8dfe7842-e0b2-4ed6-abed-66dfd37a0af1" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../report/chapters/introduction.tex" afterPath="$PROJECT_DIR$/../../report/chapters/introduction.tex" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../report/chapters/viewing-library.tex" afterPath="$PROJECT_DIR$/../../report/chapters/viewing-library.tex" />
     </list>
     <ignored path="Draw2D.iws" />
@@ -61,7 +60,7 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="introduction.tex" pinned="false" current-in-tab="true">
+          <file leaf-file-name="introduction.tex" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/../../report/chapters/introduction.tex">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="0">
@@ -91,10 +90,10 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="workspace.xml" pinned="false" current-in-tab="false">
+          <file leaf-file-name="workspace.xml" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-1728">
+                <state relative-caret-position="-1836">
                   <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
                   <folding />
                 </state>
@@ -386,7 +385,7 @@
       <workItem from="1479735505745" duration="590000" />
       <workItem from="1479890306924" duration="7000" />
       <workItem from="1479890323544" duration="4436000" />
-      <workItem from="1479904606195" duration="3439000" />
+      <workItem from="1479904606195" duration="3456000" />
     </task>
     <task id="LOCAL-00001" summary="Add the draw2d bibtex reference">
       <created>1479909196961</created>
@@ -416,11 +415,18 @@
       <option name="project" value="LOCAL" />
       <updated>1479909302383</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Warning suppression">
+      <created>1479909334188</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1479909334188</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="49802000" />
+    <option name="totallyTimeSpent" value="49819000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -438,7 +444,7 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17026885" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297062" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3293348" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3293348" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293348" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -473,7 +479,8 @@
     <MESSAGE value="Update project information, nothing relevant" />
     <MESSAGE value="produce the pdf using texfot to show only the relevant information about the report compilation" />
     <MESSAGE value="Add new minted command for javascript" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add new minted command for javascript" />
+    <MESSAGE value="Warning suppression" />
+    <option name="LAST_COMMIT_MESSAGE" value="Warning suppression" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -826,17 +833,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+    <entry file="file://$PROJECT_DIR$/../../report/chapters/introduction.tex">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1728">
+        <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../report/chapters/introduction.tex">
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
+        <state relative-caret-position="-1836">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
