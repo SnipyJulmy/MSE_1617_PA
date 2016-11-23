@@ -25,19 +25,18 @@ For the presentation of each of those library for graph visualization, we would 
             AndGate:c -> Output:c;
         }
     }
-    \caption[Graph model for the viewing library comparison]
-    {The graph model we will use for the incoming comparison
-    between several Viewing library. This model includes two logical component : a AND and a OR gate and two nodes
+    \caption[Graph model for the viewing library comparison]{The graph we will use in order to compare several Viewing library.
+    This model includes two logical component : a AND and a OR gate and two nodes
     which are representing the input and output of the parent component}
     \label{fig:graph-base-model}
 \end{figure} % }}}
 
 \section{GraphStream} %{{{
-\label{sec:Graphstream}
+\label{sec:GraphStream}
 
 GraphStream is a Java library for the modeling and analysis of dynamic graphs\cite{graphstream}. The goal of the library is to provide a way to represents graphs and work on it\cite{graphstream}. GraphStream is an active project hosted by the university of Le Havre in France.
 
-\subsection{Implementation} %{{{
+\subsection{Implementation of the base graph model} %{{{
 \label{sub:Implementation}
 
 The figure \ref{fig:base-graph-model-graphstream} show the base graph model realized with the GraphStream library.
@@ -49,32 +48,60 @@ The figure \ref{fig:base-graph-model-graphstream} show the base graph model real
     \label{fig:base-graph-model-graphstream}
 \end{figure}
 
-TODO : code example of Graphstream
+GraphStream allow us to simply create a graph (or a multigraph) in Java like in listing \ref{lst:graphstream-example}.
+
+\begin{listing}[p]
+ \centering
+ \begin{javacode}
+ public class Example
+ {
+    public static void main(String args[])
+    {
+        Graph graph = new SingleGraph("Example");
+        graph.addNode("A" );
+        graph.addNode("B" );
+        graph.addNode("C" );
+        graph.addEdge("AB", "A", "B");
+        graph.addEdge("BC", "B", "C");
+        graph.addEdge("CA", "C", "A");
+    }
+ }
+ \end{javacode}
+ \caption[A simple graph modelisation using GraphStream]{Modelisation of a simple graph using the GraphStream library}
+ \label{lst:graphstream-example}
+\end{listing}
 
 %}}} subsection Implementation
 
 \subsection{Remarks} %{{{
 \label{sub:Remarks}
 
-With GraphStream, there is no way to control some visual features which are very interresing for hardware component visualisation : the splines of the edges and the anchor position on the node. There is no way to have a node with sub-node like in the base graph model in figure \ref{fig:graph-base-model}.
+With GraphStream, there is no way to control some visual features which are very interresing for hardware component visualisation :
+the splines of the edges and the anchor position on the node.
+There is no way to have a node with sub-node like in the base graph model in figure \ref{fig:graph-base-model}.
 
-An another special case is the label on the edges. With GraphStream, we could add some label on the edges like in listings \ref{lst:graphstream-edge-label}, but we can't add multiple ones. To add multiple label we need to use sprite like in listing \ref{lst:graphstream-edge-sprite}.
+An another special case is the label on the edges.
+With GraphStream, we could add some label on the edges like in listings \ref{lst:graphstream-edge-label}, but we can't add multiple ones.
+To add multiple label we need to use sprite like in listing \ref{lst:graphstream-edge-sprite}.
 
-\begin{listing}[h] % {{{
+\begin{listing}[p] % {{{
     \centering
     \javafile{../ViewingLibrary/GraphstreamTest/src/examples/EdgesLabel.java}
-    \caption{Add a label on an edge with GraphStream}
+    \caption[Add a label on an edge with GraphStream]{TODO : maybe remove ?}
     \label{lst:graphstream-edge-label}
 \end{listing} %}}}
 
-\begin{listing}[h] % {{{
+\begin{listing}[p] % {{{
     \centering
     \javafile{../ViewingLibrary/GraphstreamTest/src/examples/SpriteEdgesExample.java}
-    \caption{Add two label on an edge with GraphStream}
+    \caption[Add two label on an edge with GraphStream]{TODO : maybe remove ?}
     \label{lst:graphstream-edge-sprite}
 \end{listing} %}}}
 
 %}}} subsection Remarks
+
+\subsection{Conclusion} %{{{
+\label{sub:Conclusion-gs}
 
 GraphStream ownes some another features which could be usefull to design an application :
 \begin{itemize}
@@ -84,22 +111,108 @@ GraphStream ownes some another features which could be usefull to design an appl
 \end{itemize}
 
 The main problem using GraphStream is we need to indicates the component information using label on the edges. The figure \ref{fig:base-graph-model-graphstream} show four nodes and six connections, but
-if we have a more lot of edges between nodes, it would be difficult to see the types, like show in figure \ref{fig:graphstream-lot-of-edges}.
+if we have a more lot of edges between nodes, it would be difficult to see the type of the inputs and outputs, like show in figure \ref{fig:graphstream-lot-of-edges}.
 
-\begin{figure}
+\begin{figure}[h]
     \centering
+    \fbox{
     \includegraphics[width=0.8\textwidth]{img/graphstream_lot_of_edges}
-    \caption[Label on multiple edges using Graphstream]{}
+    }
+    \caption[Label on multiple edges using GraphStream]{}
     \label{fig:graphstream-lot-of-edges}
 \end{figure}
 
+In order to overpass these problem, we need to visualize the type in an another form : in the graph \ref{fig:graph-base-model} we have the idea to show the inputs and outputs as a port of the component. With GraphStream we can't do that, so we need to an another library which have these idea of port.
 
-%}}} section Graphstream
+%}}} subsection Conclusion
+
+%}}} section GraphStream
 
 \section{Draw2D} %{{{
 \label{sec:Draw2D}
 
-TODO
+Draw2D is a HTML5 and Javascript library for visualization and interaction with diagrams and graph\cite{draw2d}. The goal of the library is to provide a way to represent diagrams and graph and manipulate those using the mouse or javascript code. Some existing product already use Draw2d for diagrams manipulation :
+
+\begin{itemize}
+    \item Shape Designer\cite{draw2d}
+    \item BrainBox\cite{draw2d}
+    \item Sankey State\cite{draw2d}
+\end{itemize}
+
+\subsection{Implementation of the base graph model} %{{{
+\label{sub:Implementation of the base graph model}
+
+Before implementing directly the basic example of the graph \ref{fig:graph-base-model},
+we need to extend the library with a new component for our usage.
+In the chapter \ref{sub:Conclusion-gs} we indicates that's the GraphStream library is lacking the idea of port, but Draw2d already have those.
+
+The listing \ref{lst:draw2d-base-graph-model} show the realisation of the base graph model example.
+Note that the object \textbf{ComponentShape} and the functions \textbf{ComponentShape.addPort()},\textbf{newConnection()} and
+\textbf{createConnection()} are not part of the Draw2d library, it's an extension added for this project. Those implementation are discuss in the section \ref{sec:Extension of the Draw2d library}.
+
+\begin{listing}[p]%{{{
+    \centering
+    \begin{jscode}
+    var canvas = new draw2d.Canvas("gfx_holder1");
+
+    var andGate = new ComponentShape();
+    var orGate = new ComponentShape();
+    var input = new ComponentShape();
+    var output = new ComponentShape();
+
+    canvas.installEditPolicy(new draw2d.policy.connection.DragConnectionCreatePolicy({
+        createConnection: createConnection
+    }));
+
+    andGate.setName("AndGate");
+    orGate.setName("OrGate");
+    input.setName("Input");
+    output.setName("Output");
+
+    andGate.addPort("io.a", "input");
+    andGate.addPort("io.b", "input");
+    andGate.addPort("io.c", "output");
+
+    orGate.addPort("io.a", "input");
+    orGate.addPort("io.b", "input");
+    orGate.addPort("io.c", "output");
+
+    input.addPort("io.a", "output");
+    input.addPort("io.b", "output");
+
+    output.addPort("io.c", "input");
+
+    canvas.add(input);
+    canvas.add(output);
+    canvas.add(andGate);
+    canvas.add(orGate);
+
+    canvas.add(newConnection(input.getPort("io.a"), andGate.getPort("io.a")));
+    canvas.add(newConnection(input.getPort("io.b"), andGate.getPort("io.b")));
+    canvas.add(newConnection(input.getPort("io.a"), orGate.getPort("io.a")));
+    canvas.add(newConnection(input.getPort("io.b"), orGate.getPort("io.b")));
+    canvas.add(newConnection(andGate.getPort("io.c"), output.getPort("io.c")));
+    canvas.add(newConnection(orGate.getPort("io.c"), output.getPort("io.c")));
+    \end{jscode}
+
+    \caption[Base graph model implementation using the Draw2D library]{The necessary code to produce the base graph model with the Draw2d library.
+    The object \textbf{ComponentShape} and the functions \textbf{addPort()},  \textbf{newConnection()} and \textbf{createConnection()} are not part of the Draw2d library, it's an extension added for this project.}
+
+    \label{lst:draw2d-base-graph-model}
+\end{listing}%}}}
+
+The code \ref{lst:draw2d-base-graph-model} is producing the HTML page see in figure \ref{fig:base-graph-model-html-draw2d}.
+
+\begin{figure}[h]%{{{
+    \centering
+    \fbox{
+    \includegraphics[width=0.5\textwidth]{img/draw2d-base-model-example}
+    }
+    \caption[TODO]{TODO}
+    \label{fig:base-graph-model-html-draw2d}
+\end{figure}%}}}
+
+%}}} subsection Implementation of the base graph model
 
 \subsection{Drage}
 
