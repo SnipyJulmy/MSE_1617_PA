@@ -6,14 +6,16 @@ import org.graphstream.ui.spriteManager.Sprite;
 import org.graphstream.ui.spriteManager.SpriteManager;
 
 /**
- * KlugHDL
- * Created by snipy on 21.10.16.
+ * GraphStream example :
+ * How to add multiples labels on an edge
+ * Created by Snipy on 21.10.16.
  */
 public class SpriteEdgesExample
 {
     public static void main(String[] args)
     {
-        System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
+        System.setProperty("org.graphstream.ui.renderer", 
+                           "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
         Graph graph = new MultiGraph("Edge multiple label example");
         graph.addAttribute("ui.quality");
@@ -24,7 +26,8 @@ public class SpriteEdgesExample
 
         graph.addEdge("AB", "A", "B", true);
 
-        // add labels using sprites
+        /* Add some label using the sprite */
+
         SpriteManager sman = new SpriteManager(graph);
 
         // add label 1

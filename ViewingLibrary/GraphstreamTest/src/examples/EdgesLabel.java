@@ -5,14 +5,16 @@ import org.graphstream.graph.Graph;
 import org.graphstream.graph.implementations.MultiGraph;
 
 /**
- * KlugHDL
- * Created by snipy on 21.10.16.
+ * GraphStream example :
+ * How to label an edge
+ * Created by Snipy on 21.10.16.
  */
 public class EdgesLabel
 {
     public static void main(String[] args)
     {
-        System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
+        System.setProperty("org.graphstream.ui.renderer",
+                           "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
         Graph graph = new MultiGraph("Edges label example");
         graph.addAttribute("ui.quality");
