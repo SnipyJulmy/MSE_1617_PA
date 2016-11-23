@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="8dfe7842-e0b2-4ed6-abed-66dfd37a0af1" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../report/chapters/viewing-library.tex" afterPath="$PROJECT_DIR$/../../report/chapters/viewing-library.tex" />
     </list>
     <ignored path="Draw2D.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -80,22 +79,25 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="viewing-library.tex" pinned="false" current-in-tab="false">
+          <file leaf-file-name="viewing-library.tex" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/../../report/chapters/viewing-library.tex">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-538">
-                  <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                <state relative-caret-position="434">
+                  <caret line="222" column="0" lean-forward="true" selection-start-line="222" selection-start-column="0" selection-end-line="222" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="workspace.xml" pinned="false" current-in-tab="true">
+          <file leaf-file-name="workspace.xml" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="-1836">
                   <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-                  <folding />
+                  <folding>
+                    <marker date="1479909365260" expanded="true" signature="46713:46945" ph="..." />
+                    <marker date="1479909365260" expanded="true" signature="46714:46914" ph="..." />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -140,6 +142,7 @@
         <option value="$PROJECT_DIR$/../../report/Makefile" />
         <option value="$PROJECT_DIR$/../../report/report.tex" />
         <option value="$PROJECT_DIR$/../../report/chapters/viewing-library.tex" />
+        <option value="$PROJECT_DIR$/.idea/workspace.xml" />
       </list>
     </option>
   </component>
@@ -385,7 +388,7 @@
       <workItem from="1479735505745" duration="590000" />
       <workItem from="1479890306924" duration="7000" />
       <workItem from="1479890323544" duration="4436000" />
-      <workItem from="1479904606195" duration="3456000" />
+      <workItem from="1479904606195" duration="3504000" />
     </task>
     <task id="LOCAL-00001" summary="Add the draw2d bibtex reference">
       <created>1479909196961</created>
@@ -422,11 +425,25 @@
       <option name="project" value="LOCAL" />
       <updated>1479909334188</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Warning suppression">
+      <created>1479909342410</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1479909342410</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Finish the section about graphstream and add the one with draw2d">
+      <created>1479909386067</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1479909386067</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="49819000" />
+    <option name="totallyTimeSpent" value="49867000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -439,7 +456,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1044" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17026885" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -480,7 +497,8 @@
     <MESSAGE value="produce the pdf using texfot to show only the relevant information about the report compilation" />
     <MESSAGE value="Add new minted command for javascript" />
     <MESSAGE value="Warning suppression" />
-    <option name="LAST_COMMIT_MESSAGE" value="Warning suppression" />
+    <MESSAGE value="Finish the section about graphstream and add the one with draw2d" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finish the section about graphstream and add the one with draw2d" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -825,14 +843,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../report/chapters/viewing-library.tex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-538">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../report/chapters/introduction.tex">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -845,6 +855,17 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1836">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1479909365260" expanded="true" signature="46713:46945" ph="..." />
+            <marker date="1479909365260" expanded="true" signature="46714:46914" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../report/chapters/viewing-library.tex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="434">
+          <caret line="222" column="0" lean-forward="true" selection-start-line="222" selection-start-column="0" selection-end-line="222" selection-end-column="0" />
           <folding />
         </state>
       </provider>
