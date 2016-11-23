@@ -1,4 +1,4 @@
-TEX = pdflatex -shell-escape -file-line-error
+TEX = texfot pdflatex -shell-escape -file-line-error
 BIB = biber
 NAME = report
 TEXFILE = ${NAME}.tex
@@ -41,5 +41,5 @@ clean_all : clean
 view :
 	okular ${PDFFILE} &
 
-tex : clean_all
+tex : ${TEXFILE} chapters/*.tex 
 	${TEX} ${NAME}
