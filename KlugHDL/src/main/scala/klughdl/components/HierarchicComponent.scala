@@ -15,11 +15,11 @@ class HierarchicComponent extends Component {
   val andXorGate2 = new AndXorGate
   
   val io = new Bundle {
-    val a = in Bool
-    val b = in Bool
-    val c = in Bool
-    val d = out Bool
-    val e = out Bool
+    val a : Bool = in Bool
+    val b : Bool = in Bool
+    val c : Bool = in Bool
+    val d : Bool = out Bool
+    val e : Bool = out Bool
   }
   
   andGate.io.a := io.a
@@ -42,9 +42,9 @@ class HierarchicComponent extends Component {
 class AndGate extends Component {
   
   val io = new Bundle {
-    val a = in Bool
-    val b = in Bool
-    val c = out Bool
+    val a : Bool = in Bool
+    val b : Bool = in Bool
+    val c : Bool = out Bool
   }
   
   io.c := io.a & io.b
@@ -53,9 +53,9 @@ class AndGate extends Component {
 class OrGate extends Component {
   
   val io = new Bundle {
-    val a = in Bool
-    val b = in Bool
-    val c = out Bool
+    val a : Bool = in Bool
+    val b : Bool = in Bool
+    val c : Bool = out Bool
   }
   
   io.c := io.a & io.b
@@ -64,9 +64,9 @@ class OrGate extends Component {
 class XorGate extends Component {
   
   val io = new Bundle {
-    val a = in Bool
-    val b = in Bool
-    val c = out Bool
+    val a : Bool = in Bool
+    val b : Bool = in Bool
+    val c : Bool = out Bool
   }
   
   io.c := io.a & io.b
@@ -78,10 +78,10 @@ class AndXorGate extends Component {
   val andGate = new AndGate
   
   val io = new Bundle {
-    val a = in Bool
-    val b = in Bool
-    val c = out Bool
-    val d = out Bool
+    val a : Bool = in Bool
+    val b : Bool = in Bool
+    val c : Bool = out Bool
+    val d : Bool = out Bool
   }
   
   xorGate.io.a := io.a

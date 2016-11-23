@@ -13,28 +13,28 @@ class KlugHDLModel {
   
   var connections =
     new mutable.HashMap[(KlugHDLComponent, String), mutable.Set[(KlugHDLComponent, String)]]
-      with mutable.MultiMap[(KlugHDLComponent, String), (KlugHDLComponent, String)]
+        with mutable.MultiMap[(KlugHDLComponent, String), (KlugHDLComponent, String)]
   
-  var components: Map[Component, KlugHDLComponent] = Map()
+  var components : Map[Component, KlugHDLComponent] = Map()
   
-  def addConnection(from: KlugHDLComponent, portFrom: String, to: KlugHDLComponent, portTo: String, debug: String = ""): Unit = {
+  def addConnection(from : KlugHDLComponent, portFrom : String, to : KlugHDLComponent, portTo : String, debug : String = "") : Unit = {
     println(s"$debug $from[$portFrom] -> $to[$portTo]")
     connections.addBinding((from, portFrom), (to, portTo))
   }
   
-  def addComponent(component: Component): Unit = {
+  def addComponent(component : Component) : Unit = {
     components += (component -> KlugHDLComponent(component.definitionName, component.parent))
   }
   
-  def getKlugHDLComponent(component: Component): KlugHDLComponent = {
+  def getKlugHDLComponent(component : Component) : KlugHDLComponent = {
     components(component)
   }
   
-  def addPort(component: Component, port: Port) = {
+  def addPort(component : Component, port : Port) : Unit = {
     components(component).addPort(port)
   }
   
-  def connectionToJs: String = {
+  def connectionToJs : String = {
     
     (for {
       entry <- connections
@@ -46,7 +46,7 @@ class KlugHDLModel {
       .mkString("\n")
   }
   
-  def connectionToJsLayout: String = {
+  def connectionToJsLayout : String = {
     (for {
       entry <- connections
       value <- entry._2
@@ -57,10 +57,10 @@ class KlugHDLModel {
       .mkString("\n")
   }
   
-  def getKlugHDLComponents: List[KlugHDLComponent] = components.values.toList
+  def getKlugHDLComponents : List[KlugHDLComponent] = components.values.toList
   
-  def generateJs(): Unit = {
-    val fileManager: FileManager = FileManager("output.js", "diagrams")
+  def generateJs() : Unit = {
+    val fileManager : FileManager = FileManager("output.js", "diagrams")
     fileManager.println(components.map((entry) => entry._2.toJs).mkString("\n"))
     fileManager.close()
   }

@@ -12,11 +12,11 @@ import spinal.core._
   */
 object Main {
   
-  val model: KlugHDLModel = new KlugHDLModel()
+  val model : KlugHDLModel = new KlugHDLModel()
   
-  def main(args: Array[String]) {
+  def main(args : Array[String]) {
     
-    val vhdlOutputDir: File = new File("vhdl")
+    val vhdlOutputDir : File = new File("vhdl")
     if (!vhdlOutputDir.exists())
       vhdlOutputDir.mkdir()
     else if (!vhdlOutputDir.isDirectory)
@@ -28,29 +28,29 @@ object Main {
     parseConnectionTest(report.toplevel)
     parseOutputConnection(report.toplevel)
     
-    val contents: String = klughdl.html.index(model).toString()
+    val contents : String = klughdl.html.index(model).toString()
     
     FileManager("index.html", "diagrams")
       .println(contents)
       .close()
   }
   
-  def parseComponentTree(component: Component): Unit = {
+  def parseComponentTree(component : Component) : Unit = {
     model.addComponent(component)
     parsePort(component)
     component.children.foreach(c => parseComponentTree(c))
   }
   
-  def parsePort(component: Component): Unit = {
-    component.getAllIo.foreach { baseType: BaseType =>
+  def parsePort(component : Component) : Unit = {
+    component.getAllIo.foreach { baseType : BaseType =>
       val (n, io, t) = nameIoAndType(baseType)
       val port = Port(n, io, t)
       model.addPort(component, port)
     }
   }
   
-  def parseConnection(component: Component): Unit = {
-    component.getAllIo.foreach { b: BaseType =>
+  def parseConnection(component : Component) : Unit = {
+    component.getAllIo.foreach { b : BaseType =>
       b.consumers.foreach { c =>
         if (c.component != b.component && c.getInputs.contains(b)) {
           val from = model.getKlugHDLComponent(b.component)
@@ -65,13 +65,13 @@ object Main {
     component.children.foreach(parseConnection)
   }
   
-  def parseInputs(node: Node): List[Node] = node match {
-    case bt: BaseType => List(bt) ::: node.getInputs.map(parseInputs).foldLeft(List(): List[Node])(_ ::: _)
+  def parseInputs(node : Node) : List[Node] = node match {
+    case bt : BaseType => List(bt) ::: node.getInputs.map(parseInputs).foldLeft(List() : List[Node])(_ ::: _)
     case null => List()
-    case _ => node.getInputs.map(parseInputs).foldLeft(List(): List[Node])(_ ::: _)
+    case _ => node.getInputs.map(parseInputs).foldLeft(List() : List[Node])(_ ::: _)
   }
   
-  def parseConnectionTest(component: Component): Unit = {
+  def parseConnectionTest(component : Component) : Unit = {
     
     for {
       io <- component.getAllIo
@@ -89,7 +89,7 @@ object Main {
     component.children.foreach(parseConnectionTest)
   }
   
-  def parseOutputConnection(component: Component): Unit = {
+  def parseOutputConnection(component : Component) : Unit = {
     for {
       io <- component.getAllIo
       if io.isOutput
@@ -106,7 +106,7 @@ object Main {
     component.children.foreach(parseOutputConnection)
   }
   
-  def nameIoAndType(baseType: BaseType): (String, String, String) = {
+  def nameIoAndType(baseType : BaseType) : (String, String, String) = {
     val full = baseType.toString().split("/").last
     val name = full.split(":").head.replaceAll(" ", "").replaceAll("_", ".")
     val ioType = full.split(":").last.replaceFirst(" ", "").split(" ")

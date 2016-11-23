@@ -9,9 +9,9 @@ import spinal.core._
 class SmallComponent extends Component {
   
   val io = new Bundle {
-    val a = in Bool
-    val b = in Bool
-    val c = out Bool
+    val a : Bool = in Bool
+    val b : Bool = in Bool
+    val c : Bool = out Bool
   }
   
   val andGate = new AndGate

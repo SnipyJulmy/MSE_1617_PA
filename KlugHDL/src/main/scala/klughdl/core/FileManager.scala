@@ -8,9 +8,9 @@ import scala.util.{Failure, Success, Try}
   * KlugHDL
   * Created by snipy on 10.11.16.
   */
-case class FileManager(filename: String, directoryPath: String, deleteTargetBeforeRun: Boolean = false) {
+case class FileManager(filename : String, directoryPath : String, deleteTargetBeforeRun : Boolean = false) {
   
-  private val directory: File = new File(directoryPath)
+  private val directory : File = new File(directoryPath)
   if (!directory.exists()) {
     directory.mkdir()
   }
@@ -28,9 +28,9 @@ case class FileManager(filename: String, directoryPath: String, deleteTargetBefo
   if (!outputFile.exists()) outputFile.createNewFile()
   private val pw = new PrintWriter(outputFile)
   
-  def println(str: String): FileManager = print(str + "\n")
+  def println(str : String) : FileManager = print(str + "\n")
   
-  def print(str: String): FileManager = {
+  def print(str : String) : FileManager = {
     Try {
       pw.write(str)
       this
@@ -43,7 +43,7 @@ case class FileManager(filename: String, directoryPath: String, deleteTargetBefo
     }
   }
   
-  def close(): FileManager = {
+  def close() : FileManager = {
     pw.flush()
     pw.close()
     this
