@@ -11,6 +11,14 @@ class KlugHDLComponent(val name : String, val parent : Component) {
   val id : String = if (parent == null) s"${parent}_$name" else s"${parent.definitionName}_$name"
   val idStr : String = s""""$id""""
   private var ports : Set[Port] = Set()
+
+  def inputDotPort() : String = {
+    ports.filter(_.isInput).map(p => s"<${p.dotName}>${p.dotName}").mkString(" | ")
+  }
+  
+  def outputDotPort() : String = {
+    ports.filter(_.isOutput).map(p => s"<${p.dotName}>${p.dotName}").mkString(" | ")
+  }
   
   def addPort(port : Port) : Unit = {
     ports = ports + port
