@@ -58,10 +58,4 @@ class KlugHDLModel {
   }
   
   def getKlugHDLComponents : List[KlugHDLComponent] = components.values.toList
-  
-  def generateJs() : Unit = {
-    val fileManager : FileManager = FileManager("output.js", "diagrams")
-    fileManager.println(components.map((entry) => entry._2.toJs).mkString("\n"))
-    fileManager.close()
-  }
 }
