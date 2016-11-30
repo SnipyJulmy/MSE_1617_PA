@@ -4,6 +4,8 @@ import java.io.File
 
 import klughdl.components._
 import klughdl.core._
+import klughdl.core.dot.DotGenerator
+import klughdl.core.utils.FileManager
 import spinal.core._
 
 /**
@@ -27,6 +29,10 @@ object Main {
     parseComponentTree(report.toplevel)
     parseConnectionTest(report.toplevel)
     parseOutputConnection(report.toplevel)
+    
+    DotGenerator(model, "output.dot", "dot")
+      .generateDotFile()
+      .generatePdfFile()
     
     val contents : String = klughdl.html.index(model).toString()
     
