@@ -8,6 +8,17 @@ sealed trait Port {
   
   val name : String
   val hdlType : String
+  val dotName : String = name.replaceAll("\\.", "")
+
+  def isInput : Boolean = this match {
+    case InputPort(_, _) => true
+    case OutputPort(_, _) => false
+  }
+
+  def isOutput : Boolean = this match {
+    case InputPort(_, _) => false
+    case OutputPort(_, _) => true
+  }
   
   def getType : String = this match {
     case _ : InputPort => "input"
