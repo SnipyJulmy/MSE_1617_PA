@@ -1,4 +1,4 @@
-package klughdl.core
+package klughdl.core.utils
 
 import java.io.{File, PrintWriter}
 
@@ -8,17 +8,17 @@ import scala.util.{Failure, Success, Try}
   * KlugHDL
   * Created by snipy on 10.11.16.
   */
-case class FileManager(filename : String, directoryPath : String, deleteTargetBeforeRun : Boolean = false) {
+case class FileManager(filename : String, targetDirectory : String, deleteTargetBeforeRun : Boolean = false) {
   
-  private val directory : File = new File(directoryPath)
+  private val directory : File = new File(targetDirectory)
   if (!directory.exists()) {
     directory.mkdir()
   }
   else if (!directory.isDirectory) {
-    throw new IllegalArgumentException(s"$directoryPath is not a directory !")
+    throw new IllegalArgumentException(s"$targetDirectory is not a directory !")
   }
   
-  private val completeFileName = s"$directoryPath/$filename"
+  private val completeFileName = s"$targetDirectory/$filename"
   private val outputFile = new File(completeFileName)
   
   if (deleteTargetBeforeRun) {
