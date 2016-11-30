@@ -6,6 +6,8 @@ package klughdl.core
   */
 case class KlugHDLConnection(from : (KlugHDLComponent, String), to : (KlugHDLComponent, String)) {
   
+  def toDot : String = s"""${from._1.name}:${from._2.replaceAll("\\.", "")} -> ${to._1.name}:${to._2.replaceAll("\\.", "")};"""
+  
   def toJS : String = s"""canvas.add(newConnection(${from._1.id}.getPort("${from._2}"), ${to._1.id}.getPort("${to._2}")));"""
   
   def toJSLayout : String = s"""g.setEdge(${from._1.idStr}, ${to._1.idStr});"""
