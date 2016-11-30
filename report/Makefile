@@ -7,7 +7,7 @@ BCFFILE = ${NAME}.bcf
 
 .PHONY: all clean clean_all view tex
 
-all : ${PDFFILE}
+all : ${PDFFILE} chapters/*.tex
 
 ${PDFFILE} : clean_all
 	${TEX} ${NAME}
@@ -16,27 +16,26 @@ ${PDFFILE} : clean_all
 	${TEX} ${NAME} 
 
 clean : 
-	@rm *.bbl || true
-	@rm *.log || true
-	@rm *.out || true
-	@rm *.blg || true
-	@rm *.toc || true
-	@rm *.aux || true
-	@rm *.bak || true
-	@rm *.pyg || true
-	@rm *.backup || true
-	@rm *.lof || true
-	@rm *.synctex.gz || true
-	@rm *.run.xml || true
-	@rm *.bcf || true
-	@rm -rf _minted* || true
-	@rm *.glsdefs || true
-	@rm *.dot || true
-	@rm *.ps || true
+	@rm -f *.bbl
+	@rm -f *.log
+	@rm -f *.out
+	@rm -f *.blg
+	@rm -f *.toc
+	@rm -f *.aux
+	@rm -f *.bak
+	@rm -f *.pyg
+	@rm -f *.backup
+	@rm -f *.lof
+	@rm -f *.synctex.gz
+	@rm -f *.run.xml
+	@rm -f *.bcf
+	@rm -f -rf _minted*
+	@rm -f *.glsdefs
+	@rm -f *.dot
+	@rm -f *.ps
 
 clean_all : clean
-	@rm ${PDFFILE} || true 
-	@rm *.pdf || true
+	@rm -f *.pdf
 
 view :
 	okular ${PDFFILE} &
