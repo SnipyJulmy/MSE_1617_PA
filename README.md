@@ -20,7 +20,7 @@ Author : Sylvain Julmy <sylvain.julmy@master.hes-so.ch> or <sylvain.julmy@gmail.
 
 ## Setup
 ```
-git clone git@github.com:SnipyJulmy/MSE_1617_PA.git
+git clone https://github.com/SnipyJulmy/MSE_1617_PA.git
 cd MSE_1617_PA/KlugHDL
 sbt
 # inside the sbt console
