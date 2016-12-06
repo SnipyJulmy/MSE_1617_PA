@@ -33,14 +33,12 @@ case class FileManager(filename : String, targetDirectory : String, deleteTarget
   def print(str : String) : FileManager = {
     Try {
       pw.write(str)
-      this
     } match {
       case Failure(exception) =>
         exception.printStackTrace(System.err)
-        this
-      case Success(value) =>
-        value
+      case Success(_) => // nothing...
     }
+    this
   }
   
   def close() : FileManager = {
