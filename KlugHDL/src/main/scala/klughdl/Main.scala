@@ -5,7 +5,6 @@ import java.io.File
 import klughdl.components._
 import klughdl.core._
 import klughdl.core.dot.DotGenerator
-import klughdl.core.utils.FileManager
 import spinal.core._
 
 /**
@@ -26,8 +25,9 @@ object Main {
     
     val report = SpinalConfig(targetDirectory = "vhdl").generateVhdl(new OneLevelComponent)
     
+    
     parseComponent(report.toplevel)
-    parseConnectionTest(report.toplevel)
+    parseInputConnection(report.toplevel)
     parseOutputConnection(report.toplevel)
     
     DotGenerator(model, "output.dot", "dot")
@@ -72,14 +72,22 @@ object Main {
     component.children.foreach(parseConnection)
   }
   
-  def parseInputs(node : Node) : List[Node] = node match {
-    case bt : BaseType => List(bt) ::: node.getInputs.map(parseInputs).foldLeft(List() : List[Node])(_ ::: _)
-    case null => List()
-    case _ => node.getInputs.map(parseInputs).foldLeft(List() : List[Node])(_ ::: _)
+  def parseInputs(node : Node) : List[Node] = {
+    def inner(node : Node) : List[Node] = node match {
+      case bt : BaseType => if(bt.isOutput) List(bt) else List(bt) ::: node.getInputs.map(inner).foldLeft(List() : List[Node])(_ ::: _)
+      case null => List()
+      case _ => node.getInputs.map(inner).foldLeft(List() : List[Node])(_ ::: _)
+    }
+    
+    inner(node).filter {
+      _ match {
+        case bt : BaseType => bt.isOutput
+        case _ => false
+      }
+    }
   }
   
-  def parseConnectionTest(component : Component) : Unit = {
-    
+  def parseInputConnection(component : Component) : Unit = {
     for {
       io <- component.getAllIo
       if io.isInput
@@ -93,7 +101,7 @@ object Main {
       model.addConnection(from, portFrom, to, portTo, debug = "in")
     }
     
-    component.children.foreach(parseConnectionTest)
+    component.children.foreach(parseInputConnection)
   }
   
   def parseOutputConnection(component : Component) : Unit = {
