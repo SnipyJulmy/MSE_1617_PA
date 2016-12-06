@@ -11,23 +11,32 @@ import scala.collection.mutable
 
 class KlugHDLModel {
   
-  var connections =
-    new mutable.HashMap[(KlugHDLComponent, String), mutable.Set[(KlugHDLComponent, String)]]
-        with mutable.MultiMap[(KlugHDLComponent, String), (KlugHDLComponent, String)]
+  var connections = new mutable.HashMap[(KlugHDLComponent, String), mutable.Set[(KlugHDLComponent, String)]]
+                        with mutable.MultiMap[(KlugHDLComponent, String), (KlugHDLComponent, String)]
   
   var components : Map[Component, KlugHDLComponent] = Map()
+  
+  // the set of all the parents in the components tree
+  var parents : Set[Component] = Set()
   
   def addConnection(from : KlugHDLComponent, portFrom : String, to : KlugHDLComponent, portTo : String, debug : String = "") : Unit = {
     println(s"$debug $from[$portFrom] -> $to[$portTo]")
     connections.addBinding((from, portFrom), (to, portTo))
   }
   
-  def addComponent(component : Component) : Unit = {
-    components += (component -> KlugHDLComponent(component.definitionName, component.parent))
+  def addComponent(component : Component, parent : Component) : Unit = {
+    components += (component -> KlugHDLComponent(component.definitionName, parent))
+    parents += parent
   }
+  
+  def numberOfDiagram : Int = parents.size
   
   def getKlugHDLComponent(component : Component) : KlugHDLComponent = {
     components(component)
+  }
+  
+  def allChildrenComponent(parent : Component) : List[KlugHDLComponent] = {
+    components.filter(_._1.parent == parent).values.toList
   }
   
   def addPort(component : Component, port : Port) : Unit = {
