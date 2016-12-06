@@ -19,16 +19,12 @@ object DotConverterTools {
     * @param filepath
     * @param overwrite
     */
-  def generatePdfFile(filepath : String, overwrite : Boolean = true) : Unit = {
+  def generatePdfFile(filepath : String, overwrite : Boolean = true, prg : DotProgram = dot) : Unit = {
     val srcFile = new File(filepath)
     if (!srcFile.exists()) {
       System.err.println(s"file $filepath does not exist")
     } else {
-      execDotProg(srcFile, dot)
-      execDotProg(srcFile, neato)
-      execDotProg(srcFile, circo)
-      execDotProg(srcFile, fdp)
-      execDotProg(srcFile, twopi)
+      execDotProg(srcFile, prg)
     }
   }
   
