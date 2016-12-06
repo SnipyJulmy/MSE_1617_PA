@@ -24,27 +24,28 @@ object Main {
     else if (!vhdlOutputDir.isDirectory)
       System.err.println(s"$vhdlOutputDir is not a directory")
     
-    val report = SpinalConfig(targetDirectory = "vhdl").generateVhdl(new HierarchicComponent)
+    val report = SpinalConfig(targetDirectory = "vhdl").generateVhdl(new OneLevelComponent)
     
-    parseComponentTree(report.toplevel)
+    parseComponent(report.toplevel)
     parseConnectionTest(report.toplevel)
     parseOutputConnection(report.toplevel)
     
     DotGenerator(model, "output.dot", "dot")
-      .generateDotFile()
-      .generatePdfFile()
+      .generatePDfDiagramByParent()
     
+    /*
     val contents : String = klughdl.html.index(model).toString()
     
     FileManager("index.html", "diagrams")
       .println(contents)
       .close()
+      */
   }
   
-  def parseComponentTree(component : Component) : Unit = {
-    model.addComponent(component)
+  def parseComponent(component : Component) : Unit = {
+    model.addComponent(component, parent = component.parent)
     parsePort(component)
-    component.children.foreach(c => parseComponentTree(c))
+    component.children.foreach(c => parseComponent(c))
   }
   
   def parsePort(component : Component) : Unit = {
