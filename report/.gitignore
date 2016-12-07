@@ -41,3 +41,5 @@ _minted*
 
 # Generated pdf
 klughdl.kilepr
+report.fdb_latexmk
+report.fls
