@@ -36,13 +36,28 @@ case class DotGenerator(model : KlugHDLModel, filename : String, targetDirectory
         }.mkString("\n")
       }
       
-      // TODO generate Input and Output of the parent
+      /*
+       *  Now we generate the parent but with two nodes :
+       *  - the inputs of the parent component which are outputs in the diagram
+       *  - the outputs of the parent component which are inputs in the diagram
+       */
+      if (p != null) {
+        val parent = model.getKlugHDLComponent(p)
+        
+        fileManager.println {
+          s"""${parent.name}_in [label="{${parent.name} : INPUT|{${parent.inputDotPort()}}}"];"""
+        }
+        
+        fileManager.println {
+          s"""${parent.name}_out [label="{{${parent.outputDotPort()}}|${parent.name} : OUTPUT}"];"""
+        }
+      }
       
       for {
-          entry <- model.connections
-          value <- entry._2
-          if entry._1._1.parent == p
-          if value._1.parent == p
+        entry <- model.connections
+        value <- entry._2
+        if entry._1._1.parent == p
+        if value._1.parent == p
       } {
         println(s"${entry._1._1}[${entry._1._2}] -> ${value._1}[${value._2}]")
       }
