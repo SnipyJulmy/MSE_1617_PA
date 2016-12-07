@@ -79,9 +79,4 @@ hs_err_pid*
 # http://www.scala-sbt.org/release/docs/Getting-Started/Directories.html#configuring-version-control
 /diagrams/index.html
 /vhdl/
-/dot/output.dot.dot.pdf
-/dot/output.dot.neato.pdf
-/dot/output.dot
-/dot/output.dot.fdp.pdf
-/dot/output.dot.twopi.pdf
-/dot/output.dot.circo.pdf
+/dot/

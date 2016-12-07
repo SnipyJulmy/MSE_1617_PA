@@ -2,27 +2,25 @@ package klughdl.core.dot
 
 import java.io.File
 
+import klughdl.core.model.{DiagramsIO, KlugHDLComponentBasic, Model}
 import klughdl.core.utils.{DotConverterTools, FileManager}
-import klughdl.core.{KlugHDLConnection, KlugHDLModel}
 
 /**
   * KlugHDL
   * Created by snipy on 24.11.16.
   */
-case class DotGenerator(model : KlugHDLModel, filename : String, targetDirectory : String) {
+case class DotGenerator(filename : String, targetDirectory : String) {
   
   val filePath : String = s"$targetDirectory/$filename"
   
   def generatePDfDiagramByParent() : DotGenerator = {
-    model.parents.foreach(p => println(s"PARENT : $p"))
     
-    model.allChildrenComponent(null).foreach(k => println(s"null : $k"))
-    
-    model.parents.foreach { p =>
-      // Generate a diagram for each parent in the graph
+    // Generate a diagram for each parent in the graph
+    Model.diagrams.foreach { d =>
       val outputFileName =
-        if (p == null) s"${filename}_null.dot"
-        else s"${filename}_${p.definitionName}.dot"
+        if (d.parent == null) s"${filename}_null.dot"
+        else s"${filename}_${d.parent.definitionName}.dot"
+      
       val outputFile = new File(s"$targetDirectory/$outputFileName")
       val fileManager : FileManager = FileManager(outputFileName, targetDirectory)
       fileManager.println("digraph g {")
@@ -31,8 +29,12 @@ case class DotGenerator(model : KlugHDLModel, filename : String, targetDirectory
       
       // Generate the node with port
       fileManager.println {
-        model.allChildrenComponent(p).map { c =>
-          s"""${c.name} [label="{{${c.inputDotPort()}}|${c.name}|{${c.outputDotPort()}}}"];"""
+        d.components.map { entry =>
+          entry._2 match {
+            case KlugHDLComponentBasic(name, component, parent) =>
+              s"""${entry._2.name} [label="{{${entry._2.inputDotPort()}}|${entry._2.name}|{${entry._2.outputDotPort()}}}"];"""
+            case DiagramsIO(name, parent) => s""""""
+          }
         }.mkString("\n")
       }
       
@@ -41,85 +43,33 @@ case class DotGenerator(model : KlugHDLModel, filename : String, targetDirectory
        *  - the inputs of the parent component which are outputs in the diagram
        *  - the outputs of the parent component which are inputs in the diagram
        */
-      if (p != null) {
-        val parent = model.getKlugHDLComponent(p)
-        
-        fileManager.println {
-          s"""${parent.name}_in [label="{${parent.name} : INPUT|{${parent.inputDotPort()}}}"];"""
-        }
-        
-        fileManager.println {
-          s"""${parent.name}_out [label="{{${parent.outputDotPort()}}|${parent.name} : OUTPUT}"];"""
-        }
-      }
       
-      for {
-        entry <- model.connections
-        value <- entry._2
-        if entry._1._1.parent == p
-        if value._1.parent == p
-      } {
-        println(s"${entry._1._1}[${entry._1._2}] -> ${value._1}[${value._2}]")
-      }
+      // TODO
       
-      // Generate the connection between the nodes
-      // the connection who only consider the brother nodes
-      // are generating
+      /*
+       *  Generate the connection between the nodes
+       *  the connection who only consider the brother nodes
+       *  are generating
+       */
+      
+      /*
       fileManager.println {
         (for {
-          entry <- model.connections
+          entry <- d.connections
           value <- entry._2
-          if entry._1._1.parent == p
-          if value._1.parent == p
-        } yield KlugHDLConnection(entry._1, value))
+        } yield
+          s"""${entry._1._1.name}:${entry._1._2.dotName} -> ${value._1.name}:${value._2.dotName};""")
           .toList
           .distinct
-          .map(_.toDot)
           .mkString("\n")
       }
+      */
       
       fileManager.println("}")
       fileManager.close()
-      
       DotConverterTools.generatePdfFile(outputFile.getAbsolutePath)
     }
+    
     this
   }
-  
-  def generateDotFileFull() : DotGenerator = {
-    
-    val fileManager : FileManager = FileManager(filename, targetDirectory)
-    fileManager.println("digraph g {")
-    fileManager.println("graph [rankdir=LR,ranksep=\"2\",nodesep=\"2\"];")
-    fileManager.println("node [shape=record];")
-    
-    // generate node with port
-    fileManager.println {
-      model.getKlugHDLComponents.map { c =>
-        s"""${c.name} [label="{{${c.inputDotPort()}}|${c.name}|{${c.outputDotPort()}}}"];"""
-      }.mkString("\n")
-    }
-    
-    // generate connection
-    fileManager.println {
-      (for {
-        entry <- model.connections
-        value <- entry._2
-      } yield KlugHDLConnection(entry._1, value))
-        .toList
-        .distinct
-        .map(_.toDot)
-        .mkString("\n")
-    }
-    
-    fileManager.println("}")
-    fileManager.close()
-    this
-  }
-  
-  def generatePdfFile() : DotGenerator = {
-    DotConverterTools.generatePdfFile(filePath)
-    this
-  }
-  
 }
