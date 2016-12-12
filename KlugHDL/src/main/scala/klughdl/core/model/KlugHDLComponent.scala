@@ -10,6 +10,15 @@ sealed trait KlugHDLComponent {
   
   val name : String
   val parent : Component
+  val component : Component = this match {
+    case KlugHDLComponentBasic(_, c, _) => c
+    case KlugHDLComponentIO(_, _) => null
+  }
+  
+  def isIO : Boolean = this match {
+    case KlugHDLComponentBasic(_, _, _) => false
+    case KlugHDLComponentIO(_, _) => true
+  }
   
   val id : String = if (parent == null) s"${parent}_$name" else s"${parent.definitionName}_$name"
   val idStr : String = s""""$id""""
@@ -28,10 +37,10 @@ sealed trait KlugHDLComponent {
   }
 }
 
-final case class KlugHDLComponentBasic(name : String, component : Component, parent : Component) extends KlugHDLComponent {
+final case class KlugHDLComponentBasic(name : String, override val component : Component, parent : Component) extends KlugHDLComponent {
   
 }
 
-final case class DiagramsIO(name : String, parent : Component) extends KlugHDLComponent {
+final case class KlugHDLComponentIO(name : String, parent : Component) extends KlugHDLComponent {
   
 }

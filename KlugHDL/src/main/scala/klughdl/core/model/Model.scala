@@ -10,7 +10,10 @@ object Model {
   
   var diagrams : Set[Diagram] = Set()
   
+  var topLevel : Component = _
+  
   def apply(topLevel : Component) : Model.type = {
+    this.topLevel = topLevel
     generateDiagrams(topLevel)
     diagrams.foreach(generateComponent)
     diagrams.foreach(generatePort)
@@ -28,8 +31,9 @@ object Model {
   private def generateComponent(diagram : Diagram) : Model.type = {
     // add all the children of the parent to the diagrams
     diagram.foreachChildren(diagram.addComponents)
-    // add the input and output parent connection
-    diagram.addIoComponents(diagram.parent)
+    // add the input and output parent connection, except it's top level
+    if (diagram.parent != null)
+      diagram.addIoComponents(diagram.parent)
     this
   }
   
@@ -100,7 +104,40 @@ object Model {
     
     // Generate the connection with the parent
     def parseParentConnection(component : Component) : Unit = {
-      println(s"PARENT CONNECTION EXEC")
+      
+      def parseInputParentConnection(component : Component) : Unit = {
+        if (component.parent != null) {
+          val con = for {
+            io_p <- component.parent.getAllIo
+            io <- component.getAllIo
+            if io.getInputs.contains(io_p)
+          } yield (io_p.component, Port(io_p), io.component, Port(io))
+          con.foreach(diagram.addConnection)
+        }
+      }
+      
+      def parseOutputParentConnection(component : Component) : Unit = {
+        if (component.parent != null) {
+          val con = for {
+            io_p <- component.parent.getAllIo
+            io <- component.getAllIo
+            if io_p.getInputs.contains(io)
+          } yield (io.component, Port(io), io_p.component, Port(io_p))
+          con.foreach(diagram.addConnection)
+        }
+      }
+      
+      parseInputParentConnection(component)
+      parseOutputParentConnection(component)
+      
+      if (component.parent != null) {
+        for {
+          io_p <- component.parent.getAllIo
+          io <- component.getAllIo
+          if io_p.getInputs.contains(io)
+        } println(s"DEBUG : $io -> $io_p")
+      }
+      
     }
     
     diagram.components.keys.foreach { c =>
