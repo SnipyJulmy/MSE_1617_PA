@@ -5,7 +5,6 @@ import java.io.File
 import klughdl.components._
 import klughdl.core.dot.DotGenerator
 import klughdl.core.model.Model
-import klughdl.core.old.{KlugHDLModel, Port}
 import spinal.core._
 
 /**
@@ -13,8 +12,6 @@ import spinal.core._
   * Created by snipy on 10.11.16.
   */
 object Main {
-  
-  val model : KlugHDLModel = new KlugHDLModel()
   
   def main(args : Array[String]) {
     
@@ -24,9 +21,9 @@ object Main {
     else if (!vhdlOutputDir.isDirectory)
       System.err.println(s"$vhdlOutputDir is not a directory")
     
-    val report = SpinalConfig(targetDirectory = "vhdl").generateVhdl(new OneLevelComponent)
+    val report = SpinalConfig(targetDirectory = "vhdl").generateVhdl(new HierarchicComponent)
     
-    Model(report.toplevel).diagrams.foreach(d => println(d.parent))
+    Model(report.toplevel).diagrams.foreach(d => d.generateDot(targetDirectory = "dot"))
     
     /*
     DotGenerator("output.dot", "dot")
