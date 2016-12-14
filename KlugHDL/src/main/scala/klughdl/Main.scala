@@ -3,7 +3,6 @@ package klughdl
 import java.io.File
 
 import klughdl.components._
-import klughdl.core.dot.DotGenerator
 import klughdl.core.model.Model
 import spinal.core._
 
@@ -26,16 +25,11 @@ object Main {
     Model(report.toplevel).diagrams.foreach(d => d.generateDot(targetDirectory = "dot"))
     
     /*
-    DotGenerator("output.dot", "dot")
-      .generatePDfDiagramByParent()
-     */
-    
-    /*
     val contents : String = klughdl.html.index(model).toString()
     
     FileManager("index.html", "diagrams")
       .println(contents)
       .close()
-      */
+    */
   }
 }
