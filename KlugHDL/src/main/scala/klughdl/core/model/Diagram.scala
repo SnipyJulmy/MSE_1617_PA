@@ -1,11 +1,9 @@
 package klughdl.core.model
 
 import klughdl.core.dot.DotGenerator
-import klughdl.core.utils.Debug
 import spinal.core._
 
 import scala.collection.mutable
-import scala.util.{Failure, Success, Try}
 
 /**
   * KlugHDL
@@ -59,8 +57,7 @@ class Diagram(val parent : Component) {
   }
   
   protected[model] def addConnection(con : (Component, Port, Component, Port)) : Unit = {
-    println(con)
-    if(components.contains(con._1) && components.contains(con._3))
+    if (components.contains(con._1) && components.contains(con._3))
       connections.addBinding((components(con._1), con._2), (components(con._3), con._4))
   }
 }
