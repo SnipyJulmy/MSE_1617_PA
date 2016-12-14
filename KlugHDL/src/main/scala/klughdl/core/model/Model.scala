@@ -1,5 +1,6 @@
 package klughdl.core.model
 
+import klughdl.core.utils.Debug
 import spinal.core._
 
 /**
@@ -120,8 +121,8 @@ object Model {
         if (component.parent != null) {
           val con = for {
             io_p <- component.parent.getAllIo
-            io <- component.getAllIo
-            if io_p.getInputs.contains(io)
+            io <- getInputs(io_p)
+            if io != null
           } yield (io.component, Port(io), io_p.component, Port(io_p))
           con.foreach(diagram.addConnection)
         }
@@ -129,14 +130,6 @@ object Model {
       
       parseInputParentConnection(component)
       parseOutputParentConnection(component)
-      
-      if (component.parent != null) {
-        for {
-          io_p <- component.parent.getAllIo
-          io <- component.getAllIo
-          if io_p.getInputs.contains(io)
-        } println(s"DEBUG : $io -> $io_p")
-      }
       
     }
     
@@ -147,5 +140,24 @@ object Model {
         parseParentConnection(c)
       }
     }
+  }
+  
+  private def getInputs(bt : BaseType) : List[BaseType] = {
+    val comp = bt.component
+    
+    def inner(n : Node, acc : List[Node]) : List[Node] = {
+      if(n == null) acc
+      else if (n.component != comp){
+        acc
+      }
+      else if (n.getInputsCount > 1) {
+        n.getInputs.flatMap(n => inner(n,Nil)).toList
+      }
+      else {
+        inner(n.getInputs.next(), n :: acc)
+      }
+    }
+    
+    inner(bt, Nil).map(_.getInputs.next().asInstanceOf[BaseType])
   }
 }
