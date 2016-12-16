@@ -1,37 +1,46 @@
+/*
+ *
+ * Copyright (c) 2016  Sylvain Julmy
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; see the file COPYING. If not, write to the
+ * Free Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */
+
 package klughdl.core.model
 
-import klughdl.core.utils.Debug
 import spinal.core._
 
-/**
-  * KlugHDL
-  * Created by snipy on 07.12.16.
-  */
-object Model {
+case class Model(toplevel : Component) {
   
   var diagrams : Set[Diagram] = Set()
   
-  var topLevel : Component = _
-  
-  def apply(topLevel : Component) : Model.type = {
-    this.topLevel = topLevel
-    generateDiagrams(topLevel)
-    diagrams.foreach(generateComponent)
-    diagrams.foreach(generatePort)
-    diagrams.foreach(generateConnection)
-    this
-  }
+  generateDiagrams(toplevel)
+  diagrams.foreach(generateComponent)
+  diagrams.foreach(generatePort)
+  diagrams.foreach(generateConnection)
   
   override def toString : String = s"Model : " + diagrams.mkString("\n")
   
+  // TODO move to the backend
   private def generateDiagrams(component : Component) : Unit = {
     diagrams += new Diagram(component.parent)
     component.children.foreach(generateDiagrams)
   }
   
-  private def generateComponent(diagram : Diagram) : Model.type = {
+  private def generateComponent(diagram : Diagram) : Model = {
     // add all the children of the parent to the diagrams
-    diagram.foreachChildren(diagram.addComponents)
+    diagram.foreachChildren(diagram.addComponents, toplevel)
     // add the input and output parent connection, except it's top level
     if (diagram.parent != null)
       diagram.addIoComponents(diagram.parent)
@@ -52,8 +61,9 @@ object Model {
       
       def parseInputs(node : Node) : List[BaseType] = {
         def inner(node : Node) : List[BaseType] = node match {
-          case bt : BaseType => if (bt.isOutput) List(bt) else List(bt) ::: node.getInputs.map(inner).foldLeft(List() : List[BaseType])(
-            _ ::: _)
+          case bt : BaseType =>
+            if (bt.isOutput) List(bt)
+            else List(bt) ::: node.getInputs.map(inner).foldLeft(List() : List[BaseType])(_ ::: _)
           case null => List()
           case _ => node.getInputs.map(inner).foldLeft(List() : List[BaseType])(_ ::: _)
         }
@@ -146,12 +156,12 @@ object Model {
     val comp = bt.component
     
     def inner(n : Node, acc : List[Node]) : List[Node] = {
-      if(n == null) acc
-      else if (n.component != comp){
+      if (n == null) acc
+      else if (n.component != comp) {
         acc
       }
       else if (n.getInputsCount > 1) {
-        n.getInputs.flatMap(n => inner(n,Nil)).toList
+        n.getInputs.flatMap(n => inner(n, Nil)).toList
       }
       else {
         inner(n.getInputs.next(), n :: acc)
