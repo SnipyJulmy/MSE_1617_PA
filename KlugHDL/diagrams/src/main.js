@@ -1,7 +1,3 @@
-/**
- * Created by snipy on 16.12.16.
- */
-
 function createConnection() {
     var con = new draw2d.Connection();
     con.setRouter(new draw2d.layout.connection.InteractiveManhattanConnectionRouter());
