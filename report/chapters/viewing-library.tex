@@ -10,8 +10,8 @@ For the presentation of each of those library for graph visualization, we would 
     \fbox{
         \digraph[scale=0.5]{GraphBaseModel}{
             node [shape=record];
-            graph [rankdir=LR, 
-                   ranksep="1", 
+            graph [rankdir=LR,
+                   ranksep="1",
                    nodesep="1"];
             AndGate [label="{{<a>io.a : Bool|<b>io.b : Bool}|AndGate|{<c>io.c : Bool}}"];
             OrGate [label="{{<a>io.a : Bool|<b>io.b : Bool}|OrGate|{<c>io.c : Bool}}"];
@@ -208,7 +208,7 @@ The code \ref{lst:draw2d-base-graph-model} is producing the HTML page see in fig
     \fbox{
     \includegraphics[width=0.5\textwidth]{img/draw2d-base-model-example}
     }
-    \caption[TODO]{TODO}
+    \caption[Render of the base graph model using the Draw2D library]{Rendering of the base graph model diagram from figure \ref{fig:graph-base-model} using the Draw2D library}
     \label{fig:base-graph-model-html-draw2d}
 \end{figure}%}}}
 
@@ -219,9 +219,46 @@ The code \ref{lst:draw2d-base-graph-model} is producing the HTML page see in fig
 \section{Graph layout} %{{{
 \label{sec:graph-layout}
 
-TODO Just explain about the layout of the graph (multigraph), the usage of the Dagre and Graphlib library
+One functionnality the Draw2D don't have is the layout of the diagram. If we said nothing about the position of the node, Draw2D simply overlap all the nodes and manage nothing for the visualization like in figure \ref{fig:draw2d_overlapping}.
+
+\begin{figure}
+  \centering
+  \fbox{
+    \includegraphics{img/overlap_draw2d}
+  }
+  \caption[Overlapping of nodes by Draw2D]{When we specify nothing about the node position with Draw2D, the engine just overlaps all the node}
+  \label{fig:draw2d_overlapping}
+\end{figure}
+
+In order to produce a visualisable diagram, we need to layout ourself the diagram. We need to mention that's the layout algorithm is a NP-Hard problem in computing theory\cite{Tamassia:2007:HGD:1202383} and for our graph, we have some specialties :
+
+\begin{itemize}
+  \item The graph could be cyclic
+  \item The graph is oriented
+  \item Nodes ownes port, so we need to layout the edges on specific part of the graph
+\end{itemize}
+
+The first two specialties aren't a big deal, but the last one is quiet problematic, he involved a special layout algorithm which take care of the ports position on the nodes. Otherwise the visual result could be chaotics like in figure \ref{fig:multigraph-no-port}, in which we can't see the connection between some specific ports.
+
+\begin{figure}[h] %{{{ ast-example
+    \centering
+    \fbox{
+        \digraph[scale=0.5]{MultiGraphNoPort}{
+            A -> B -> C -> D;
+            A -> B -> C;
+            A -> B;
+            D -> A;
+            D -> B;
+        }
+    }
+    \caption[Visualization of a multi-graph without port]{Visualization of a multi-graph without port, we could not determine the connection which is representing a certain connection between two component}
+    \label{fig:multigraph-no-port}
+\end{figure} % }}}
+
+In order to solve this drawback, we need to layout the graph ourself by using a library. We could also do it ourself by implementing the algorithm for the kind of graph we have, but it's to time-consuming for a project like this.
+
+TODO layout des edges du graph... (questions sur le forum de Draw2d.org)
 
 %}}} section Graph layout
 
-%}}} chapter Viewing library 
-
+%}}} chapter Viewing library

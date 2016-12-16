@@ -22,14 +22,14 @@ SpinalHDL is a programming language to describe digital hardware and generate th
     \item Extract information from your digital design and then generate files that contain information about some latency and addresses
     \item Bidirectional translation between any data type and bits. Useful to load a complex data structure from a CPU interface.
     \item Check for you that there is no combinational loop / latch
-    \item Check that there is no unintentional cross clock domain 
+    \item Check that there is no unintentional cross clock domain
 \end{itemize}
 
 The code \ref{lst:spinalhdl_example_and_gate} shows a AND gate written with SpinalHDL with the corresponding generated VHDL code, we could see the similarity between the two code.
 
 \begin{listing}[h] % {{{
     \centering
-    
+
     \begin{minipage}[c]{0.45\textwidth}
     \begin{scalacode}
     import spinal.core._
@@ -51,10 +51,10 @@ The code \ref{lst:spinalhdl_example_and_gate} shows a AND gate written with Spin
     \begin{minipage}[c]{0.45\textwidth}
     \begin{vhdlcode}
     entity AND_1 is
-        port( 
+        port(
             io_a : in std_logic;
             io_b : in std_logic;
-            io_c : out std_logic 
+            io_c : out std_logic
         );
     end AND_1;
 
@@ -100,4 +100,4 @@ TODO
 
 %}}} section Document overview
 
-%}}} chapter Introduction 
+%}}} chapter Introduction

@@ -43,3 +43,7 @@ _minted*
 klughdl.kilepr
 report.fdb_latexmk
 report.fls
+chapters/viewing-library.fls
+AstExample.pdf
+GraphBaseModel.pdf
+MultiGraphNoPort.pdf
