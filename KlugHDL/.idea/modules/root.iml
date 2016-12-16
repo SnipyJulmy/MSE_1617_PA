@@ -19,21 +19,23 @@
       <sourceFolder url="file://$MODULE_DIR$/../../target/scala-2.11/resource_managed/main" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/../../src/test/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/../../target/scala-2.11/resource_managed/test" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../../src/main/twirl" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/../../target" />
       <excludeFolder url="file://$MODULE_DIR$/../../target/resolution-cache" />
       <excludeFolder url="file://$MODULE_DIR$/../../target/streams" />
-      <excludeFolder url="file://$MODULE_DIR$/../../vhdl" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="SBT: com.github.scopt:scopt_2.11:3.4.0:jar" level="project" />
     <orderEntry type="library" name="SBT: org.scala-lang.modules:scala-xml_2.11:1.0.3:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.scala-lang:scalap:2.10.4:jar" level="project" />
     <orderEntry type="library" name="SBT: org.scala-lang:scala-reflect:2.11.6:jar" level="project" />
     <orderEntry type="library" name="SBT: org.scala-lang:scala-library:2.11.6:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.scala-lang:scala-compiler:2.10.4:jar" level="project" />
     <orderEntry type="library" name="SBT: org.apache.commons:commons-lang3:3.4:jar" level="project" />
+    <orderEntry type="library" name="SBT: net.liftweb:lift-json_2.10:2.6.3:jar" level="project" />
     <orderEntry type="library" name="SBT: com.typesafe.play:twirl-api_2.11:1.1.1:jar" level="project" />
-    <orderEntry type="library" name="SBT: com.github.spinalhdl:spinalhdl-lib_2.11:0.10.5:jar" level="project" />
-    <orderEntry type="library" name="SBT: com.github.spinalhdl:spinalhdl-core_2.11:0.10.5:jar" level="project" />
-    <orderEntry type="library" name="scala-sdk-2.11.7" level="application" />
+    <orderEntry type="library" name="SBT: com.thoughtworks.paranamer:paranamer:2.4.1:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.github.spinalhdl:spinalhdl-lib_2.11:0.10.7:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.github.spinalhdl:spinalhdl-core_2.11:0.10.7:jar" level="project" />
   </component>
 </module>

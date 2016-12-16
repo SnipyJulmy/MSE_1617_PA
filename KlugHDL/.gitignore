@@ -80,3 +80,12 @@ hs_err_pid*
 /diagrams/index.html
 /vhdl/
 /dot/
+/diagrams/model.js
+/diagrams/model.json
+Supprimerait diagrams/lib/bootstrap-treeview/
+Supprimerait diagrams/model.json
+Supprimerait project/project/
+Supprimerait src/main/java/
+Supprimerait src/main/resources/
+Supprimerait src/main/scala-2.11/
+Supprimerait src/test/
