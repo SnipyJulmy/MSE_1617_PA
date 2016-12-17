@@ -1,0 +1,32 @@
+#treeview {
+    float: left;
+    width: 30vh;
+}
+
+#topbar {
+    width: 100vh;
+    height: 10vh;
+    text-align: center;
+}
+
+#logo {
+    width: 20vh;
+    float: left;
+    text-align: center;
+}
+
+#middlediv{
+    height: 70vh;
+}
+
+#title {
+    width: 80vh;
+    float: left;
+    text-align: center;
+}
+
+#gfx_holder1 {
+    width: 70vh;
+    height: 70vh;
+    float: left;
+}
