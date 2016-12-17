@@ -38,16 +38,6 @@ sealed trait KlugHDLComponent {
     case KlugHDLComponentIO(_, _) => true
   }
   
-  // TODO move to the backend
-  def inputDotPort() : String = {
-    ports.filter(_.isInput).map(p => s"<${p.dotName}>${p.dotName}").mkString(" | ")
-  }
-  
-  // TODO move to the backend
-  def outputDotPort() : String = {
-    ports.filter(_.isOutput).map(p => s"<${p.dotName}>${p.dotName}").mkString(" | ")
-  }
-  
   def addPort(port : Port) : Unit = {
     ports += port
   }

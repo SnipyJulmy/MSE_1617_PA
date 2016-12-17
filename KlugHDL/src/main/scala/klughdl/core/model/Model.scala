@@ -21,18 +21,17 @@ package klughdl.core.model
 
 import spinal.core._
 
-case class Model(toplevel : Component) {
+case class Model(topLevel : Component) {
   
   var diagrams : Set[Diagram] = Set()
   
-  generateDiagrams(toplevel)
+  generateDiagrams(topLevel)
   diagrams.foreach(generateComponent)
   diagrams.foreach(generatePort)
   diagrams.foreach(generateConnection)
   
   override def toString : String = s"Model : " + diagrams.mkString("\n")
   
-  // TODO move to the backend
   private def generateDiagrams(component : Component) : Unit = {
     diagrams += new Diagram(component.parent)
     component.children.foreach(generateDiagrams)
@@ -40,7 +39,7 @@ case class Model(toplevel : Component) {
   
   private def generateComponent(diagram : Diagram) : Model = {
     // add all the children of the parent to the diagrams
-    diagram.foreachChildren(diagram.addComponents, toplevel)
+    diagram.foreachChildren(diagram.addComponents, topLevel)
     // add the input and output parent connection, except it's top level
     if (diagram.parent != null)
       diagram.addIoComponents(diagram.parent)
