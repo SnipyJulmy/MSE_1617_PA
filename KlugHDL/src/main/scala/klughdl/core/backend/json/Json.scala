@@ -35,21 +35,23 @@ case class Json() extends Backend {
     pretty(render(json))
   }
   
-  override def generate(diagram : Diagram) : String = {
-    val json = generateJson(diagram)
-    pretty(render(json))
+  private def generateJson(model : Model) : JValue = {
+    ("tree" -> generateTree(model)) ~
+      ("model" -> model.diagrams.map("diagram" -> generateJson(_)))
   }
   
   private def generateTree(model : Model) : JValue = {
     def inner(component : Component) : JValue = {
-      component.definitionName -> component.children.map(inner)
+      
+      if (component.children.nonEmpty) {
+        ("text" -> component.definitionName) ~
+          ("nodes" -> component.children.map(inner))
+      }
+      else "text" -> component.definitionName
+      
     }
+    
     inner(model.topLevel)
-  }
-  
-  private def generateJson(model : Model) : JValue = {
-    ("tree" -> generateTree(model)) ~
-    ("model" -> model.diagrams.map("diagram" -> generateJson(_)))
   }
   
   private def generateJson(diagram : Diagram) : JValue = {
@@ -101,5 +103,10 @@ case class Json() extends Backend {
       ("name" -> name) ~
         ("type" -> hdlType) ~
         ("portType" -> "output")
+  }
+  
+  override def generate(diagram : Diagram) : String = {
+    val json = generateJson(diagram)
+    pretty(render(json))
   }
 }

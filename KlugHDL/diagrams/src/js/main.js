@@ -12,33 +12,16 @@ function newConnection(srcPort, targetPort) {
     return c
 }
 
-function parseTreeViewModel(model) {
-
-    var tree = [];
-
-    for(var i = 0; i < model.length; i++){
-        console.log(model[i].diagram.name)
-    }
-
-    return tree;
-}
-
-function parseTreeViewDiagram(diagram) {
-    var tree = [];
-    diagram.components.forEach(function (entry) {
-        //tree.push({"text" : entry.name, "node" : parseTreeViewComponent(entry)});
-        console.log(entry);
-    });
-    return tree;
-}
-
 function generateTreeView(model) {
 
-    var tree = parseTreeViewModel(model);
+    var tree = [
+      model.tree
+    ];
+
+    console.log(tree);
 
     $('#treeview').treeview({
-        data: tree,
-        levels: 2
+        data: tree
     })
 }
 
