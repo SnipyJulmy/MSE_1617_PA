@@ -12,11 +12,38 @@ function newConnection(srcPort, targetPort) {
     return c
 }
 
+function parseTreeViewModel(model) {
+
+    var tree = [];
+
+    for(var i = 0; i < model.length; i++){
+        console.log(model[i].diagram.name)
+    }
+
+    return tree;
+}
+
+function parseTreeViewDiagram(diagram) {
+    var tree = [];
+    diagram.components.forEach(function (entry) {
+        //tree.push({"text" : entry.name, "node" : parseTreeViewComponent(entry)});
+        console.log(entry);
+    });
+    return tree;
+}
+
 function generateTreeView(model) {
+
+    var tree = parseTreeViewModel(model);
+
     $('#treeview').treeview({
         data: tree,
         levels: 2
     })
+}
+
+function generateDiagram(model) {
+
 }
 
 $(document).ready(function () {
@@ -97,4 +124,12 @@ $(document).ready(function () {
 
     var c = newConnection(orGate.getPort("io.c"), output.getPort("io.c"));
     canvas.add(c);
+
+    $.getJSON("../model.json", function (model) {
+
+        generateTreeView(model);
+
+        generateDiagram(model);
+    })
+
 });

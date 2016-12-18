@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8dfe7842-e0b2-4ed6-abed-66dfd37a0af1" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../KlugHDL/diagrams/.gitignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../KlugHDL/diagrams/.idea/diagrams.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../KlugHDL/diagrams/.idea/modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../KlugHDL/diagrams/src/css/index.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../KlugHDL/diagrams/src/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../KlugHDL/diagrams/src/js/main.js" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../KlugHDL/diagrams/lib/bootstrap-treeview/bootstrap-treeview-1.2.0.zip" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../KlugHDL/diagrams/src/main.js" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../../KlugHDL/diagrams/src/ComponentShape.js" afterPath="$PROJECT_DIR$/../../KlugHDL/diagrams/src/js/ComponentShape.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../KlugHDL/diagrams/src/js/main.js" afterPath="$PROJECT_DIR$/../../KlugHDL/diagrams/src/js/main.js" />
     </list>
     <ignored path="Draw2D.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -325,7 +316,7 @@
       <workItem from="1481808889592" duration="2790000" />
       <workItem from="1481890229570" duration="479000" />
       <workItem from="1481986906896" duration="7000" />
-      <workItem from="1481986944556" duration="300000" />
+      <workItem from="1481986944556" duration="758000" />
     </task>
     <task id="LOCAL-00001" summary="Add the draw2d bibtex reference">
       <created>1479909196961</created>
@@ -380,7 +371,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="57065000" />
+    <option name="totallyTimeSpent" value="57523000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -393,7 +384,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1044" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14549288" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
