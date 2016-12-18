@@ -23,6 +23,7 @@ import klughdl.core.backend.Backend
 import klughdl.core.model._
 import net.liftweb.json.JsonDSL._
 import net.liftweb.json._
+import spinal.core.Component
 
 case class Json() extends Backend {
   
@@ -39,8 +40,16 @@ case class Json() extends Backend {
     pretty(render(json))
   }
   
+  private def generateTree(model : Model) : JValue = {
+    def inner(component : Component) : JValue = {
+      component.definitionName -> component.children.map(inner)
+    }
+    inner(model.topLevel)
+  }
+  
   private def generateJson(model : Model) : JValue = {
-    model.diagrams.map("diagram" -> generateJson(_))
+    ("tree" -> generateTree(model)) ~
+    ("model" -> model.diagrams.map("diagram" -> generateJson(_)))
   }
   
   private def generateJson(diagram : Diagram) : JValue = {
