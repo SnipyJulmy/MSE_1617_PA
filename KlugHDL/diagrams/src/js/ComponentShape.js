@@ -38,6 +38,10 @@ ComponentShape = draw2d.shape.layout.VerticalLayout.extend({
         this.classLabel.setText(name);
     },
 
+    getName : function () {
+        return this.classLabel.text;
+    },
+
     getPort: function (name) {
         return this.getPorts().find(function (entry) {
             return entry.name == name
@@ -71,5 +75,4 @@ ComponentShape = draw2d.shape.layout.VerticalLayout.extend({
     doubleClickCallBack: function () {
         console.log("OK")
     }
-
 });
