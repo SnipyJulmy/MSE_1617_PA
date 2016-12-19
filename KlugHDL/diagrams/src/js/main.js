@@ -1,3 +1,13 @@
+var topLevel;
+var diagrams = [];
+var extOutputGlobal;
+var extInputGlobal;
+
+var canvasIdGlobal = "gfx_holder1";
+
+var crtLevel;
+var crtShapes = [];
+
 function createConnection() {
     var con = new draw2d.Connection();
     con.setRouter(new draw2d.layout.connection.InteractiveManhattanConnectionRouter());
@@ -15,104 +25,200 @@ function newConnection(srcPort, targetPort) {
 function generateTreeView(model) {
 
     var tree = [
-      model.tree
+        model.tree
     ];
-
-    console.log(tree);
 
     $('#treeview').treeview({
         data: tree
     })
 }
 
-function generateDiagram(model) {
-
+function getDiagram(name) {
+    return diagrams.filter(function (entry) {
+        return entry.name == name;
+    })[0];
 }
 
-$(document).ready(function () {
+function addConn(canvas, conn) {
+    var from = getFromCrtShapes(conn.from.name);
+    var to = getFromCrtShapes(conn.to.name);
 
-    var g = new dagre.graphlib.Graph({
+    canvas.add(
+        newConnection(
+            from.getPort(conn.from.port),
+            to.getPort(conn.to.port)
+        )
+    );
+}
+
+function getFromCrtShapes(name) {
+    return crtShapes.filter(function (shape) {
+        return shape.classLabel.text == name;
+    })[0];
+}
+
+function displayDiagram(diagram) {
+
+    crtShapes = [];
+
+    var holder = document.getElementById(canvasIdGlobal);
+    holder.innerHTML = "";
+
+    // Layout of the diagram
+    var graph = new dagre.graphlib.Graph({
         rankdir: "RL",
         directed: true
     });
 
-    g.setGraph({});
+    graph.setGraph({});
 
-    g.setDefaultEdgeLabel(function () {
+    graph.setDefaultEdgeLabel(function () {
         return {};
     });
 
-    g.setNode("I", {label: "", width: 100, height: 100});
-    g.setNode("O", {label: "", width: 100, height: 100});
-    g.setNode("a", {label: "", width: 100, height: 100});
-    g.setNode("o", {label: "", width: 100, height: 100});
-    g.setEdge("I", "a");
-    g.setEdge("I", "a");
-    g.setEdge("I", "o");
-    g.setEdge("I", "o");
-    g.setEdge("a", "O");
-    g.setEdge("o", "O");
+    // TODO external IO
 
-    dagre.layout(g);
+    for (var itrCompLayout = 0; itrCompLayout < diagram.components.length; itrCompLayout++) {
+        var c = diagram.components[itrCompLayout];
 
-    var canvas = new draw2d.Canvas("gfx_holder1");
+        // TODO width + height
+        if (c.type == "default") {
+            graph.setNode(c.name, {label: "", width: 100, height: 100});
+        } else {
+            graph.setNode(extInputGlobal, {label: "", width: 100, height: 100});
+            graph.setNode(extOutputGlobal, {label: "", width: 100, height: 100});
+        }
 
-    var andGate = new ComponentShape();
-    var orGate = new ComponentShape();
-    var input = new ComponentShape();
-    var output = new ComponentShape();
+    }
+
+    // brothers connections
+    for (var bItrLayout = 0; bItrLayout < diagram.connections.length; bItrLayout++) {
+        var connLayout = diagram.connections[bItrLayout];
+        graph.setEdge(connLayout.from.name, connLayout.to.name);
+    }
+    // outputs connections
+    for (var oItrLayout = 0; oItrLayout < diagram.outputs.length; oItrLayout++) {
+        var outputLayout = diagram.outputs[oItrLayout];
+        graph.setEdge(outputLayout.from.name, outputLayout.to.name);
+    }
+    // brothers connections
+    for (var iItrLayout = 0; iItrLayout < diagram.inputs.length; iItrLayout++) {
+        var inputLayout = diagram.inputs[iItrLayout];
+        graph.setEdge(inputLayout.from.name, inputLayout.to.name);
+    }
+
+    dagre.layout(graph);
+
+    var canvas = new draw2d.Canvas(canvasIdGlobal);
 
     canvas.installEditPolicy(new draw2d.policy.connection.DragConnectionCreatePolicy({
         createConnection: createConnection
     }));
 
-    andGate.setName("AndGate");
-    orGate.setName("OrGate");
-    input.setName("Input");
-    output.setName("Output");
+    for (var itrComp = 0; itrComp < diagram.components.length; itrComp++) {
+        var comp = diagram.components[itrComp];
 
-    andGate.addPort("io.a", "input");
-    andGate.addPort("io.b", "input");
-    andGate.addPort("io.c", "output");
+        if (comp.type == "default") {
+            var shape = new ComponentShape();
+            shape.setName(comp.name);
 
-    orGate.addPort("io.a", "input");
-    orGate.addPort("io.b", "input");
-    orGate.addPort("io.c", "output");
 
-    input.addPort("io.a", "output");
-    input.addPort("io.b", "output");
+            for (var portItr = 0; portItr < comp.ports.length; portItr++) {
+                var port = comp.ports[portItr];
+                shape.addPort(port.name, port.portType);
+            }
 
-    output.addPort("io.c", "input");
+            shape.setX(graph.node(comp.name).x);
+            shape.setY(graph.node(comp.name).y);
+            canvas.add(shape);
+            crtShapes.push(shape);
 
-    input.setX(g.node("I").x);
-    input.setY(g.node("I").y);
-    output.setX(g.node("O").x);
-    output.setY(g.node("O").y);
-    andGate.setX(g.node("a").x);
-    andGate.setY(g.node("a").y);
-    orGate.setX(g.node("o").x);
-    orGate.setY(g.node("o").y);
+            console.log();
 
-    canvas.add(input);
-    canvas.add(output);
-    canvas.add(andGate);
-    canvas.add(orGate);
+            var diagToDisplay = getDiagram(comp.name);
 
-    canvas.add(newConnection(input.getPort("io.a"), andGate.getPort("io.a")));
-    canvas.add(newConnection(input.getPort("io.b"), andGate.getPort("io.b")));
-    canvas.add(newConnection(input.getPort("io.a"), orGate.getPort("io.a")));
-    canvas.add(newConnection(input.getPort("io.b"), orGate.getPort("io.b")));
+            if (diagToDisplay == null) {
+                shape.doubleClickCallBack = function () {
+                    console.log("No children !")
+                }
+            } else {
+                shape.doubleClickCallBack = function () {
+                    displayDiagram(diagToDisplay);
+                };
+            }
 
-    canvas.add(newConnection(andGate.getPort("io.c"), output.getPort("io.c")));
 
-    var c = newConnection(orGate.getPort("io.c"), output.getPort("io.c"));
-    canvas.add(c);
+        } else {
+            var extI = new ComponentShape();
+            extI.setName(extInputGlobal);
+            var extO = new ComponentShape();
+            extO.setName(extOutputGlobal);
+
+            for (var portItrExt = 0; portItrExt < comp.ports.length; portItrExt++) {
+                var portExt = comp.ports[portItrExt];
+                if (portExt.portType == "input") {
+                    extI.addPort(portExt.name, "output");
+                } else {
+                    extO.addPort(portExt.name, "input");
+                }
+            }
+
+            extI.setX(graph.node(extInputGlobal).x);
+            extI.setY(graph.node(extInputGlobal).y);
+            extO.setX(graph.node(extOutputGlobal).x);
+            extO.setY(graph.node(extOutputGlobal).y);
+            canvas.add(extI);
+            canvas.add(extO);
+            crtShapes.push(extI);
+            crtShapes.push(extO);
+        }
+    }
+
+    // brothers connections
+    for (var bItr = 0; bItr < diagram.connections.length; bItr++) {
+        var conn = diagram.connections[bItr];
+        addConn(canvas, conn);
+    }
+
+    // outputs connections
+    for (var oItr = 0; oItr < diagram.outputs.length; oItr++) {
+        var output = diagram.outputs[oItr];
+        addConn(canvas, output);
+    }
+    // brothers connections
+    for (var iItr = 0; iItr < diagram.inputs.length; iItr++) {
+        var input = diagram.inputs[iItr];
+        addConn(canvas, input);
+    }
+}
+
+function generateDiagram(model) {
+
+    extInputGlobal = model.extInput;
+    extOutputGlobal = model.extOutput;
+
+    diagrams = [];
+
+    for (var i = 0; i < model.model.length; i++) {
+        var diagram = model.model[i].diagram;
+        if (diagram.isTopLevel == "true") {
+            topLevel = diagram;
+        }
+        diagrams.push(diagram);
+        console.log(diagram);
+    }
+
+    displayDiagram(topLevel);
+}
+
+$(document).ready(function () {
 
     $.getJSON("../model.json", function (model) {
 
+        generateDiagram(model);
+
         generateTreeView(model);
 
-        generateDiagram(model);
     })
 
 });
