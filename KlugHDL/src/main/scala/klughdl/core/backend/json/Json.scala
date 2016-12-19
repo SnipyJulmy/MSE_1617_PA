@@ -37,7 +37,9 @@ case class Json() extends Backend {
   
   private def generateJson(model : Model) : JValue = {
     ("tree" -> generateTree(model)) ~
-      ("model" -> model.diagrams.map("diagram" -> generateJson(_)))
+      ("model" -> model.diagrams.map("diagram" -> generateJson(_))) ~
+      ("extInput" -> s"$extInput") ~
+      ("extOutput" -> s"$extOutput")
   }
   
   private def generateTree(model : Model) : JValue = {
@@ -57,6 +59,7 @@ case class Json() extends Backend {
   private def generateJson(diagram : Diagram) : JValue = {
     val parentName = if (diagram.parent == null) "null" else diagram.parent.definitionName
     ("name" -> parentName) ~
+      ("isTopLevel" -> s"${diagram.parent == null}") ~
       ("components" -> diagram.components.map(c => generateJson(c._2))) ~
       ("connections" -> (for {
         entry <- diagram.connections
