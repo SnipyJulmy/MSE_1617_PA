@@ -31,6 +31,8 @@ import scala.sys.process._
 // TODO move to the backend
 object DotConverterTools {
   
+  
+  // TODO exec query don't work and don't know why
   def generatePdfFile(filepath : String, overwrite : Boolean = true, prg : DotProgram = dot) : Unit = {
     val srcFile = new File(filepath)
     if (!srcFile.exists()) {
@@ -44,6 +46,7 @@ object DotConverterTools {
     val outputFile = new File(s"${src.getAbsolutePath}.$prog.$outputType")
     val query = s"$prog -T$outputType ${src.getAbsolutePath} -o ${outputFile.getAbsolutePath}"
     println(query)
+    
     val result = query !!
     
     if (!result.isEmpty) {
