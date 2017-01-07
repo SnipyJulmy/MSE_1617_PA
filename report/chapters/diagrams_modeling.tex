@@ -44,45 +44,16 @@ The diagrams produces by KlugHDL are kind of special, they are hierarchical ones
 
 The hierarchical layout is the simplest way to achieve the visualisation of the hierarchy. The figure \ref{fig:hierarchical-layout-simple} illustrate a simple hierarchical layout with some children and parent.
 
-\begin{figure}
+\begin{figure}[h]
   \centering
   \fbox{
-    \digraph[scale=0.5]{SimpleHierarchicalLayout}{
-        node [shape=record];
-        graph [ranksep="1",
-               nodesep="1"];
-        A1 [label="{{<a> io.a | <b> io.b}|RandomComponent|{<c> io.c|<d> io.d}}"];
-
-        B1 [label="{{<a> io.a | <b> io.b}|AndGate|{<c> io.c}}"];
-        B2 [label="{{<a> io.a | <b> io.b}|AndXorGate|{<c> io.c|<d> io.d}}"];
-        B3 [label="{{<a> io.a | <b> io.b}|OrGate|{<c> io.c}}"];
-
-        C1 [label="{{<a> io.a | <b> io.b}|AndGate|{<c> io.c}}"];
-        C2 [label="{{<a> io.a | <b> io.b}|XorGate|{<c> io.c}}"];
-
-        A1:a -> B1:a;
-        A1:b -> B1:b;
-        A1:a -> B2:a;
-        A1:b -> B2:b;
-        A1:a -> B3:a;
-        A1:b -> B3:b;
-
-        B2:a -> C1:a;
-        B2:a -> C2:a;
-        B2:b -> C1:b;
-        B2:b -> C2:a;
-
-        C1:c -> B2:c;
-        C2:c -> B2:c;
-
-        B2:c -> A1:c;
-        B1:c -> A1:d;
-        B3:c -> A1:d;
-    }
+  \includegraphics[width=0.7\textwidth]{img/HierarchicalLayoutSimple}
   }
   \caption[Simple hierarchical layout for diagram visualization]{The simplest hierarchical visualization}
   \label{fig:hierarchical-layout-simple}
 \end{figure}
+
+The problem by using such a representation is clear, sometimes the ports of a component is an output type port as well as a input type port. This can be seen at the port "io.c" from the \textbf{AndXorGate} component.
 
 \section{A visual example}
 
