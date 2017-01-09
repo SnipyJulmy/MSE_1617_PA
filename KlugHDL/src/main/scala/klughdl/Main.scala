@@ -23,14 +23,16 @@ object Main {
     else if (!vhdlOutputDir.isDirectory)
       System.err.println(s"$vhdlOutputDir is not a directory")
     
-    val report = SpinalConfig(targetDirectory = "vhdl").generateVhdl(new SmallComponent)
+    val report = SpinalConfig(targetDirectory = "vhdl").generateVhdl(new HierarchicComponent)
     
     // Build the model
     
     val model = Model(report.toplevel)
-    
-    Dot("dot").generatePDFDiagram(model)
-    
+
+    Dot(targetDirectory = "dot").generatePDFDiagram(model)
+
+    // Dot("dot").generatePDFDiagram(model)
+
     val json = Json().generate(model)
     
     FileManager("model.json", "diagrams")

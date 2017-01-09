@@ -45,15 +45,17 @@ object DotConverterTools {
   private def execDotProg(src : File, prog : DotProgram = dot, outputType : DotOutputType = DotOutputType.pdf) : Unit = {
     val outputFile = new File(s"${src.getAbsolutePath}.$prog.$outputType")
     val query = s"$prog -T$outputType ${src.getAbsolutePath} -o ${outputFile.getAbsolutePath}"
+
     println(query)
-    
-    val result = query !!
-    
+
+    val result = query.!!
+
     if (!result.isEmpty) {
       System.err.println(result)
     }
   }
-  
+
+  // TODO
   def generateLayoutFile(filepath : String, overwrite : Boolean = true) : Unit = {
     ???
   }

@@ -36,8 +36,7 @@ case class Dot(targetDirectory : String) extends Backend {
   
   override def generate(diagram : Diagram) : String = {
     val head =
-      s"""
-         |digraph g {
+      s"""digraph g {
          |graph [rankdir=LR,ranksep=\"2\",nodesep=\"2\"];
          |node [shape=record];
        """.stripMargin
@@ -132,7 +131,7 @@ case class Dot(targetDirectory : String) extends Backend {
     this
   }
   
-  def generatePDFDiagram(diagram : Diagram) : Dot = {
+  private def generatePDFDiagram(diagram : Diagram) : Dot = {
     val outputFileName = {
       if (diagram.parent == null) s"null.dot"
       else s"${diagram.parent.definitionName}.dot"
