@@ -1,5 +1,43 @@
 \chapter{Parsing the AST}
+\label{chap:parsing-ast}
 
-The abstract syntax tree of SpinalHDL is the core components of all the KlugHDL product. He is used to produce the intermediate representation in the generation pipeline (figure \ref{fig:generation-pipeline}) and once the intermediate representation is built, the rest could be make too.
+The abstract syntax tree of SpinalHDL is the core components of all the KlugHDL
+product. He is used to produce the intermediate representation in the generation
+pipeline (figure \ref{fig:generation-pipeline}) and once the intermediate
+representation is built, the rest is easely makable.
 
-\section{Generation of the components}
+The concept of AST as already been explain in chapter \ref{sub:Abstract Syntax
+  Tree}. Using this, we are going to see the parsing of the SpinalHDL AST in
+order to generate an intermediate model. The parsing and the following
+generation into the intermediate model is separate in multiple
+phases :
+
+\begin{itemize}
+\item Diagram parsing
+\item Components parsing
+\item Ports parsing
+\item Connections parsing
+\end{itemize}
+
+As illustrate in the intermediate model class diagram
+\ref{fig:model-class-diagram}, the intermediate representation is composed like
+the following :
+\begin{itemize}
+\item A model possesses multiple diagrams (at least two : the toplevel and the
+  root component)
+\item A diagrams possesses at least one component with zero or more ports
+\item A diagrams possesses zero or more connections which are 
+\end{itemize}
+
+\section{Diagram parsing}
+\label{sec:diagrams-parsing}
+
+\section{Components parsing}
+\label{sec:components-parsing}
+
+\section{Ports parsing}
+\label{sec:ports-parsing}
+
+\section{Connections parsing}
+\label{sec:connections-parsing}
+
