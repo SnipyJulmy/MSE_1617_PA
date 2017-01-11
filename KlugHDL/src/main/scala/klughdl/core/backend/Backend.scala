@@ -22,8 +22,8 @@ package klughdl.core.backend
 import klughdl.core.model.{Diagram, Model}
 
 trait Backend {
-  
-  def generate(model : Model) : String
-  
-  def generate(diagram : Diagram) : String
+
+  def generate(model: Model): String
+
+  def generate(diagram: Diagram): String
 }

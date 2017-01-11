@@ -1,6 +1,6 @@
 #treeview {
     float: left;
-    width: 30%;
+    width: 200px;
 }
 
 #topbar {
@@ -15,7 +15,7 @@
     text-align: center;
 }
 
-#middlediv{
+#middlediv {
     height: 70%;
 }
 
@@ -26,7 +26,7 @@
 }
 
 #gfx_holder1 {
-    width: 500px;
-    height: 500px;
+    width: 1000px;
+    height: 1000px;
     float: left;
 }

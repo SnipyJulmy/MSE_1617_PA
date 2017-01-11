@@ -21,23 +21,23 @@ package klughdl.core.model
 
 import spinal.core._
 
-case class Model(topLevel : Component) {
-  
-  var diagrams : Set[Diagram] = Set()
-  
+case class Model(topLevel: Component) {
+
+  var diagrams: Set[Diagram] = Set()
+
   generateDiagrams(topLevel)
   diagrams.foreach(generateComponent)
   diagrams.foreach(generatePort)
   diagrams.foreach(generateConnection)
-  
-  override def toString : String = s"Model : " + diagrams.mkString("\n")
-  
-  private def generateDiagrams(component : Component) : Unit = {
+
+  override def toString: String = s"Model : " + diagrams.mkString("\n")
+
+  private def generateDiagrams(component: Component): Unit = {
     diagrams += new Diagram(component.parent)
     component.children.foreach(generateDiagrams)
   }
-  
-  private def generateComponent(diagram : Diagram) : Model = {
+
+  private def generateComponent(diagram: Diagram): Model = {
     // add all the children of the parent to the diagrams
     diagram.foreachChildren(diagram.addComponents, topLevel)
     // add the input and output parent connection, except it's top level
@@ -45,36 +45,40 @@ case class Model(topLevel : Component) {
       diagram.addIoComponents(diagram.parent)
     this
   }
-  
-  private def generatePort(diagram : Diagram) : Unit = {
-    def generatePort(entry : (Component, KlugHDLComponent)) : Unit = {
-      if (entry._1 != null) entry._1.getAllIo.foreach(bt => entry._2.addPort(Port(bt)))
+
+  private def generatePort(diagram: Diagram): Unit = {
+    def generatePort(entry: (Component, KlugHDLComponent)): Unit = {
+      if (entry._1 != null) {
+        entry._1.getAllIo.foreach { bt =>
+          entry._2.addPort(Port(bt))
+        }
+      }
     }
-    
+
     diagram.components.foreach(generatePort)
   }
-  
-  private def generateConnection(diagram : Diagram) : Unit = {
+
+  private def generateConnection(diagram: Diagram): Unit = {
     // Generate the input connection between the brother
-    def parseInputConnection(component : Component) : Unit = {
-      
-      def parseInputs(node : Node) : List[BaseType] = {
-        def inner(node : Node) : List[BaseType] = node match {
-          case bt : BaseType =>
+    def parseInputConnection(component: Component): Unit = {
+
+      def parseInputs(node: Node): List[BaseType] = {
+        def inner(node: Node): List[BaseType] = node match {
+          case bt: BaseType =>
             if (bt.isOutput) List(bt)
-            else List(bt) ::: node.getInputs.map(inner).foldLeft(List() : List[BaseType])(_ ::: _)
+            else List(bt) ::: node.getInputs.map(inner).foldLeft(List(): List[BaseType])(_ ::: _)
           case null => List()
-          case _ => node.getInputs.map(inner).foldLeft(List() : List[BaseType])(_ ::: _)
+          case _ => node.getInputs.map(inner).foldLeft(List(): List[BaseType])(_ ::: _)
         }
-        
+
         inner(node).filter {
           _ match {
-            case bt : BaseType => bt.isOutput
+            case bt: BaseType => bt.isOutput
             case _ => false
           }
         }
       }
-      
+
       for {
         io <- component.getAllIo
         if io.isInput
@@ -83,26 +87,26 @@ case class Model(topLevel : Component) {
         diagram.addConnection(input.component, Port(input), io.component, Port(io))
       }
     }
-    
+
     // Generate the output connection between the brother
-    def parseOutputConnection(component : Component) : Unit = {
-      
-      def parseConsumers(node : Node) : List[BaseType] = {
-        def inner(node : Node) : List[BaseType] = node match {
-          case bt : BaseType => if (bt.isInput) List(bt) else List(bt) ::: node.consumers.map(inner).foldLeft(List() : List[BaseType])(
+    def parseOutputConnection(component: Component): Unit = {
+
+      def parseConsumers(node: Node): List[BaseType] = {
+        def inner(node: Node): List[BaseType] = node match {
+          case bt: BaseType => if (bt.isInput) List(bt) else List(bt) ::: node.consumers.map(inner).foldLeft(List(): List[BaseType])(
             _ ::: _)
           case null => List()
-          case _ => node.consumers.map(inner).foldLeft(List() : List[BaseType])(_ ::: _)
+          case _ => node.consumers.map(inner).foldLeft(List(): List[BaseType])(_ ::: _)
         }
-        
+
         inner(node).filter {
           _ match {
-            case bt : BaseType => bt.isInput
+            case bt: BaseType => bt.isInput
             case _ => false
           }
         }
       }
-      
+
       for {
         io <- component.getAllIo
         if io.isInput
@@ -111,11 +115,11 @@ case class Model(topLevel : Component) {
         diagram.addConnection(io.component, Port(io), consumer.component, Port(consumer))
       }
     }
-    
+
     // Generate the connection with the parent
-    def parseParentConnection(component : Component) : Unit = {
-      
-      def parseInputParentConnection(component : Component) : Unit = {
+    def parseParentConnection(component: Component): Unit = {
+
+      def parseInputParentConnection(component: Component): Unit = {
         if (component.parent != null) {
           val con = for {
             io_p <- component.parent.getAllIo
@@ -125,8 +129,8 @@ case class Model(topLevel : Component) {
           con.foreach(diagram.addConnection)
         }
       }
-      
-      def parseOutputParentConnection(component : Component) : Unit = {
+
+      def parseOutputParentConnection(component: Component): Unit = {
         if (component.parent != null) {
           val con = for {
             io_p <- component.parent.getAllIo
@@ -136,12 +140,12 @@ case class Model(topLevel : Component) {
           con.foreach(diagram.addConnection)
         }
       }
-      
+
       parseInputParentConnection(component)
       parseOutputParentConnection(component)
-      
+
     }
-    
+
     diagram.components.keys.foreach { c =>
       if (c != null) {
         parseInputConnection(c)
@@ -150,11 +154,11 @@ case class Model(topLevel : Component) {
       }
     }
   }
-  
-  private def getInputs(bt : BaseType) : List[BaseType] = {
+
+  private def getInputs(bt: BaseType): List[BaseType] = {
     val comp = bt.component
-    
-    def inner(n : Node, acc : List[Node]) : List[Node] = {
+
+    def inner(n: Node, acc: List[Node]): List[Node] = {
       if (n == null) acc
       else if (n.component != comp) {
         acc
@@ -166,7 +170,7 @@ case class Model(topLevel : Component) {
         inner(n.getInputs.next(), n :: acc)
       }
     }
-    
+
     inner(bt, Nil).map(_.getInputs.next().asInstanceOf[BaseType])
   }
 }

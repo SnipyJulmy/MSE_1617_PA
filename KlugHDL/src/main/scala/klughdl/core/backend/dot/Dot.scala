@@ -25,16 +25,16 @@ import klughdl.core.backend.Backend
 import klughdl.core.model._
 import klughdl.core.utils.{DotConverterTools, FileManager}
 
-case class Dot(targetDirectory : String) extends Backend {
-  
+case class Dot(targetDirectory: String) extends Backend {
+
   private val extInput = "EXTERNAL_INPUT"
   private val extOutput = "EXTERNAL_OUTPUT"
-  
-  override def generate(model : Model) : String = {
+
+  override def generate(model: Model): String = {
     model.diagrams.map(generate).mkString("\n\n\n")
   }
-  
-  override def generate(diagram : Diagram) : String = {
+
+  override def generate(diagram: Diagram): String = {
     val head =
       s"""digraph g {
          |graph [rankdir=LR,ranksep=\"2\",nodesep=\"2\"];
@@ -50,7 +50,7 @@ case class Dot(targetDirectory : String) extends Backend {
      * - the inputs of the parent component which are outputs in the diagram
      * - the outputs of the parent component which are inputs in the diagram
      */
-    
+
     val nodes = diagram.components.map { entry =>
       entry._2 match {
         case KlugHDLComponentBasic(_, _, _) =>
@@ -62,7 +62,7 @@ case class Dot(targetDirectory : String) extends Backend {
              """.stripMargin
       }
     }.mkString("\n")
-    
+
     /*
      *  Generate the connection between the nodes
      *  the connection who only consider the brother nodes
@@ -80,12 +80,12 @@ case class Dot(targetDirectory : String) extends Backend {
       .toList
       .distinct
       .mkString("\n")
-    
+
     /*
      * Generate the connection from the
      * inputs/outputs of the external world
      */
-    
+
     // inputs
     val inputs =
       (for {
@@ -98,7 +98,7 @@ case class Dot(targetDirectory : String) extends Backend {
         .toList
         .distinct
         .mkString("\n")
-    
+
     // outputs
     val outputs = (for {
       entry <- diagram.connections
@@ -110,35 +110,35 @@ case class Dot(targetDirectory : String) extends Backend {
       .toList
       .distinct
       .mkString("\n")
-    
+
     head + nodes + connections + inputs + outputs + last
   }
-  
-  def inputDotPort(ports : Set[Port]) : String = {
+
+  def inputDotPort(ports: Set[Port]): String = {
     ports.filter(_.isInput).map(p => s"<${p.dotName}>${p.dotName}").mkString(" | ")
   }
-  
-  def outputDotPort(ports : Set[Port]) : String = {
+
+  def outputDotPort(ports: Set[Port]): String = {
     ports.filter(_.isOutput).map(p => s"<${p.dotName}>${p.dotName}").mkString(" | ")
   }
-  
-  def generatePDFDiagram(model : Model) : Dot = {
-    
+
+  def generatePDFDiagram(model: Model): Dot = {
+
     // Generate a diagram for each parent in the graph
     model.diagrams.foreach {
       generatePDFDiagram
     }
     this
   }
-  
-  private def generatePDFDiagram(diagram : Diagram) : Dot = {
+
+  private def generatePDFDiagram(diagram: Diagram): Dot = {
     val outputFileName = {
       if (diagram.parent == null) s"null.dot"
       else s"${diagram.parent.definitionName}.dot"
     }
-    
+
     val outputFile = new File(s"$targetDirectory/$outputFileName")
-    val fileManager : FileManager = FileManager(outputFileName, targetDirectory)
+    val fileManager: FileManager = FileManager(outputFileName, targetDirectory)
     DotConverterTools.generatePdfFile(outputFile.getAbsolutePath)
     fileManager.println(generate(diagram))
     fileManager.close()

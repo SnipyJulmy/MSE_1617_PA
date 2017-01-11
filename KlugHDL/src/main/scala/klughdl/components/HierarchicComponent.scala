@@ -7,88 +7,88 @@ import spinal.core._
   */
 
 class HierarchicComponent extends Component {
-  
+
   val andGate = new AndGate
   val xorGate = new XorGate
   val andXorGate1 = new AndXorGate
   val orGate = new OrGate
   val andXorGate2 = new AndXorGate
-  
+
   val io = new Bundle {
-    val a : Bool = in Bool
-    val b : Bool = in Bool
-    val c : Bool = in Bool
-    val d : Bool = out Bool
-    val e : Bool = out Bool
+    val a: Bool = in Bool
+    val b: Bool = in Bool
+    val c: Bool = in Bool
+    val d: Bool = out Bool
+    val e: Bool = out Bool
   }
-  
+
   andGate.io.a := io.a
   andGate.io.b := io.b
   orGate.io.a := io.a
   orGate.io.b := io.c
   xorGate.io.a := io.b
   xorGate.io.b := io.c
-  
+
   andXorGate1.io.a := io.a
   andXorGate1.io.b := io.b
-  
+
   andXorGate2.io.a := io.a
   andXorGate2.io.b := io.b
-  
+
   io.d := andGate.io.c & xorGate.io.c & orGate.io.c
   io.e := andXorGate1.io.c | andXorGate1.io.d | andXorGate2.io.c | andXorGate2.io.d
 }
 
 class AndGate extends Component {
-  
+
   val io = new Bundle {
-    val a : Bool = in Bool
-    val b : Bool = in Bool
-    val c : Bool = out Bool
+    val a: Bool = in Bool
+    val b: Bool = in Bool
+    val c: Bool = out Bool
   }
-  
+
   io.c := io.a & io.b
 }
 
 class OrGate extends Component {
-  
+
   val io = new Bundle {
-    val a : Bool = in Bool
-    val b : Bool = in Bool
-    val c : Bool = out Bool
+    val a: Bool = in Bool
+    val b: Bool = in Bool
+    val c: Bool = out Bool
   }
-  
+
   io.c := io.a & io.b
 }
 
 class XorGate extends Component {
-  
+
   val io = new Bundle {
-    val a : Bool = in Bool
-    val b : Bool = in Bool
-    val c : Bool = out Bool
+    val a: Bool = in Bool
+    val b: Bool = in Bool
+    val c: Bool = out Bool
   }
-  
+
   io.c := io.a & io.b
 }
 
 class AndXorGate extends Component {
-  
+
   val xorGate = new XorGate
   val andGate = new AndGate
-  
+
   val io = new Bundle {
-    val a : Bool = in Bool
-    val b : Bool = in Bool
-    val c : Bool = out Bool
-    val d : Bool = out Bool
+    val a: Bool = in Bool
+    val b: Bool = in Bool
+    val c: Bool = out Bool
+    val d: Bool = out Bool
   }
-  
+
   xorGate.io.a := io.a
   xorGate.io.b := io.b
   andGate.io.a := io.a
   andGate.io.b := io.b
-  
+
   io.c := xorGate.io.c
   io.d := andGate.io.c
 }

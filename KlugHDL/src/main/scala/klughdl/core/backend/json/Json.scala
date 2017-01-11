@@ -26,37 +26,37 @@ import net.liftweb.json._
 import spinal.core.Component
 
 case class Json() extends Backend {
-  
+
   private val extInput = "EXTERNAL_INPUT"
   private val extOutput = "EXTERNAL_OUTPUT"
-  
-  override def generate(model : Model) : String = {
+
+  override def generate(model: Model): String = {
     val json = generateJson(model)
     pretty(render(json))
   }
-  
-  private def generateJson(model : Model) : JValue = {
+
+  private def generateJson(model: Model): JValue = {
     ("tree" -> generateTree(model)) ~
       ("model" -> model.diagrams.map("diagram" -> generateJson(_))) ~
       ("extInput" -> s"$extInput") ~
       ("extOutput" -> s"$extOutput")
   }
-  
-  private def generateTree(model : Model) : JValue = {
-    def inner(component : Component) : JValue = {
-      
+
+  private def generateTree(model: Model): JValue = {
+    def inner(component: Component): JValue = {
+
       if (component.children.nonEmpty) {
         ("text" -> component.definitionName) ~
           ("nodes" -> component.children.map(inner))
       }
       else "text" -> component.definitionName
-      
+
     }
-    
+
     inner(model.topLevel)
   }
-  
-  private def generateJson(diagram : Diagram) : JValue = {
+
+  private def generateJson(diagram: Diagram): JValue = {
     val parentName = if (diagram.parent == null) "null" else diagram.parent.definitionName
     ("name" -> parentName) ~
       ("isTopLevel" -> s"${diagram.parent == null}") ~
@@ -85,8 +85,8 @@ case class Json() extends Backend {
       } yield ("from" -> ("name" -> s"${entry._1._1.name}") ~ ("port" -> s"${entry._1._2.name}")) ~
         ("to" -> ("name" -> s"$extOutput") ~ ("port" -> s"${value._2.name}"))))
   }
-  
-  private def generateJson(klugHDLComponent : KlugHDLComponent) : JValue = klugHDLComponent match {
+
+  private def generateJson(klugHDLComponent: KlugHDLComponent): JValue = klugHDLComponent match {
     case KlugHDLComponentBasic(name, _, _) =>
       ("name" -> name) ~
         ("type" -> "default") ~
@@ -96,8 +96,8 @@ case class Json() extends Backend {
         ("type" -> "io") ~
         ("ports" -> klugHDLComponent.ports.map(generateJson))
   }
-  
-  private def generateJson(port : Port) : JValue = port match {
+
+  private def generateJson(port: Port): JValue = port match {
     case InputPort(name, hdlType) =>
       ("name" -> name) ~
         ("type" -> hdlType) ~
@@ -107,8 +107,8 @@ case class Json() extends Backend {
         ("type" -> hdlType) ~
         ("portType" -> "output")
   }
-  
-  override def generate(diagram : Diagram) : String = {
+
+  override def generate(diagram: Diagram): String = {
     val json = generateJson(diagram)
     pretty(render(json))
   }

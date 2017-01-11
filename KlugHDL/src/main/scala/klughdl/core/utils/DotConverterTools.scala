@@ -23,17 +23,16 @@ import java.io.File
 
 import klughdl.core.backend.dot.DotOutputType
 import klughdl.core.backend.dot.DotOutputType.DotOutputType
-import klughdl.core.backend.dot.DotProgram.DotProgram
-import klughdl.core.backend.dot.DotProgram._
+import klughdl.core.backend.dot.DotProgram.{DotProgram, _}
 
 import scala.sys.process._
 
 // TODO move to the backend
 object DotConverterTools {
-  
-  
+
+
   // TODO exec query don't work and don't know why
-  def generatePdfFile(filepath : String, overwrite : Boolean = true, prg : DotProgram = dot) : Unit = {
+  def generatePdfFile(filepath: String, overwrite: Boolean = true, prg: DotProgram = dot): Unit = {
     val srcFile = new File(filepath)
     if (!srcFile.exists()) {
       System.err.println(s"file $filepath does not exist")
@@ -41,8 +40,8 @@ object DotConverterTools {
       execDotProg(srcFile, prg)
     }
   }
-  
-  private def execDotProg(src : File, prog : DotProgram = dot, outputType : DotOutputType = DotOutputType.pdf) : Unit = {
+
+  private def execDotProg(src: File, prog: DotProgram = dot, outputType: DotOutputType = DotOutputType.pdf): Unit = {
     val outputFile = new File(s"${src.getAbsolutePath}.$prog.$outputType")
     val query = s"$prog -T$outputType ${src.getAbsolutePath} -o ${outputFile.getAbsolutePath}"
 
@@ -56,7 +55,7 @@ object DotConverterTools {
   }
 
   // TODO
-  def generateLayoutFile(filepath : String, overwrite : Boolean = true) : Unit = {
+  def generateLayoutFile(filepath: String, overwrite: Boolean = true): Unit = {
     ???
   }
 }

@@ -14,19 +14,19 @@ import spinal.core._
   * Created by snipy on 10.11.16.
   */
 object Main {
-  
-  def main(args : Array[String]) {
-    
-    val vhdlOutputDir : File = new File("vhdl")
+
+  def main(args: Array[String]) {
+
+    val vhdlOutputDir: File = new File("vhdl")
     if (!vhdlOutputDir.exists())
       vhdlOutputDir.mkdir()
     else if (!vhdlOutputDir.isDirectory)
       System.err.println(s"$vhdlOutputDir is not a directory")
-    
+
     val report = SpinalConfig(targetDirectory = "vhdl").generateVhdl(new HierarchicComponent)
-    
+
     // Build the model
-    
+
     val model = Model(report.toplevel)
 
     Dot(targetDirectory = "dot").generatePDFDiagram(model)
@@ -34,7 +34,7 @@ object Main {
     // Dot("dot").generatePDFDiagram(model)
 
     val json = Json().generate(model)
-    
+
     FileManager("model.json", "diagrams")
       .println(json)
       .close()

@@ -38,7 +38,7 @@ ComponentShape = draw2d.shape.layout.VerticalLayout.extend({
         this.classLabel.setText(name);
     },
 
-    getName : function () {
+    getName: function () {
         return this.classLabel.text;
     },
 
