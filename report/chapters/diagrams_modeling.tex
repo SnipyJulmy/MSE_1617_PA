@@ -21,15 +21,21 @@ in figure \ref{fig:generation-pipeline}.
             I -> dot;
         }
     }
-    \caption[KlugHDL generation pipeline]{This figure show the entire generation pipeline use by KlugHDL in order to generate different output. The intermediate model is use to produce the target code, for example dot or JSON file}
+    \caption[KlugHDL generation pipeline]{This figure show the entire generation
+      pipeline use by KlugHDL in order to generate different output. The
+      intermediate model is use to produce the target code, for example dot or
+      JSON file}
     \label{fig:generation-pipeline}
 \end{figure} % }}}
 
-We also need to introduce an crucial element to understand how the model is build : the hierarchy visualization.
+We also need to introduce an crucial element to understand how the model is
+build : the hierarchy visualization.
 
 \section{Hierarchy visualization}
 
-The diagrams produces by KlugHDL are kind of special, they are hierarchical ones. That's means we need to find a way to show the hierarchy between the components of a SpinalHDL program. There is multiple way to do this :
+The diagrams produces by KlugHDL are kind of special, they are hierarchical
+ones. That's means we need to find a way to show the hierarchy between the
+components of a SpinalHDL program. There is multiple way to do this :
 \begin{itemize}
   \item Showing the elements using a hierarchical layout, like in family tree
   \item Showing the elements using a tree view, like in file explorer
@@ -39,7 +45,9 @@ The diagrams produces by KlugHDL are kind of special, they are hierarchical ones
 \subsection{Hierarchical layout}
 \label{sec:hierarchical-layout}
 
-The hierarchical layout is the simplest way to achieve the visualization of the hierarchy. The figure \ref{fig:hierarchical-layout-simple} illustrate a simple hierarchical layout with some children and parent.
+The hierarchical layout is the simplest way to achieve the visualization of the
+hierarchy. The figure \ref{fig:hierarchical-layout-simple} illustrate a simple
+hierarchical layout with some children and parent.
 
 \begin{figure}[H]
   \centering
@@ -120,8 +128,10 @@ The diagram we want to produce, as explain in \ref{sec:graph-layout}, ownes the 
 \end{itemize}
 
 \section{Model representation}
+\label{sec:model-representation} 
 
-The model representation is builded using the oriented-object paradigm, the figure \ref{fig:model-class-diagram} show the class diagram of the models.
+The model representation is builded using the oriented-object paradigm, the
+figure \ref{fig:model-class-diagram} show the class diagram of the models.
 
 \begin{figure}[H]
   \centering
@@ -134,4 +144,8 @@ The model representation is builded using the oriented-object paradigm, the figu
 
 \section{Conclusion}
 
-The major advantages of such an intermediate representation is the capability to evolve the program in order to produce additionnal output. For now there is just a \textbf{dot} and \textbf{JSON} backend. It's also provide a way to check the correctness of the diagram after the parsing on the AST : connections with non-existing port for example.
+The major advantages of such an intermediate representation is the capability to
+evolve the program in order to produce additionnal output. For now there is just
+a \textbf{dot} and \textbf{JSON} backend. It's also provide a way to check the
+correctness of the diagram after the parsing on the AST : connections with
+non-existing port for example.

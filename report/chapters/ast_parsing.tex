@@ -29,15 +29,372 @@ the following :
 \item A diagrams possesses zero or more connections which are 
 \end{itemize}
 
+A model could be represented, using scala, with the class declaration in listing
+\ref{lst:model-scala}. A model is a set of diagrams which are related to a
+toplevel component.
+
+\begin{listing}[H]
+  \centering
+  \begin{scalacode}
+    case class Model(topLevel : Component) {
+
+      var diagrams : Set[Diagram] = Set()
+  }
+\end{scalacode}
+\caption[Model class declaration]{Declaration of the model with scala, a model
+  is basically a set of diagrams and is attached to a topLevel component, which
+  is the only component of the AST which as no parent}
+\label{lst:model-scala}
+\end{listing}
+
 \section{Diagram parsing}
 \label{sec:diagrams-parsing}
+
+Generating a diagram (see listing \ref{lst:diagram-scala}) is trivial because we
+just have to retrieve all the components which are parents, the algorithm is
+implemented in listing \ref{lst:generate-diagram}. 
+\begin{listing}[H]
+  \centering
+  \begin{scalacode}
+    class Diagram(val parent : Component) {
+
+      var components : Map[Component, KlugHDLComponent] = Map()
+      var connections : mutable.MultiMap[
+          (KlugHDLComponent,Port),
+          (KlugHDLComponent, Port)
+        ]
+      }
+  \end{scalacode}
+  \caption[Diagram class declaration]{Declaration of a the diagram class with
+    scala, a diagram is a set of components (here as a Map) and a set of
+    connections (here as a multimap for the orientation)}
+  \label{lst:diagram-scala}
+\end{listing}
+
+\begin{listing}[H]
+  \centering
+  \begin{scalacode}
+  def generateDiagrams(component : Component) : Unit = {
+    diagrams += new Diagram(component.parent)
+    component.children.foreach(generateDiagrams)
+  }
+  \end{scalacode}
+  \caption[Parsing the diagrams form the AST]{This function parse the AST and
+    generate all the corresponding diagrams object for a specific component}
+  \label{lst:generate-diagram}
+\end{listing}
+
+Because we are using a set,
+we don't have to check if the digrams already exist. To make this possible we
+have to redifine the \verb|equals| function like in listing \ref{lst:diagram-equals-scala}.
+
+\begin{listing}[H]
+  \centering
+  \begin{scalacode}
+  override def equals(o : scala.Any) : Boolean = o match {
+    case d : Diagram => this.parent == d.parent
+    case _ => super.equals(o)
+  }
+  \end{scalacode}
+  \caption[Equals function implementation for the Diagram Class]{We have to
+    override the equals function in order to use the diagrams in a set as expected}
+  \label{lst:diagram-equals-scala}
+\end{listing}
 
 \section{Components parsing}
 \label{sec:components-parsing}
 
+The parsing and generation of the components is made for each diagrams one by
+one. Here, the algorithm is quite simple too. The algorithm is implemented in
+the listing \ref{lst:component-parse-scala} and the KlugHDLComponent is declared
+in listing \ref{lst:component-scala}.
+
+\begin{listing}[H]
+  \centering
+  \begin{scalacode}
+  sealed trait KlugHDLComponent {
+
+    val name : String
+    val parent : Component
+    val component : Component = this match {
+      case KlugHDLComponentBasic(_, c, _) => c
+      case KlugHDLComponentIO(_, _) => null
+    }
+  }
+
+  final case class KlugHDLComponentBasic(name : String, override val component : Component, parent : Component) extends KlugHDLComponent
+
+  final case class KlugHDLComponentIO(name : String, parent : Component) extends KlugHDLComponent
+  \end{scalacode}
+  \caption[Diagram class declaration]{Declaration of the Components class (here
+    names KlugHDLComponents). There is two type of components : the basic ones
+    and the ones who represent the external world input and output like in
+    figure \ref{fig:and-xor-gate}}
+  \label{lst:component-scala}
+\end{listing}
+
+\begin{listing}[H]
+  \centering
+  \begin{scalacode}
+  private def generateComponent(diagram : Diagram) : Model = {
+    diagram.foreachChildren(diagram.addComponents, topLevel)
+    if (diagram.parent != null)
+      diagram.addIoComponents(diagram.parent)
+    this
+  }
+
+  def addComponents(component : Component) : Unit = {
+    components += (component -> KlugHDLComponentBasic(component.definitionName, component, component.parent))
+  }
+  
+  def addIoComponents(component : Component) : Unit = {
+    if (component == null)
+      components += (component -> KlugHDLComponentIO("NULL", component))
+    else
+      components += (component -> KlugHDLComponentIO(component.definitionName, component))
+  }
+  \end{scalacode}
+  \caption[Implementation of the components parsing]{Components parsing and
+    generation in scala for one diagram}
+  \label{lst:component-parse-scala}
+\end{listing}
+
+Note that we generate the interface for the external world connections in the
+model. This two KlugHDLComponentIO aren't present in the SpinalHDL AST.
+
 \section{Ports parsing}
 \label{sec:ports-parsing}
 
+The ports generation is, again, easy to make. In the SpinalHDL model, the
+Components class already ownes a \verb|getAllIo| function which return all the
+inputs and outputs node for a components. So we just need to create a ports
+object (listing \ref{lst:port-scala}) from these and add it to the correct
+KlugHDLComponents. The algorithm is implement in the listing
+\ref{lst:port-parsing-scala}.
+
+\begin{listing}[H]
+  \centering
+  \begin{scalacode}
+  sealed trait Port {
+
+    val name : String
+    val hdlType : String
+  }
+
+  final case class InputPort(name : String, hdlType : String) extends Port
+
+  final case class OutputPort(name : String, hdlType : String) extends Port
+  \end{scalacode}
+  \caption[Diagram class declaration]{Declaration if the Port class with scala,
+    there is two types of ports : input and output}
+  \label{lst:port-scala}
+\end{listing}
+
+\begin{listing}[H]
+  \centering
+  \begin{scalacode}
+  def generatePort(diagram: Diagram): Unit = {
+    def generatePort(entry: (Component, KlugHDLComponent)): Unit = {
+      if (entry._1 != null) {
+        entry._1.getAllIo.foreach { bt =>
+          entry._2.addPort(Port(bt))
+        }
+      }
+    }
+
+    diagram.components.foreach(generatePort)
+  }
+  \end{scalacode}
+  \caption[Implementation of the ports parsing]{Ports parsing and generation in
+    scala for one diagrams, the ports are generating component by component}
+  \label{lst:port-parsing-scala}
+\end{listing}
+
 \section{Connections parsing}
 \label{sec:connections-parsing}
+
+The connections parsing is the hardest implementation to do. The reason is we
+have multiple type of connections :
+\begin{itemize}
+\item input connections
+\item output connections
+\item input connections from parent
+\item output connections from parent
+\end{itemize}
+
+In addition, to find the staring point of a connection, we have to parse
+recursively all the nodes of the AST until we found a \verb|Basetype| object
+which is the type for the inputs and outputs nodes of a SpinalHDL component.
+
+\subsection{Input connections}
+\label{sec:input-connections}
+
+The input connections represent all the connections generated romom the inputs of a
+nodes. Firstable, we have to retrieve all the inputs for a specific AST nodes
+then we need to generate a connections between two ports on two nodes. The
+implementation could be seen in listing \ref{lst:parse-input-connection-scala}.
+
+\begin{listing}[H]
+  \centering
+  \begin{scalacode}
+  def parseInputConnection(component: Component): Unit = {
+      
+    def parseInputs(node: Node): List[BaseType] = {
+      
+      // iterate over all the inputs on each nodes of the AST until founding an
+      // output basetype
+      def inner(node: Node): List[BaseType] = node match {
+        case bt: BaseType =>
+          if (bt.isOutput) List(bt)
+          else List(bt) ::: node.getInputs.map(inner).foldLeft(List(): List[BaseType])(_ ::: _)
+        case null => List()
+        case _ => node.getInputs.map(inner).foldLeft(List(): List[BaseType])(_ ::: _)
+      }
+
+      inner(node).filter {
+        _ match {
+          case bt: BaseType => bt.isOutput
+          case _ => false
+        }
+      }
+    }
+
+    for {
+      io <- component.getAllIo
+      if io.isInput
+      input <- parseInputs(io)
+    } {
+      diagram.addConnection(input.component, Port(input), io.component, Port(io))
+    }
+  }
+  \end{scalacode}
+  \caption[Parsing and generation of the inputs connections]{Implementation in
+    scala of the parsing and generation for all the inputs connections for a
+    specific component}
+  \label{lst:parse-input-connection-scala}
+\end{listing}
+
+\subsection{Output connections}
+\label{sec:output-connections}
+
+The output connections represent all the connections generated from the outputs
+of a node. The problem is the same as for the input connections but in the other
+way : we need to parse the consumer for a specific node like in listing.
+
+\begin{listing}[H]
+  \centering
+  \begin{scalacode}
+  def parseOutputConnection(component: Component): Unit = {
+      
+    def parseConsumers(node: Node): List[BaseType] = {
+      
+      // iterate over all the inputs on each nodes of the AST until founding an
+      // input basetype
+      def inner(node: Node): List[BaseType] = node match {
+        case bt: BaseType =>
+          if (bt.isInput) List(bt)
+          else List(bt) ::: node.consumers.map(inner).foldLeft(List(): List[BaseType])(_ ::: _)
+        case null => List()
+        case _ => node.consumers.map(inner).foldLeft(List(): List[BaseType])(_ ::: _)
+      }
+
+      inner(node).filter {
+        _ match {
+          case bt: BaseType => bt.isInput
+          case _ => false
+        }
+      }
+    }
+
+    for {
+      io <- component.getAllIo
+      if io.isInput
+      consumer <- parseConsumers(io)
+    } {
+      diagram.addConnection(io.component, Port(io), consumer.component, Port(consumer))
+    }
+  }
+  \end{scalacode}
+  \caption[Parsing and generation of the outputs connections]{Implementation in
+    scalaof the parsing and generation for all the inputs connections for a
+    specific component}
+  \label{lst:parse-output-connection-scala}
+\end{listing}
+
+\subsection{Parent connections}
+\label{sec:parent-connections}
+
+Finally we could parse and generate the connections with the parent. This part
+is slightly easier than the two previous one. Because we just have to generate
+the inputs and consumers and subtract them like in a set. The algorithm is
+describe in listing \ref{lst:parse-parent-connection}.
+
+\begin{listing}[H]
+  \centering
+  \begin{scalacode}
+  def parseParentConnection(component: Component): Unit = {
+
+    def parseInputParentConnection(component: Component): Unit = {
+      if (component.parent != null) {
+        val con = for {
+          io_p <- component.parent.getAllIo
+          io <- component.getAllIo
+          if io.getInputs.contains(io_p)
+        } yield (io_p.component, Port(io_p), io.component, Port(io))
+        con.foreach(diagram.addConnection)
+      }
+    }
+
+    def parseOutputParentConnection(component: Component): Unit = {
+      if (component.parent != null) {
+        val con = for {
+          io_p <- component.parent.getAllIo
+          io <- getInputs(io_p)
+          if io != null
+        } yield (io.component, Port(io), io_p.component, Port(io_p))
+        con.foreach(diagram.addConnection)
+      }
+    }
+
+    def getInputs(bt: BaseType): List[BaseType] = {
+      val comp = bt.component
+
+      def inner(n: Node, acc: List[Node]): List[Node] = {
+        if (n == null) acc
+        else if (n.component != comp) {
+          acc
+        }
+        else if (n.getInputsCount > 1) {
+          n.getInputs.flatMap(n => inner(n, Nil)).toList
+        }
+        else {
+          inner(n.getInputs.next(), n :: acc)
+        }
+      }
+
+      inner(bt, Nil).map(_.getInputs.next().asInstanceOf[BaseType])
+  }
+
+    parseInputParentConnection(component)
+    parseOutputParentConnection(component)
+  }
+  \end{scalacode}
+  \caption[Parsing and generation of the connections with the
+  parent]{Implementation in scala of the parsing and generation of all the
+    connections (inpus and outputs ones) with the parent}
+  \label{lst:parse-parent-connection}
+\end{listing}
+
+\section{Conclusion}
+\label{sec:ast-parsing-conclusion}
+
+The parsing of the AST is the hardest part to understand, there is a lot to know
+about SpinalHDL itself and large amount of special case to understand. By the
+way, it's the most important part too, with the generation of the
+intermediate model we can do anything.
+
+
+
+
+
 
