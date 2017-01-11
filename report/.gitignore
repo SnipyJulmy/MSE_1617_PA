@@ -48,3 +48,7 @@ AstExample.pdf
 GraphBaseModel.pdf
 MultiGraphNoPort.pdf
 auto/
+GenerationPipeline.pdf
+chapters/ast_parsing.fls
+chapters/viewing-library.rip
+report.tr
