@@ -1,14 +1,19 @@
-\chapter{Analysis} %{{{
+\chapter{Analysis}
 \label{cha:Analysis}
 
-In this chapter, we would discuss about the "What do we want ?" questions. It means what need the final product based on the Goal of the project. The other part is about the actual state of SpinalHDL. We are not presenting all of the implementation or conception, just a small part which is usefull for this project. FInally, we introduce the concept of Component and AST (Abstract Syntax Tree).
+In this chapter, we would discuss about the "What do we want ?" questions. It
+means what need the final product based on the Goal of the project. The other
+part is about the actual state of SpinalHDL. We are not presenting all of the
+implementation or conception, just a small part which is usefull for this
+project. FInally, we introduce the concept of Component and AST (Abstract Syntax
+Tree).
 
-\section{What do we want ?} %{{{
+\section{What do we want ?}
 \label{sec:What do we want ?}
 
 Based on the goal of the project at section \ref{sec:Goal}, we expose what the end user of SpinalHDL want to do with KlugHDL. The figure \ref{fig:use_case_klughdl} show the use case of KlugHDL.
 
-\begin{figure}[h] %{{{
+\begin{figure}[H]
     \centering
 
     \begin{tikzpicture}
@@ -43,37 +48,52 @@ Based on the goal of the project at section \ref{sec:Goal}, we expose what the e
 
     \caption{Use case of KlugHDL}
     \label{fig:use_case_klughdl}
-\end{figure} % }}}
+\end{figure}
 
-An important point is the idea of port. If we want to design a HDL diagram, we have to display the types of the connection between the component. We have at least two alternative :
+An important point is the idea of port. If we want to design a HDL diagram, we
+have to display the types of the connection between the component. We have at
+least two alternative :
 \begin{itemize}
  \item display the types using the edges
  \item display the types using some ports attached to the component
 \end{itemize}
 
-We need to figure out which alternative is the best in order to display the type of a connection.
+We need to figure out which alternative is the best in order to display the type
+of a connection.
 
-%}}} section What do we want ?
-
-\section{SpinalHDL} %{{{
+\section{SpinalHDL}
 \label{sec:SpinalHDL}
 
-As explain in chapter \ref{cha:Introduction}, SpinalHDL is a DSL for VHDL programmation. SpinalHDL run with various internal construction such as an AST or a Component Tree. Those are the majors element needed for the diagram generation.
+As explain in chapter \ref{cha:Introduction}, SpinalHDL is a DSL for VHDL
+programmation. SpinalHDL run with various internal construction such as an AST
+or a Component Tree. Those are the majors element needed for the diagram
+generation.
 
-\subsection{Component} % {{{
+\subsection{Component}
 \label{sub:Component}
 
-A SpinalHDL's component is the base class of every SpinalHDL Program, like in the listing \ref{lst:spinalhdl_example_and_gate}. Like in Verilog and VHDL, you can define components that could be used to build a design hierarchy. But unlike them, you don’t need to bind them at instantiation \cite{github-spinalhdl}. That's why there is just one component against the architecture and entity combination in VHDL.
+A SpinalHDL's component is the base class of every SpinalHDL Program, like in
+the listing \ref{lst:spinalhdl_example_and_gate}. Like in Verilog and VHDL, you
+can define components that could be used to build a design hierarchy. But unlike
+them, you don’t need to bind them at instantiation \cite{github-spinalhdl}.
+That's why there is just one component against the architecture and entity
+combination in VHDL.
 
-The component is the main part of the SpinalHDL architecture for this project because all the component are linked together with :
+The component is the main part of the SpinalHDL architecture for this project
+because all the component are linked together with :
 \begin{itemize}
     \item a parent-children relationship
     \item a brother relationship
 \end{itemize}
 
-A component could contains and communicate with an other component, that's the parent-children relationship, and a component could communicate with the component contained by his parent, that's the brother relationship. This two relation could be seen in listing \ref{lst:HierarchicComponent-solo}. The component is communication with their children which are communicationg between them.
+A component could contains and communicate with an other component, that's the
+parent-children relationship, and a component could communicate with the
+component contained by his parent, that's the brother relationship. This two
+relation could be seen in listing \ref{lst:HierarchicComponent-solo}. The
+component is communication with their children which are communicationg between
+them.
 
-\begin{listing} % {{{
+\begin{listing}
     \centering
     \begin{scalacode}
     class ParentChildrenBrother extends Component
@@ -111,20 +131,23 @@ A component could contains and communicate with an other component, that's the p
         io.e := andXorGate1.io.c | andXorGate1.io.d | andXorGate2.io.c | andXorGate2.io.d
     }
     \end{scalacode}
-    \caption{caption}
+    \caption[Type of connection in SpinalHDL]{There is two different type of
+      connections with SpinalHDL, a brother to brother ones and a
+      parent-children ones}
     \label{lst:HierarchicComponent-solo}
-\end{listing} %}}}
+\end{listing}
 
-A component could have other element inside him too, like Area or Function. But they are not relevant for the diagram generation.
+A component could have other element inside him too, like Area or Function. But
+they are not relevant for the diagram generation.
 
-%}}} subsection Component
-
-\subsection{Abstract Syntax Tree} % {{{
+\subsection{Abstract Syntax Tree}
 \label{sub:Abstract Syntax Tree}
 
-An abstract syntax tree is a tree where the node are marked by operator and the leaf are marked by the operand of those operator. For example, the expression $5 * 2 + 3$ has his equivalent AST showed in the figure \ref{fig:ast-example}.
+An abstract syntax tree is a tree where the node are marked by operator and the
+leaf are marked by the operand of those operator. For example, the expression $5
+* 2 + 3$ has his equivalent AST showed in the figure \ref{fig:ast-example}.
 
-\begin{figure}[h] %{{{ ast-example
+\begin{figure}[H]
     \centering
     \fbox{
         \digraph[scale=0.5]{AstExample}{
@@ -137,14 +160,11 @@ An abstract syntax tree is a tree where the node are marked by operator and the 
             plus -> mul;
         }
     }
-    \caption{AST of the expression $5 * 2 + 3$}
+    \caption[Example of an AST]{AST of the expression $5 * 2 + 3$}
     \label{fig:ast-example}
 \end{figure} % }}}
 
-The AST is important because he is using to recover all the input and the output of a component, including the source of each input's component. To do that, we just need to recursively walk inside the AST of a SpinalHDL program.
-
-%}}} subsection Abstract Syntax Tree
-
-%}}} section SpinalHDL
-
-%}}} chapter Analysis 
+The AST is important because he is using to recover all the input and the output
+of a component, including the source of each input's component. To do that, we
+just need to recursively walk inside the AST of a SpinalHDL program like explain
+in the chapter \ref{chap:parsing-ast}.

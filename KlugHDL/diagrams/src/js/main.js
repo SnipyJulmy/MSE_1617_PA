@@ -3,10 +3,16 @@ var diagrams = [];
 var extOutputGlobal;
 var extInputGlobal;
 
+itrG = 0;
+
 var canvasIdGlobal = "gfx_holder1";
 
 var crtLevel;
 var crtShapes = [];
+
+var diagramsStack = [];
+
+var canExecuteDisplayDiagram = true;
 
 function createConnection() {
     var con = new draw2d.Connection();
@@ -59,6 +65,17 @@ function getFromCrtShapes(name) {
 
 function displayDiagram(diagram) {
 
+    if(diagram == null){
+        return;
+    }
+
+    if (!canExecuteDisplayDiagram) {
+        return;
+    }
+
+    canExecuteDisplayDiagram = false;
+
+    crtLevel = diagram;
     crtShapes = [];
 
     var holder = document.getElementById(canvasIdGlobal);
@@ -75,8 +92,6 @@ function displayDiagram(diagram) {
     graph.setDefaultEdgeLabel(function () {
         return {};
     });
-
-    // TODO external IO
 
     for (var itrCompLayout = 0; itrCompLayout < diagram.components.length; itrCompLayout++) {
         var c = diagram.components[itrCompLayout];
@@ -120,6 +135,7 @@ function displayDiagram(diagram) {
 
         if (comp.type == "default") {
             var shape = new ComponentShape();
+            shape.doubleClickCallBack = null;
             shape.setName(comp.name);
 
 
@@ -143,10 +159,14 @@ function displayDiagram(diagram) {
                 }
             } else {
                 shape.doubleClickCallBack = function () {
-                    displayDiagram(diagToDisplay);
+                    if(canExecuteGotoChildren){
+                        canExecuteGotoChildren = false;
+                        canExecuteDisplayDiagram = true;
+                        diagramsStack.push(diagram);
+                        displayDiagram(diagToDisplay);
+                    }
                 };
             }
-
 
         } else {
             var extI = new ComponentShape();
@@ -169,6 +189,19 @@ function displayDiagram(diagram) {
             extO.setY(graph.node(extOutputGlobal).y);
             canvas.add(extI);
             canvas.add(extO);
+
+            extI.doubleClickCallBack = function () {
+                canExecuteDisplayDiagram = true;
+                var diag = diagramsStack.pop();
+                displayDiagram(diag);
+            };
+
+            extO.doubleClickCallBack = function () {
+                canExecuteDisplayDiagram = true;
+                var diag = diagramsStack.pop();
+                displayDiagram(diag);
+            };
+
             crtShapes.push(extI);
             crtShapes.push(extO);
         }
@@ -205,10 +238,14 @@ function generateDiagram(model) {
             topLevel = diagram;
         }
         diagrams.push(diagram);
-        console.log(diagram);
     }
-
     displayDiagram(topLevel);
+}
+
+function displayStack() {
+    diagramsStack.forEach(function (entry) {
+        console.log(entry);
+    })
 }
 
 $(document).ready(function () {
@@ -218,7 +255,6 @@ $(document).ready(function () {
         generateDiagram(model);
 
         generateTreeView(model);
-
     })
 
 });

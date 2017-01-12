@@ -11,7 +11,7 @@ mentinnoed.
 For the presentation of each of those library for graph visualization, we would
 use the same graph showed in figure \ref{fig:graph-base-model}.
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
   \fbox{
     \digraph[scale=0.5]{GraphBaseModel}{
@@ -52,7 +52,7 @@ project hosted by the university of Le Havre in France.
 The figure \ref{fig:base-graph-model-graphstream} show the base graph model
 realized with the GraphStream library.
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{img/graphstream-base-model-example}
   \caption{The base graph model rendering using graphstream}
@@ -62,28 +62,21 @@ realized with the GraphStream library.
 GraphStream allow us to simply create a graph (or a multigraph) in Java like in
 listing \ref{lst:graphstream-example}.
 
-\begin{listing}[p]
+\begin{listing}[H]
   \centering
   \begin{javacode}
-    public class Example
-    {
-      public static void main(String args[])
-      {
-        Graph graph = new SingleGraph("Example");
-        graph.addNode("A" );
-        graph.addNode("B" );
-        graph.addNode("C" );
-        graph.addEdge("AB", "A", "B");
-        graph.addEdge("BC", "B", "C");
-        graph.addEdge("CA", "C", "A");
-      }
-    }
+  Graph graph = new SingleGraph("Example");
+  graph.addNode("A" );
+  graph.addNode("B" );
+  graph.addNode("C" );
+  graph.addEdge("AB", "A", "B");
+  graph.addEdge("BC", "B", "C");
+  graph.addEdge("CA", "C", "A");
   \end{javacode}
   \caption[A simple graph modelisation using GraphStream]{Modelisation of a
     simple graph using the GraphStream library}
   \label{lst:graphstream-example}
 \end{listing}
-
 
 \subsection{Remarks}
 \label{sub:Remarks}
@@ -98,16 +91,42 @@ add some label on the edges like in listings \ref{lst:graphstream-edge-label},
 but we can't add multiple ones. To add multiple label we need to use sprite like
 in listing \ref{lst:graphstream-edge-sprite}.
 
-\begin{listing}[p]
+\begin{listing}[H]
   \centering
-  \javafile{../ViewingLibrary/GraphstreamTest/src/examples/EdgesLabel.java}
+  \begin{javacode}
+  Graph graph = new MultiGraph("Edges label example");
+  graph.addAttribute("ui.quality");
+  graph.addAttribute("ui.antialias");
+  
+  graph.addNode("A");
+  graph.addNode("B");
+  Edge edge = graph.addEdge("AB", "A", "B", true);
+  edge.addAttribute("ui.label", "A --> B");
+  graph.display(false);
+  \end{javacode}
   \caption[Add a label on an edge with GraphStream]{TODO : maybe remove ?}
   \label{lst:graphstream-edge-label}
 \end{listing}
 
-\begin{listing}[p]
+\begin{listing}[H]
   \centering
-  \javafile{../ViewingLibrary/GraphstreamTest/src/examples/SpriteEdgesExample.java}
+  \begin{javacode}
+    SpriteManager sman = new SpriteManager(graph);
+
+    // add label 1
+    Sprite label1 = sman.addSprite("label1");
+    label1.attachToEdge("AB");
+    label1.setPosition(0.2, 0, 0);
+    label1.addAttribute("ui.label", "Label 1");
+    label1.addAttribute("ui.style", "fill-mode:none;");
+
+    // add label 2
+    Sprite label2 = sman.addSprite("label2");
+    label2.attachToEdge("AB");
+    label2.setPosition(0.8, 0, 0);
+    label2.addAttribute("ui.label", "Label 2");
+    label2.addAttribute("ui.style", "fill-mode:none;");
+  \end{javacode}
   \caption[Add two label on an edge with GraphStream]{TODO : maybe remove ?}
   \label{lst:graphstream-edge-sprite}
 \end{listing}
@@ -130,7 +149,7 @@ if we have a more lot of edges between nodes, it would be difficult to see the
 type of the inputs and outputs, like show in figure
 \ref{fig:graphstream-lot-of-edges}.
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
   \fbox{
     \includegraphics[width=0.8\textwidth]{img/graphstream_lot_of_edges}
@@ -143,8 +162,6 @@ In order to overpass these problem, we need to visualize the type in an another
 form : in the graph \ref{fig:graph-base-model} we have the idea to show the
 inputs and outputs as a port of the component. With GraphStream we can't do
 that, so we need to an another library which have these idea of port.
-
-
 
 \section{Draw2D}
 \label{sec:Draw2D}
@@ -174,7 +191,7 @@ functions \textbf{ComponentShape.addPort()},\textbf{newConnection()} and
 extension added for this project. Those implementation are discuss in the
 section \ref{sec:Extension of the Draw2d library}.
 
-\begin{listing}[p]
+\begin{listing}[H]
   \centering
   \begin{jscode}
     var canvas = new draw2d.Canvas("gfx_holder1");
@@ -230,18 +247,16 @@ section \ref{sec:Extension of the Draw2d library}.
 The code \ref{lst:draw2d-base-graph-model} is producing the HTML page see in
 figure \ref{fig:base-graph-model-html-draw2d}.
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
   \fbox{
-    \includegraphics[width=0.5\textwidth]{img/draw2d-base-model-example}
+    \includegraphics[width=0.3\textwidth]{img/draw2d-base-model-example}
   }
   \caption[Render of the base graph model using the Draw2D library]{Rendering of
     the base graph model diagram from figure \ref{fig:graph-base-model} using
     the Draw2D library}
   \label{fig:base-graph-model-html-draw2d}
 \end{figure}
-
-
 
 \section{Graph layout}
 \label{sec:graph-layout}
@@ -251,7 +266,7 @@ said nothing about the position of the node, Draw2D simply overlap all the nodes
 and manage nothing for the visualization like in figure
 \ref{fig:draw2d_overlapping}.
 
-\begin{figure}
+\begin{figure}[H]
   \centering
   \fbox{
     \includegraphics{img/overlap_draw2d}
@@ -278,7 +293,7 @@ position on the nodes. Otherwise the visual result could be chaotics like in
 figure \ref{fig:multigraph-no-port}, in which we can't see the connection
 between some specific ports.
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
   \fbox{
     \digraph[scale=0.5]{MultiGraphNoPort}{
@@ -311,5 +326,3 @@ components so we have to labelize the connections and it's look ugly (figure
 this idea of ports. We find them with Draw2D and choose it for the project. The
 disadvantage of using this library is that we can't layout easily the graph by
 ourself.
-
-

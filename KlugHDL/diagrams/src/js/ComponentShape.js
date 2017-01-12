@@ -74,5 +74,7 @@ ComponentShape = draw2d.shape.layout.VerticalLayout.extend({
 
     doubleClickCallBack: function () {
         console.log("OK")
-    }
+    },
+
+
 });

@@ -33,6 +33,7 @@ clean :
 	@rm -f *.glsdefs
 	@rm -f *.dot
 	@rm -f *.ps
+	@rm -f *.tr
 
 clean_all : clean
 	@rm -f *.pdf
