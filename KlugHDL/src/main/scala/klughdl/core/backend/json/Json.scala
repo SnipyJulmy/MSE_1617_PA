@@ -21,14 +21,22 @@ package klughdl.core.backend.json
 
 import klughdl.core.backend.Backend
 import klughdl.core.model._
+import klughdl.core.utils.FileManager
 import net.liftweb.json.JsonDSL._
 import net.liftweb.json._
 import spinal.core.Component
 
-case class Json() extends Backend {
+case class Json(targetDirectory: String = "json") extends Backend {
 
   private val extInput = "EXTERNAL_INPUT"
   private val extOutput = "EXTERNAL_OUTPUT"
+
+  def generateJsonModel(model: Model) : Unit = {
+    val json = generateJson(model)
+    FileManager("model.json",targetDirectory)
+      .println(pretty(render(json)))
+      .close()
+  }
 
   override def generate(model: Model): String = {
     val json = generateJson(model)

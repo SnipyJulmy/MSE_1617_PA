@@ -2904,7 +2904,7 @@ draw2d.geo.Rectangle = draw2d.geo.Point.extend({
      */
     determineOctant: function( r2)
     {
-        var HISTERESE= 3; // Toleranz um diese vermieden wird, dass der Octant "8" zurückgegeben wird
+        var HISTERESE= 3; // Toleranz um diese vermieden wird, dass der Octant "8" zurï¿½ckgegeben wird
         
         var ox = this.x+HISTERESE;
         var oy = this.y+HISTERESE;
@@ -8870,7 +8870,7 @@ draw2d.layout.connection.MuteableManhattanConnectionRouter = draw2d.layout.conne
         
         horizontal = !horizontal;
 
-        // dot product is zero if the vector orthogonal (90°)
+        // dot product is zero if the vector orthogonal (90ï¿½)
         if (startNormal.dot(endNormal) === 0) {
             if ((startNormal.dot(direction) >= 0)  && (endNormal.dot(direction) <= 0)) {
                 // 0
@@ -15211,7 +15211,7 @@ draw2d.policy.canvas.SnapToCenterEditPolicy = draw2d.policy.canvas.SnapToEditPol
 
     /**
      * @method
-     * Hide the horizontal snapüing guides
+     * Hide the horizontal snapï¿½ing guides
      *
      * @param soft
      */
@@ -15264,7 +15264,7 @@ draw2d.policy.canvas.SnapToCenterEditPolicy = draw2d.policy.canvas.SnapToEditPol
 
     /**
      * @method
-     * Hide the horizontal snapüing guides
+     * Hide the horizontal snapï¿½ing guides
      *
      * @param soft
      */
@@ -20372,7 +20372,7 @@ draw2d.Canvas = Class.extend(
         this.installEditPolicy( new draw2d.policy.canvas.DropInterceptorPolicy());          // Responsible for drop operations
         this.installEditPolicy( new draw2d.policy.connection.ComposedConnectionCreatePolicy(// Responsible for connection creation....
                                 [
-                                    new draw2d.policy.connection.DragConnectionCreatePolicy(),  // ....via drag/´drop
+                                    new draw2d.policy.connection.DragConnectionCreatePolicy(),  // ....via drag/ï¿½drop
                                     new draw2d.policy.connection.ClickConnectionCreatePolicy()  // or clicking on the ports and canvas.
                                 ])
         );
@@ -29742,18 +29742,18 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
     * Returns the angle of the line in degree.
     *
     * <pre>
-    *                                 270°
+    *                                 270ï¿½
     *                               |
     *                               |
     *                               |
     *                               |
-    * 180° -------------------------+------------------------> +X
-    *                               |                        0°
+    * 180ï¿½ -------------------------+------------------------> +X
+    *                               |                        0ï¿½
     *                               |
     *                               |
     *                               |
     *                               V +Y
-    *                              90°
+    *                              90ï¿½
     * </pre>
     * @return {Number}
     **/
@@ -35083,7 +35083,7 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
         
         this.connectionAnchor = new draw2d.layout.anchor.ConnectionAnchor(this);
 
-        // for dynamic diagrams. A Port can have a value which is set by a connector
+        // for dynamic diagramsMap. A Port can have a value which is set by a connector
         //
         this.value = null; 
         this.maxFanOut = this.MAX_SAFE_INTEGER;
@@ -35275,7 +35275,7 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
 
     /**
      * @method
-     * Set a value for the port. This is useful for interactive/dynamic diagrams like circuits, simulator,...
+     * Set a value for the port. This is useful for interactive/dynamic diagramsMap like circuits, simulator,...
      *  
      * @param {Object} value the new value for the port 
      */
@@ -36871,7 +36871,7 @@ draw2d.shape.flowchart.Document = draw2d.VectorFigure.extend({
  ****************************************/
 /**
  * @class draw2d.shape.widget.Widget
- * Base class for all diagrams.
+ * Base class for all diagramsMap.
  * 
  * @extends draw2d.SetFigure
  */
@@ -37197,7 +37197,7 @@ draw2d.shape.widget.Slider = draw2d.shape.widget.Widget.extend({
 /**
  * @class draw2d.shape.diagram.Diagram
  * 
- * Base class for all diagrams.
+ * Base class for all diagramsMap.
  * 
  * @extends draw2d.SetFigure
  */
@@ -39562,12 +39562,12 @@ draw2d.shape.layout.FlexGridLayout= draw2d.shape.layout.Layout.extend({
        for(var i=0;i<figures.getSize();i++){
            var figure = figures.get(i);
            var cell = figure.__cellConstraint;
-       		// ermitteln der derzeitig zur verfügung stehenden weite
+       		// ermitteln der derzeitig zur verfï¿½gung stehenden weite
            this.gridDef.min_width[cell.col]=Math.max(this.gridDef.min_width[cell.col],figure.getMinWidth());
        		
        		// Falls das Elemente eine y_span hat, dann versuchen ob es auf die ganze
-       		// höhe rein passt. Wenn nicht wird der Teil der 'grow' angegeben hat verändert.
-       		// Wenn kein Element 'grow' angegeben hat, dann wird das letzte Element verändert
+       		// hï¿½he rein passt. Wenn nicht wird der Teil der 'grow' angegeben hat verï¿½ndert.
+       		// Wenn kein Element 'grow' angegeben hat, dann wird das letzte Element verï¿½ndert
        		if(cell.rowspan>1){
        			var eHeight = figure.getMinHeight();         
        			var cHeight = this.cellHeight(cell.row,cell.row+cell.rowspan);

@@ -1,0 +1,8 @@
+PWD /home/snipy/PA/report/chapters
+INPUT /usr/share/texmf-dist/web2c/texmf.cnf
+INPUT /var/lib/texmf/web2c/pdftex/pdflatex.fmt
+INPUT diagram-visualization.tex
+OUTPUT diagram-visualization.log
+INPUT /usr/share/texmf-dist/fonts/map/fontname/texfonts.map
+INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
+INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmtt10.tfm

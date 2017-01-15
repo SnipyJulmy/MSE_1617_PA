@@ -23,7 +23,7 @@ object Main {
     else if (!vhdlOutputDir.isDirectory)
       System.err.println(s"$vhdlOutputDir is not a directory")
 
-    val report = SpinalConfig(targetDirectory = "vhdl").generateVhdl(new HierarchicComponent)
+    val report = SpinalConfig(targetDirectory = "vhdl").generateVhdl(new SmallComponent)
 
     // Build the model
 

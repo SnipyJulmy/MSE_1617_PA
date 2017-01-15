@@ -33984,7 +33984,7 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
 
         this.connectionAnchor = new draw2d.layout.anchor.ConnectionAnchor(this);
 
-        // for dynamic diagrams. A Port can have a value which is set by a connector
+        // for dynamic diagramsMap. A Port can have a value which is set by a connector
         //
         this.value = null;
         this.maxFanOut = this.MAX_SAFE_INTEGER;
@@ -34164,7 +34164,7 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
 
     /**
      * @method
-     * Set a value for the port. This is useful for interactive/dynamic diagrams like circuits, simulator,...
+     * Set a value for the port. This is useful for interactive/dynamic diagramsMap like circuits, simulator,...
      *
      * @param {Object} value the new value for the port
      */
@@ -35719,7 +35719,7 @@ draw2d.shape.flowchart.Document = draw2d.VectorFigure.extend({
  ****************************************/
 /**
  * @class draw2d.shape.widget.Widget
- * Base class for all diagrams.
+ * Base class for all diagramsMap.
  *
  * @extends draw2d.SetFigure
  */
@@ -36033,7 +36033,7 @@ draw2d.shape.widget.Slider = draw2d.shape.widget.Widget.extend({
 /**
  * @class draw2d.shape.diagram.Diagram
  *
- * Base class for all diagrams.
+ * Base class for all diagramsMap.
  *
  * @extends draw2d.SetFigure
  */

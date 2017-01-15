@@ -26,7 +26,7 @@ var DecoratedInputPort = draw2d.InputPort.extend({
             this.decoration.setVisible(false);
         }.bind(this));
 
-        // a port can have a value. Usefull for workflow engines or circuit diagrams
+        // a port can have a value. Usefull for workflow engines or circuit diagramsMap
         this.setValue(true);
     },
 

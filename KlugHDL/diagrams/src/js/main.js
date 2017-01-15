@@ -65,7 +65,7 @@ function getFromCrtShapes(name) {
 
 function displayDiagram(diagram) {
 
-    if(diagram == null){
+    if (diagram == null) {
         return;
     }
 
@@ -159,7 +159,7 @@ function displayDiagram(diagram) {
                 }
             } else {
                 shape.doubleClickCallBack = function () {
-                    if(canExecuteGotoChildren){
+                    if (canExecuteGotoChildren) {
                         canExecuteGotoChildren = false;
                         canExecuteDisplayDiagram = true;
                         diagramsStack.push(diagram);
@@ -224,6 +224,8 @@ function displayDiagram(diagram) {
         addConn(canvas, input);
     }
 }
+
+
 
 function generateDiagram(model) {
 
