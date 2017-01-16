@@ -15,8 +15,7 @@ Author : Sylvain Julmy <sylvain.julmy@master.hes-so.ch> or <sylvain.julmy@gmail.
 * **Dagre**, a javascript library (MIT, already in the project) : <https://github.com/cpettitt/dagre>
 * **Graphlib**, a javascript library used by **Dagre** (MIT) : <https://github.com/cpettitt/graphlib>
 * **SpinalHDL**, a Scala library (MIT, added in SBT) : <https://github.com/SpinalHDL/SpinalHDL>
-* **Twirl**, the Play template engine (Apache, added in SBT) : <https://github.com/playframework/twirl>
-
+* **LiftJson**, a Scala library (Apache 2.0, added in SBT) : <https://liftweb.net/>
 
 ## Setup
 ```
