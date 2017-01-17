@@ -1,31 +1,46 @@
-\chapter{Introduction} %{{{
+\chapter{Introduction}
 \label{cha:Introduction}
 
-A program is a sequence of mathematical instruction which are written by a human and executed by a computer.
-The VHDL langage has been created to describe digital and signals systems such as field-programmable gate arrays
-and integrated circuits\cite{wiki-vhdl}.The problem is that VHDL is an old, verbose and tricky language.
+A program is a sequence of machine instructions which are written by a
+human and executed by a computer. The VHDL language has been created to describe
+digital and signals systems such as field-programmable gate arrays and
+integrated circuits\cite{wiki-vhdl}.The problem is that VHDL is an old, verbose
+and tricky language.
 
-SpinalHDL has been created to fight thos disadvantage. The main goal of a DSL (Domain Specific Langage) is to offer a more plaisant way to code and that's what dose SpinalHDL. Has written before, the code is written by a human and by using SpinalHDL, the human became happier than using just the VHDL.
+SpinalHDL has been created to offer a way to outmatch those disadvantages. The
+main goal of a DSL (domain-specific language) is to offer a more pleasant way to
+code and that's what dose SpinalHDL. As written before, the code is written by a
+human and by using SpinalHDL, the human became happier than using just the VHDL.
 
-KlugHDL is an another tools to make the human happiest, it's a component diagram generator which offer some
+KlugHDL is an another tool to make the human happier, it's a component diagram
+generator which produce statics and dynamics diagrams.
 
-\section{Context} %{{{
+\section{Context}
 \label{sec:Context}
 
-SpinalHDL is a programming language to describe digital hardware and generate the corresponding in VHDL (or Verilog). SpinalHDL is written in Scala as a DSL and has multiple advantages\cite{github-spinalhdl} :
+SpinalHDL is a programming language to describe digital hardware and generate
+the corresponding source code in VHDL (or Verilog). SpinalHDL is written in Scala as a DSL
+and has multiple advantages\cite{github-spinalhdl} :
 \begin{itemize}
-    \item No restriction to the genericity of your hardware description by using Scala constructs
+    \item No restriction to the genericity of hardware description by using
+      Scala constructs
     \item No more endless wiring. Create and connect complex buses like AXI in one line.
     \item Evolving capabilities. Create your own buses definition and abstraction layer.
-    \item Reduce code size by a high factor, especially for wiring. Allowing you to have a better visibility, more productivity and fewer headaches.
-    \item Free and user friendly IDE. Thanks to scala world for auto-completion, error highlight, navigation shortcut and many others
-    \item Extract information from your digital design and then generate files that contain information about some latency and addresses
-    \item Bidirectional translation between any data type and bits. Useful to load a complex data structure from a CPU interface.
+    \item Reduce code size by a high factor, especially for wiring. Allowing you
+      to have a better visibility, more productivity and fewer headaches.
+    \item Free and user friendly IDE. Thanks to Scala world for auto-completion,
+      error highlight, navigation shortcut and many others
+    \item Extract information from your digital design and then generate files
+      that contain information about some latency and addresses
+    \item Bidirectional translation between any data type and bits. Useful to
+      load a complex data structure from a CPU interface
     \item Check for you that there is no combinational loop / latch
     \item Check that there is no unintentional cross clock domain
 \end{itemize}
 
-The code \ref{lst:spinalhdl_example_and_gate} shows a AND gate written with SpinalHDL with the corresponding generated VHDL code, we could see the similarity between the two code.
+The listing \ref{lst:spinalhdl_example_and_gate} shows a AND gate written with
+SpinalHDL with the corresponding generated VHDL code, we an see the
+similarity between the two codes.
 
 \begin{listing}[H] % {{{
     \centering
@@ -65,39 +80,41 @@ The code \ref{lst:spinalhdl_example_and_gate} shows a AND gate written with Spin
     end arch;
     \end{vhdlcode}
     \end{minipage}
-    \caption{Example of a AND gate written in SpinalHDL and the corresponding generated VHDL code}
+    \caption{Example of a AND gate written in SpinalHDL and the corresponding
+             generated VHDL code}
     \label{lst:spinalhdl_example_and_gate}
-\end{listing} %}}}
+\end{listing}
 
-%}}} section Context
-
-\section{Goal} %{{{
+\section{Goal}
 \label{sec:Goal}
 
-The goal of the project is to produce an application which is analysing a spinalhdl program in order to produce a block diagramm of the corresponding hardware description. This application should offer the following activities :
+The goal of the project is to produce an application which will analyse a
+SpinalHDL program in order to produce a block diagram of the corresponding
+hardware description. This application should offer the following activities :
 
 \begin{itemize}
-    \item Display the complete graph of the programm
-    \item Navigate through all the hierarchical level of the programm (Component inside another component)
+    \item Display the complete graph of the program
+    \item Navigate through all the hierarchical levels of the program (Components
+      inside another component)
     \item The edges should display some information about the signals :
     \begin{itemize}
         \item type
         \item input or output
         \item ...
     \end{itemize}
-    \item A Hierarchical view (like in filesystems or in Quartus)
-    \item A filter functionnality in order to view only some specific component
+    \item A hierarchical view (like in filesystems or in Quartus)
+    \item A filter functionality in order to view only some specific component
 \end{itemize}
 
-The application is going to be develop, firstable, in a standalone version and next could be develop into a plugin version for Eclipse or IntelliJ.
+The application is going to be developed, firstly, in a standalone version and
+next could be develop into a plugin version for Eclipse or IntelliJ.
 
-%}}} section Goal
-
-\section{Document overview} %{{{
+\section{Document overview}
 \label{sec:Document overview}
 
 TODO
 
-%}}} section Document overview
-
-%}}} chapter Introduction
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../report"
+%%% End:

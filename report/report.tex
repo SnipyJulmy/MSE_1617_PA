@@ -68,7 +68,7 @@
 % Chapter titles
 % Remove space before title
 \titlespacing{\chapter}{0pt}{*-4}{*3}
-% Remove "Chapter N" and use a sans-serif font
+% Remove "Chapter N" and use a sans-seautocompleterif font
 \titleformat{\chapter}[hang]{\bf\huge}{\thechapter}{1pc}{}
 % Change chapter page style
 \patchcmd{\chapter}{plain}{fancy}{}{}
@@ -118,9 +118,9 @@
 \newmintedfile{vhdl}{frame=single, framesep=6pt, breaklines=true, fontsize=\scriptsize}
 
 % JavaScript
-\newminted{js}{frame=single,framesep=6pt, breaklines=true, fontsize=\scriptsize}
+\newminted{js}{frame=single,framesep=6pt, breaklines=true, fontsize=\scriptsize,
+mathescape=true}
 \newmintedfile{js}{frame=single, framesep=6pt, breaklines=true, fontsize=\scriptsize}
-
 
 % Document
 % --------

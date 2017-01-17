@@ -1,12 +1,12 @@
 \chapter{Diagrams modelisation}
 
 In order to produce a visual schema from a SpinalHDL program, we need to parse
-his AST and produce an intermediate model for the diagrams. The reason to use
-an intermediate model is that we could then build multiple backend generator
-for multiple output target. The complete pipeline of the generation is visible
+it AST and produce an intermediate model for the diagrams. The reason to use
+an intermediate model is that we could then build multiple output generators
+for multiple output targets. The complete pipeline of the generation is visible
 in figure \ref{fig:generation-pipeline}.
 
-\begin{figure}[H] % {{{ figure
+\begin{figure}[H]
     \centering
     \fbox{
         \digraph[scale=0.5]{GenerationPipeline}{
@@ -21,21 +21,21 @@ in figure \ref{fig:generation-pipeline}.
             I -> dot;
         }
     }
-    \caption[KlugHDL generation pipeline]{This figure show the entire generation
-      pipeline use by KlugHDL in order to generate different output. The
+    \caption[KlugHDL generation pipeline]{Representation of the entire generation
+      pipeline use by KlugHDL in order to generate different outputs. The
       intermediate model is use to produce the target code, for example dot or
-      JSON file}
+      JSON file.}
     \label{fig:generation-pipeline}
-\end{figure} % }}}
+\end{figure}
 
-We also need to introduce an crucial element to understand how the model is
+We also need to introduce a crucial element to understand how the model is
 build : the hierarchy visualization.
 
 \section{Hierarchy visualization}
 
-The diagrams produces by KlugHDL are kind of special, they are hierarchical
-ones. That's means we need to find a way to show the hierarchy between the
-components of a SpinalHDL program. There is multiple way to do this :
+The diagrams produced by KlugHDL are kind of special, they are hierarchical
+That's means we need to find a way to show the hierarchy between the components
+of a SpinalHDL program. There are multiple way to do this :
 \begin{itemize}
   \item Showing the elements using a hierarchical layout, like in family tree
   \item Showing the elements using a tree view, like in file explorer
@@ -47,7 +47,7 @@ components of a SpinalHDL program. There is multiple way to do this :
 
 The hierarchical layout is the simplest way to achieve the visualization of the
 hierarchy. The figure \ref{fig:hierarchical-layout-simple} illustrate a simple
-hierarchical layout with some children and parent.
+hierarchical layout with some children and parents.
 
 \begin{figure}[H]
   \centering
@@ -55,18 +55,53 @@ hierarchical layout with some children and parent.
   \includegraphics[width=0.7\textwidth]{img/HierarchicalLayoutSimple}
   }
   \caption[Simple hierarchical layout for diagram visualization]{The simplest
-    hierarchical visualization, the parent are just representing using the height}
+    hierarchical visualization, where parents are just represented using the heights}
   \label{fig:hierarchical-layout-simple}
 \end{figure}
 
 The problem by using such a representation is clearly visible, sometimes the
-ports of a component is an output type port as well as a input type port.
-This can be seen at the port "io.c" from the \texttt{AndXorGate} component.
+ports of a component is an output type port as well as an input type port.
+This can be seen at the port "io.c" from the \texttt{AndXorGate} component. In
+listing \ref{lst:andxorgate-problem}, we can see that the value \verb|io.c| is
+written as an output of the component. In the figure
+\ref{fig:hierarchical-layout-simple}, the same port is the source and the target
+of some connections. This can create some misunderstanding.
+
+\begin{listing}[H]
+  \centering
+\begin{scalacode}
+class AndXorGate extends Component {
+
+  val xorGate = new XorGate
+  val andGate = new AndGate
+
+  val io = new Bundle {
+    val a: Bool = in Bool
+    val b: Bool = in Bool
+    val c: Bool = out Bool
+    val d: Bool = out Bool
+  }
+
+  xorGate.io.a := io.a
+  xorGate.io.b := io.b
+  andGate.io.a := io.a
+  andGate.io.b := io.b
+
+  io.c := xorGate.io.c
+  io.d := andGate.io.c
+}
+\end{scalacode}
+  \caption[The AndXorGate component written with SpinalHDL]{The AndXorGate
+component writtent with SpinalHDL. We can see that the ``c'' port is an output
+of the components and in figure \ref{fig:hierarchical-layout-simple} the port is
+shows as an input port and an output port.}
+  \label{lst:andxorgate-problem}
+\end{listing}
 
 \subsection{Tree view}
 
 The idea of the tree view is to represent the hierarchical relation like in file
-explorer. The figure \ref{fig:tree-view} show the idea for a SpinalHDL
+explorer. The figure \ref{fig:tree-view} depicts the idea for a SpinalHDL
 component.
 
 \begin{figure}[H]
@@ -75,20 +110,20 @@ component.
     \includegraphics[width=0.2\textwidth]{img/tree-view}
   }
   \caption[SpinalHDL's Component visualization with tree view]{A tree view
-    visualization of a SpinalHDL Component, each son are under his parent and
-    eventually possesses it self some sub-Component}
+    visualization of a SpinalHDL Component, each son is under his parent and
+    eventually possesses itself some sub-component.}
   \label{fig:tree-view}
 \end{figure}
 
-The tree view visualization is very usefull to directly detect the relation
+The tree view visualization is very useful to directly detect the relation
 between some components. The big problem is that we can't see the connections
-relationship.
+relationships.
 
 \subsection{Multiple diagrams}
 
 As seen with the hierarchical layout figure
 \ref{fig:hierarchical-layout-simple}, the problem is that sometimes a port is an
-output for somes components and, in the other way, an input for somes others
+output for some components and, in the other way, an input for some other
 ones. If we look closely to the problems we could notice that a port receive
 connections from his brothers and send connections to his childrens.
 
@@ -96,7 +131,7 @@ connections from his brothers and send connections to his childrens.
   \centering
   \includegraphics[width=0.6\textwidth]{img/HierarchicComponent.pdf}
   \caption[SpinalHDL Component inside]{Inside of a SpinalHDL components, the
-    components possesses input and output has his own interface and communicates
+    components possesses inputs and outputs has his own interface and communicates
   with his children}
   \label{fig:hierarchic-component}
 \end{figure}
@@ -111,16 +146,16 @@ connections from his brothers and send connections to his childrens.
 \end{figure}
 
 Using such a representation solve the problem discuss in
-\ref{sec:hierarchical-layout} : if we represent all the components juste using
+\ref{sec:hierarchical-layout} : if we represent all the components just using
 one diagram, sometimes the ports are inputs and sometimes they are outputs. With
-multiple diagram this problem no more occurs.
+multiple diagram this problem no longuer occurs.
 
-The major disadvantages is that we need an interractive diagrams for exploring
-the children of a components or multiple statics ones which is not practical.
+The major disadvantage is that we need an interactive diagram for exploring
+the children of a component or multiple static ones which is not practical.
 
 \section{A visual example}
 
-The diagram we want to produce, as explain in \ref{sec:graph-layout}, ownes the following property :
+The diagram we want to produce, as explained in chapter \ref{sec:graph-layout}, own the following property :
 \begin{itemize}
   \item Oriented
   \item Cyclic
@@ -145,7 +180,12 @@ figure \ref{fig:model-class-diagram} show the class diagram of the models.
 \section{Conclusion}
 
 The major advantages of such an intermediate representation is the capability to
-evolve the program in order to produce additionnal output. For now there is just
-a \textbf{dot} and \textbf{JSON} backend. It's also provide a way to check the
+evolve the program in order to produce additional output. For now there is just
+a \textbf{DOT} and \textbf{JSON} backend. It also provide a way to check the
 correctness of the diagram after the parsing on the AST : connections with
 non-existing port for example.
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../report"
+%%% End:

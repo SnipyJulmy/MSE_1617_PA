@@ -2,16 +2,18 @@
 \label{cha:Analysis}
 
 In this chapter, we would discuss about the "What do we want ?" questions. It
-means what need the final product based on the Goal of the project. The other
-part is about the actual state of SpinalHDL. We are not presenting all of the
-implementation or conception, just a small part which is usefull for this
-project. FInally, we introduce the concept of Component and AST (Abstract Syntax
-Tree).
+means what need the final product based on the goal of the project. The other
+part is about the actual state of SpinalHDL. We are not presenting all the
+implementation or conception, just a small part is useful for this
+project. Finally, we introduce the concept of the SpinalHDL's component and AST
+(Abstract Syntax Tree).
 
 \section{What do we want ?}
 \label{sec:What do we want ?}
 
-Based on the goal of the project at section \ref{sec:Goal}, we expose what the end user of SpinalHDL want to do with KlugHDL. The figure \ref{fig:use_case_klughdl} show the use case of KlugHDL.
+Based on the goal of the project at section \ref{sec:Goal}, we expose what the
+end user of SpinalHDL want to do with KlugHDL. The figure
+\ref{fig:use_case_klughdl} show the use case of KlugHDL.
 
 \begin{figure}[H]
     \centering
@@ -24,8 +26,9 @@ Based on the goal of the project at section \ref{sec:Goal}, we expose what the e
         \begin{umlsystem}[x=3,y=0]{KlugHDL}
             \umlusecase[x=4,y=6,name=UCA,width=180]{Generate a component diagram}
             \umlusecase[x=4,y=4.9,name=UCB,width=180]{View a component diagram}
-            \umlusecase[x=4,y=3.7,name=UCC,width=180]{Display, hide and toggle the hierarchical tree view of the programm}
-            \umlusecase[x=4,y=2.6,name=UCD,width=180]{Filter the Hierarchical view}
+            \umlusecase[x=4,y=3.7,name=UCC,width=180]{Display, hide and toggle
+              the hierarchical tree view of the programm}
+            \umlusecase[x=4,y=2.6,name=UCD,width=180]{Filter the hierarchical view}
             \umlusecase[x=4,y=1.5,name=UCE,width=180]{Enter a component}
             \umlusecase[x=4,y=0.4,name=UCF,width=180]{Go out of a component}
             \umlusecase[x=4,y=-0.8,name=UCG,width=180]{Display, hide and toggle the type of the connections}
@@ -51,8 +54,8 @@ Based on the goal of the project at section \ref{sec:Goal}, we expose what the e
 \end{figure}
 
 An important point is the idea of port. If we want to design a HDL diagram, we
-have to display the types of the connection between the component. We have at
-least two alternative :
+have to display the types of the connection between the components. We have at
+least two alternatives :
 \begin{itemize}
  \item display the types using the edges
  \item display the types using some ports attached to the component
@@ -64,33 +67,32 @@ of a connection.
 \section{SpinalHDL}
 \label{sec:SpinalHDL}
 
-As explain in chapter \ref{cha:Introduction}, SpinalHDL is a DSL for VHDL
-programmation. SpinalHDL run with various internal construction such as an AST
-or a Component Tree. Those are the majors element needed for the diagram
-generation.
+As explained in chapter \ref{cha:Introduction}, SpinalHDL is a DSL for VHDL
+programing. SpinalHDL run with various internal construction such as an AST or
+a Component Tree. Those are the majors elements needed for the diagram generation.
 
 \subsection{Component}
 \label{sub:Component}
 
-A SpinalHDL's component is the base class of every SpinalHDL Program, like in
-the listing \ref{lst:spinalhdl_example_and_gate}. Like in Verilog and VHDL, you
+A SpinalHDL's component is the base class of every SpinalHDL program, like in
+the listing \ref{lst:spinalhdl_example_and_gate}. Like in Verilog and VHDL, we
 can define components that could be used to build a design hierarchy. But unlike
-them, you don’t need to bind them at instantiation \cite{github-spinalhdl}.
-That's why there is just one component against the architecture and entity
+them, we don’t need to bind them at instantiation \cite{github-spinalhdl}.
+That's why there is just one component in SpinalHDL versus the architecture and entity
 combination in VHDL.
 
 The component is the main part of the SpinalHDL architecture for this project
-because all the component are linked together with :
+because all the components are linked together with :
 \begin{itemize}
     \item a parent-children relationship
     \item a brother relationship
 \end{itemize}
 
-A component could contains and communicate with an other component, that's the
+A component could contain and communicate with other component, that's the
 parent-children relationship, and a component could communicate with the
 component contained by his parent, that's the brother relationship. This two
-relation could be seen in listing \ref{lst:HierarchicComponent-solo}. The
-component is communication with their children which are communicationg between
+relations could be seen in listing \ref{lst:HierarchicComponent-solo}. The
+component communicate with his children which are communicationg between
 them.
 
 \begin{listing}
@@ -131,20 +133,21 @@ them.
         io.e := andXorGate1.io.c | andXorGate1.io.d | andXorGate2.io.c | andXorGate2.io.d
     }
     \end{scalacode}
-    \caption[Type of connection in SpinalHDL]{There is two different type of
-      connections with SpinalHDL, a brother to brother ones and a
-      parent-children ones}
+    \caption[Type of connection in SpinalHDL]{There are two different type of
+connections with SpinalHDL, from brother to brother or from a parent to
+one of is children. The corresponding diagram to this code is shows in figure
+\ref{fig:hierarchical-layout-simple}}
     \label{lst:HierarchicComponent-solo}
 \end{listing}
 
-A component could have other element inside him too, like Area or Function. But
+A component may have other elements inside him too, like Area or Function. But
 they are not relevant for the diagram generation.
 
 \subsection{Abstract Syntax Tree}
 \label{sub:Abstract Syntax Tree}
 
 An abstract syntax tree is a tree where the node are marked by operator and the
-leaf are marked by the operand of those operator. For example, the expression $5
+leaf are marked by the operand of those operators. For example, the expression $5
 * 2 + 3$ has his equivalent AST showed in the figure \ref{fig:ast-example}.
 
 \begin{figure}[H]
@@ -160,11 +163,14 @@ leaf are marked by the operand of those operator. For example, the expression $5
             plus -> mul;
         }
     }
-    \caption[Example of an AST]{AST of the expression $5 * 2 + 3$}
+    \caption[Example of an AST]{AST of the expression $5 * 2 + 3$.}
     \label{fig:ast-example}
-\end{figure} % }}}
+  \end{figure}
 
-The AST is important because he is using to recover all the input and the output
-of a component, including the source of each input's component. To do that, we
-just need to recursively walk inside the AST of a SpinalHDL program like explain
-in the chapter \ref{chap:parsing-ast}.
+The understanding of the AST is a main concept of this project. From it, we are
+able to generate whole model for further implementation.
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../report"
+%%% End:
