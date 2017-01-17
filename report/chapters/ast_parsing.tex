@@ -1,7 +1,7 @@
 \chapter{Parsing the AST}
 \label{chap:parsing-ast}
 
-The abstract syntax tree of SpinalHDL is the core components of the whole KlugHDL
+The abstract syntax tree of SpinalHDL is the core component of the whole KlugHDL
 product. It is used to produce the intermediate representation in the generation
 pipeline (figure \ref{fig:generation-pipeline}) and once the intermediate
 representation is built, the rest is easily doable.
@@ -41,9 +41,9 @@ toplevel component.
       var diagrams : Set[Diagram] = Set()
   }
 \end{scalacode}
-\caption[Model class declaration]{Declaration of the model with Scala, a model
+\caption[Model class declaration]{Declaration of the model with Scala. A model
   is basically a set of diagrams and is attached to a toplevel component, which
-  is the only component of the AST which has no parent}
+  is the only component of the AST which has no parent.}
 \label{lst:model-scala}
 \end{listing}
 
@@ -66,8 +66,8 @@ implemented in listing \ref{lst:generate-diagram}.
       }
   \end{scalacode}
   \caption[Diagram class declaration]{Declaration of a the diagram class with
-    Scala, a diagram is a set of components (here as a Map) and a set of
-    connections (here as a multimap for the orientation)}
+    Scala. A diagram is a set of components (here as a map) and a set of
+    connections (here as a multimap for the orientation).}
   \label{lst:diagram-scala}
 \end{listing}
 
@@ -80,7 +80,7 @@ implemented in listing \ref{lst:generate-diagram}.
   }
   \end{scalacode}
   \caption[Parsing the diagrams form the AST]{This function parse the AST and
-    generate all the corresponding diagrams Object for a specific component}
+    generate all the corresponding diagrams objects for a specific component}
   \label{lst:generate-diagram}
 \end{listing}
 
@@ -97,7 +97,7 @@ have to redefine the \verb|equals| function like in listing \ref{lst:diagram-equ
   }
   \end{scalacode}
   \caption[Equals function implementation for the Diagram Class]{We have to
-    override the equals function in order to use the diagrams in a set as expected}
+    override the equals function in order to use the diagram in a set as expected}
   \label{lst:diagram-equals-scala}
 \end{listing}
 
@@ -126,10 +126,10 @@ in listing \ref{lst:component-scala}.
 
   final case class KlugHDLComponentIO(name : String, parent : Component) extends KlugHDLComponent
   \end{scalacode}
-  \caption[Diagram class declaration]{Declaration of the Components class (here
-    names KlugHDLComponents). There are two type of components : the basic ones
+  \caption[Diagram class declaration]{Declaration of the components class (here
+    named KlugHDLComponents). There are two types of components : the basic ones
     and the ones who represent the external world input and output like in
-    figure \ref{fig:and-xor-gate}}
+    figure \ref{fig:and-xor-gate}.}
   \label{lst:component-scala}
 \end{listing}
 
@@ -159,16 +159,16 @@ in listing \ref{lst:component-scala}.
   \label{lst:component-parse-scala}
 \end{listing}
 
-Note that we generate the interface for the external world connections in the
+Note that we generates the interface for the external world connections in the
 model. This two KlugHDLComponentIO aren't present in the SpinalHDL AST.
 
 \section{Ports parsing}
 \label{sec:ports-parsing}
 
 The ports generation is, again, easy to make. In the SpinalHDL model, the
-Components class already owns a \verb|getAllIo| function which return all the
-inputs and outputs node for a components. So we just need to create a ports
-object (listing \ref{lst:port-scala}) from these and add it to the correct
+Component class already owns a \verb|getAllIo| function which return all the
+inputs and outputs nodes for a components. So we just need to create a port
+object (listing \ref{lst:port-scala}) from those and add it to the correct
 KlugHDLComponents. The algorithm is implemented in the listing
 \ref{lst:port-parsing-scala}.
 
@@ -185,8 +185,8 @@ KlugHDLComponents. The algorithm is implemented in the listing
 
   final case class OutputPort(name : String, hdlType : String) extends Port
   \end{scalacode}
-  \caption[Diagram class declaration]{Declaration if the Port class with Scala,
-    there is two types of ports : input and output.}
+  \caption[Diagram class declaration]{Declaration of the Port class with Scala.
+There are two types of ports : input and output.}
   \label{lst:port-scala}
 \end{listing}
 
@@ -206,15 +206,15 @@ KlugHDLComponents. The algorithm is implemented in the listing
   }
   \end{scalacode}
   \caption[Implementation of the ports parsing]{Ports parsing and generation in
-    Scala for one diagrams, the ports are generating component by component.}
+    Scala for one diagram, the ports are generating components by components.}
   \label{lst:port-parsing-scala}
 \end{listing}
 
 \section{Connections parsing}
 \label{sec:connections-parsing}
 
-The connections parsing is the hardest implementation to do. The reason we
-have multiples types of connections :
+The connections parsing is the hardest implementation to do because we
+have multiple types of connections :
 \begin{itemize}
 \item input connections
 \item output connections
@@ -230,7 +230,7 @@ which is the type for the inputs and outputs nodes of a SpinalHDL component.
 \label{sec:input-connections}
 
 The input connections represent all the connections generated from the inputs of a
-nodes. Firstable, we have to retrieve all the inputs for a specific AST node
+node. Firstly, we have to retrieve all the inputs for a specific AST node
 then we need to generate a connection between two ports on two nodes. The
 implementation can be seen in listing \ref{lst:parse-input-connection-scala}.
 
@@ -241,7 +241,7 @@ implementation can be seen in listing \ref{lst:parse-input-connection-scala}.
       
     def parseInputs(node: Node): List[BaseType] = {
       
-      // iterate over all the inputs on each nodes of the AST until finding an
+      // iterate over all the inputs on each node of the AST until finding an
       // output basetype
       def inner(node: Node): List[BaseType] = node match {
         case bt: BaseType =>
@@ -288,7 +288,7 @@ way : we need to parse the consumer for a specific node like in listing.
       
     def parseConsumers(node: Node): List[BaseType] = {
       
-      // iterate over all the inputs on each nodes of the AST until finding an
+      // iterate over all the inputs on each node of the AST until finding an
       // input basetype
       def inner(node: Node): List[BaseType] = node match {
         case bt: BaseType =>
@@ -316,7 +316,7 @@ way : we need to parse the consumer for a specific node like in listing.
   }
   \end{scalacode}
   \caption[Parsing and generation of the outputs connections]{Implementation in
-    Scala of the parsing and generation for all the inputs connections for a
+    Scala of the parsing and generation of all the input connections of a
     specific component}
   \label{lst:parse-output-connection-scala}
 \end{listing}
@@ -325,7 +325,7 @@ way : we need to parse the consumer for a specific node like in listing.
 \label{sec:parent-connections}
 
 Finally we could parse and generate the connections with the parent. This part
-is slightly easier than the two previous one. Because we just have to generate
+is slightly easier than the two previous ones. Because we just have to generate
 the inputs and consumers and subtract them like in a set. The algorithm is
 described in listing \ref{lst:parse-parent-connection}.
 
@@ -389,8 +389,8 @@ described in listing \ref{lst:parse-parent-connection}.
 \label{sec:ast-parsing-conclusion}
 
 The parsing of the AST is the hardest part to understand, there is a lot to know
-about SpinalHDL itself and a large amount of specials cases to understand. By the
-way, it's the most important part too, with the generation of the
+about SpinalHDL itself and a large amount of special cases to understand. By the
+way, it's the most important part too. With the generation of the
 intermediate model we could do all the rest.
 
 %%% Local Variables:

@@ -1,12 +1,11 @@
 \chapter{Viewing library}
 \label{cha:Viewing library}
 
-This chapter will present some visualization library which could be used to
-generate and interact with the component diagram. The comparison between those
-library is based on the features we want to offer to the KlugHDL user (see
+This chapter will present some visualization libraries which could be used to
+generate and interact with the components diagram. The comparison between those
+libraries is based on the features we want to offer to the KlugHDL user (see
 chapter \ref{sec:Goal}). In order to compare those viewing libraries, we end by
-discuting the point of the evaluation and the evaluation of all the library
-mentionned.
+discuting the evaluation of all the libraries mentionned.
 
 For the presentation of each of those libraries for graph visualization, we would
 use the same graph showed in figure \ref{fig:graph-base-model}.
@@ -32,7 +31,7 @@ use the same graph showed in figure \ref{fig:graph-base-model}.
     }
   }
   \caption[Graph model for the viewing library comparison]{The graph we will use
-    in order to compare several viewing library. This model includes two
+    in order to compare several viewing libraries. This model includes two
     logical components : a AND and a OR gate and two nodes which are
     representing the input and output of the parent component.}
   \label{fig:graph-base-model}
@@ -43,23 +42,23 @@ use the same graph showed in figure \ref{fig:graph-base-model}.
 
 GraphStream is a Java library used for the modelisation and analysis of dynamic
 graphs\cite{graphstream}. The goal of the library is to provide a way to
-represents graphs and work on it\cite{graphstream}. GraphStream is an active
+represent graphs and work on it\cite{graphstream}. GraphStream is an active
 project hosted by the University of Le Havre in France.
 
 \subsection{Implementation of the base graph model}
 \label{sub:Implementation}
 
-The figure \ref{fig:base-graph-model-graphstream} show the base graph model
+The figure \ref{fig:base-graph-model-graphstream} shows the base graph model
 realized with the GraphStream library.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{img/graphstream-base-model-example}
-  \caption{The base graph model rendering using Graphstream}
+  \caption{The base graph model rendering using GraphStream}
   \label{fig:base-graph-model-graphstream}
 \end{figure}
 
-GraphStream allow us to simply create a graph (or a multigraph) in Java like in
+GraphStream allows us to simply create a graph (or a multigraph) in Java like in
 listing \ref{lst:graphstream-example}.
 
 \begin{listing}[H]
@@ -88,7 +87,7 @@ like in the base graph model in figure \ref{fig:graph-base-model}.
 
 An additional special case is the label on the edges. With GraphStream, we could
 add some labels on the edges like in listings \ref{lst:graphstream-edge-label},
-but we can't add multiple ones. To add multiple labels we need to use sprite like
+but we can't add multiple ones. To add multiple labels we need to use sprites like
 in listing \ref{lst:graphstream-edge-sprite}.
 
 \begin{listing}[H]
@@ -130,7 +129,7 @@ add a label to an edge with the GraphStream library.}
   \end{javacode}
   \caption[Add two label on an edge with GraphStream]{A complete example on how
 to add multiples labels to an edge with the GraphStream library. This time, we
-need to use sprites.}
+have to use sprites.}
   \label{lst:graphstream-edge-sprite}
 \end{listing}
 
@@ -146,9 +145,9 @@ GraphStream owns other features which could be useful to design an application :
 
 The main problem using GraphStream is that we need to indicate the component
 information using label on the edges. The figure
-\ref{fig:base-graph-model-graphstream} show four nodes and six connections, but
+\ref{fig:base-graph-model-graphstream} shows four nodes and six connections, but
 if we have a lot more edges between nodes, it would be difficult to see the
-type of the inputs and outputs, shown in figure
+type of the inputs and outputs, as shown in figure
 \ref{fig:graphstream-lot-of-edges}.
 
 \begin{figure}[H]
@@ -160,18 +159,18 @@ type of the inputs and outputs, shown in figure
   \label{fig:graphstream-lot-of-edges}
 \end{figure}
 
-In order to overpass those problem, we need to visualize the type in an another
-form : in the graph \ref{fig:graph-base-model} we have the idea to show the
+In order to overpass those problems, we need to visualize the type in another
+form : in the graph \ref{fig:graph-base-model} we had the idea to show the
 inputs and outputs as a port of the component. With GraphStream we can't do
-it, so we need an another library which have this idea of port.
+it, so we need another library which had this idea of port.
 
 \section{Draw2D}
 \label{sec:Draw2D}
 
 Draw2D is a HTML5 and Javascript library for visualization and interaction with
 diagrams and graphs\cite{draw2d}. The goal of the library is to provide a way to
-represent diagrams and graphs and manipulate those using the mouse or Javascript
-code. Some existing product already use Draw2d for diagrams manipulation :
+represent diagrams and graphs and to manipulate those using the mouse or Javascript
+code. Some existing product already use Draw2d for diagrams manipulations :
 
 \begin{itemize}
 \item Shape Designer\cite{draw2d}
@@ -184,15 +183,16 @@ code. Some existing product already use Draw2d for diagrams manipulation :
 
 Before implementing directly the basic example of the graph \ref{fig:graph-base-model},
 we need to extend the library with a new component for our usage.
-In the chapter \ref{sub:Conclusion-gs} we indicate that the GraphStream library is lacking the idea of port, but Draw2d already have them.
+In the chapter \ref{sub:Conclusion-gs} we indicate that the GraphStream library
+is lacking the idea of port, but Draw2d already had them.
 
 The listing \ref{lst:draw2d-base-graph-model} shows the realisation of the base
 graph model example. Note that the object \textbf{ComponentShape} and the
-functions \textbf{ComponentShape.addPort()},\textbf{newConnection()} and
+functions \textbf{ComponentShape.addPort()}, \textbf{newConnection()} and
 \textbf{createConnection()} are not part of the Draw2d library, it's an
 extension added for this project.
 
-The code \ref{lst:draw2d-base-graph-model} is producing the HTML page see in
+The listing \ref{lst:draw2d-base-graph-model} is producing the HTML page shown in
 figure \ref{fig:base-graph-model-html-draw2d}.
 
 \begin{listing}[H]
@@ -262,10 +262,9 @@ figure \ref{fig:base-graph-model-html-draw2d}.
 \section{Graph layout}
 \label{sec:graph-layout}
 
-A feature that Draw2D doens't owns is the layout of the diagram. If we did not
+A feature that Draw2D doens't own is the layout of the diagram. If we did not
 say anything about the position of the node, Draw2D simply overlaps all the nodes
-and manages nothing for the visualization as illustrate in figure
-\ref{fig:draw2d_overlapping}.
+ as illustrated in figure \ref{fig:draw2d_overlapping}.
 
 \begin{figure}[H]
   \centering
@@ -285,7 +284,7 @@ specialties :
 \begin{itemize}
 \item The graph could be cyclic
 \item The graph is oriented
-\item Nodes owns port, so we need to layout the edges on specific part of the graph
+\item Nodes own ports, so we need to layout the edges on specific part of the graph
 \end{itemize}
 
 The first two specialties aren't a big deal, but the last one is quite

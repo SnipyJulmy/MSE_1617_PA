@@ -3,26 +3,59 @@
 
 This project tries to offer an additional tool for SpinalHDL in order to
 increase his popularity. Domain specific languages are more and more used in
-computer software this days and KlugHDL could be describe as a tool for
+computer software those days and KlugHDL could be describe as a tool for
 development and documentation.
 
 Writing VHDL code over and over again seems to be painful and SpinalHDL try to
 make the developer life easier, but VHDL owns a lot of tools to increase
 productivity. KlugHDL is the first ``tool'' of the whole world of SpinalHDL and
-launch a new era for SpinalHDL and his believer.
+launch a new era for SpinalHDL and his believers.
 
 KlugHDL is able to parse and generate static diagrams with DOT and Graphviz for
-any simple SpinalHDL components. Components with bus or complex basetype, like
-$Uint(n bits)$ aren't supported for the moments. KlugHDL is also here to
-demonstrate it's possible to generate diagrams from the SpinalHDL AST.
+any simple SpinalHDL component. Components with bus or complex basetype, like
+$Uint(n bits)$ aren't supported for the moment. KlugHDL is also here to
+demonstrate that it is possible to generate diagrams from the SpinalHDL AST.
 
 We have seen that parsing the AST could be tricky and sometimes really strange.
 We need additionnal SpinalHDL Components and a lot deeper understanding of the
 SpinalHDL AST in order to parse and generate all the possible components which
 could be written.
 
-TODO : end this...
-s
+There is a lot of work to do on KlugHDL in order to have a complete tool for
+diagrams generation. It is not only about the visualization but also about the
+kind of SpinalHDL components to parse.
+
+Some other features and work can be add to KlugHDL :
+\begin{itemize}
+\item Integrate the diagram visualization to an integrated software development
+  like Eclipse or Intellij for a live preview of the current work.
+\item Generate the diagram without generating the whole RTL for a component.
+\end{itemize}
+
+I would like to sincerely thanks the following people, whitout whom this project
+would have been impossible to realize :
+
+\begin{itemize}
+\item Professor Dr. Mudry Pierre-André, for coordinating and supporting me
+\item Charles Papon, author of SpinalHDL, for answered my questions about
+  SpinalHDL and supporting me
+\item Roland Julmy, my father, for having review this document and encouraging me.
+\end{itemize}
+
+Fribourg, the 17th January 2017,
+
+Sylvain Julmy
+
+\chapter*{Sworn declaration}
+
+`` I hereby solemnly declare that I have personally and independently prepared
+this paper. All quotations in the text have been marked as such, and the paper
+or considerable parts of it have not previously been subject to any examination
+or assessment.''
+
+\listoffigures
+\listoflistings
+
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../report"

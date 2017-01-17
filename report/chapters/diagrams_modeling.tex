@@ -1,7 +1,7 @@
 \chapter{Diagrams modelisation}
 
 In order to produce a visual schema from a SpinalHDL program, we need to parse
-it AST and produce an intermediate model for the diagrams. The reason to use
+his AST and produce an intermediate model for the diagrams. The reason to use
 an intermediate model is that we could then build multiple output generators
 for multiple output targets. The complete pipeline of the generation is visible
 in figure \ref{fig:generation-pipeline}.
@@ -22,8 +22,8 @@ in figure \ref{fig:generation-pipeline}.
         }
     }
     \caption[KlugHDL generation pipeline]{Representation of the entire generation
-      pipeline use by KlugHDL in order to generate different outputs. The
-      intermediate model is use to produce the target code, for example dot or
+      pipeline used by KlugHDL in order to generate different outputs. The
+      intermediate model is used to produce the target code, for example DOT or
       JSON file.}
     \label{fig:generation-pipeline}
 \end{figure}
@@ -33,9 +33,9 @@ build : the hierarchy visualization.
 
 \section{Hierarchy visualization}
 
-The diagrams produced by KlugHDL are kind of special, they are hierarchical
-That's means we need to find a way to show the hierarchy between the components
-of a SpinalHDL program. There are multiple way to do this :
+The diagrams produced by KlugHDL are kind of special, they are hierarchical.
+That means we need to find a way to show the hierarchy between the components
+of a SpinalHDL program. There are multiple ways to do this :
 \begin{itemize}
   \item Showing the elements using a hierarchical layout, like in family tree
   \item Showing the elements using a tree view, like in file explorer
@@ -55,7 +55,8 @@ hierarchical layout with some children and parents.
   \includegraphics[width=0.7\textwidth]{img/HierarchicalLayoutSimple}
   }
   \caption[Simple hierarchical layout for diagram visualization]{The simplest
-    hierarchical visualization, where parents are just represented using the heights}
+    hierarchical visualization, where parents are just represented using various
+    heights}
   \label{fig:hierarchical-layout-simple}
 \end{figure}
 
@@ -65,7 +66,7 @@ This can be seen at the port "io.c" from the \texttt{AndXorGate} component. In
 listing \ref{lst:andxorgate-problem}, we can see that the value \verb|io.c| is
 written as an output of the component. In the figure
 \ref{fig:hierarchical-layout-simple}, the same port is the source and the target
-of some connections. This can create some misunderstanding.
+of some connections. This can cause some misunderstanding.
 
 \begin{listing}[H]
   \centering
@@ -94,7 +95,7 @@ class AndXorGate extends Component {
   \caption[The AndXorGate component written with SpinalHDL]{The AndXorGate
 component writtent with SpinalHDL. We can see that the ``c'' port is an output
 of the components and in figure \ref{fig:hierarchical-layout-simple} the port is
-shows as an input port and an output port.}
+shown as an input port and as an output port.}
   \label{lst:andxorgate-problem}
 \end{listing}
 
@@ -110,13 +111,13 @@ component.
     \includegraphics[width=0.2\textwidth]{img/tree-view}
   }
   \caption[SpinalHDL's Component visualization with tree view]{A tree view
-    visualization of a SpinalHDL Component, each son is under his parent and
-    eventually possesses itself some sub-component.}
+    visualization of a SpinalHDL component, each child is under his parent and
+    eventually possesses itself some sub-components.}
   \label{fig:tree-view}
 \end{figure}
 
 The tree view visualization is very useful to directly detect the relation
-between some components. The big problem is that we can't see the connections
+between some components. The big problem is that we can't see the connection
 relationships.
 
 \subsection{Multiple diagrams}
@@ -124,15 +125,15 @@ relationships.
 As seen with the hierarchical layout figure
 \ref{fig:hierarchical-layout-simple}, the problem is that sometimes a port is an
 output for some components and, in the other way, an input for some other
-ones. If we look closely to the problems we could notice that a port receive
-connections from his brothers and send connections to his childrens.
+ones. If we look closely to the problem we could notice that a port receive
+connections from her brothers and send connections to her childrens.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.6\textwidth]{img/HierarchicComponent.pdf}
-  \caption[SpinalHDL Component inside]{Inside of a SpinalHDL components, the
-    components possesses inputs and outputs has his own interface and communicates
-  with his children}
+  \caption[SpinalHDL Component inside]{Inside of a SpinalHDL component, the
+    component possesses inputs and outputs as his own interface and communicates
+  with her children}
   \label{fig:hierarchic-component}
 \end{figure}
 
@@ -155,18 +156,18 @@ the children of a component or multiple static ones which is not practical.
 
 \section{A visual example}
 
-The diagram we want to produce, as explained in chapter \ref{sec:graph-layout}, own the following property :
+The diagram we want to produce, as explained in chapter \ref{sec:graph-layout}, owns the following properties :
 \begin{itemize}
   \item Oriented
   \item Cyclic
-  \item Connection between port on nodes and not between nodes
+  \item Connection between ports on nodes and not between nodes
 \end{itemize}
 
 \section{Model representation}
 \label{sec:model-representation} 
 
-The model representation is builded using the oriented-object paradigm, the
-figure \ref{fig:model-class-diagram} show the class diagram of the models.
+The model representation is builded using the oriented-object paradigm. The
+figure \ref{fig:model-class-diagram} shows the class diagram of the models.
 
 \begin{figure}[H]
   \centering
@@ -179,9 +180,9 @@ figure \ref{fig:model-class-diagram} show the class diagram of the models.
 
 \section{Conclusion}
 
-The major advantages of such an intermediate representation is the capability to
-evolve the program in order to produce additional output. For now there is just
-a \textbf{DOT} and \textbf{JSON} backend. It also provide a way to check the
+The major advantage of such an intermediate representation is the capability to
+evolve the program in order to produce additional outputs. For now there is just
+a \textbf{DOT} and \textbf{JSON} backend. It also provides a way to check the
 correctness of the diagram after the parsing on the AST : connections with
 non-existing port for example.
 
