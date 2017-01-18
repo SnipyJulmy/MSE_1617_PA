@@ -35,10 +35,10 @@
 \defcounter {refsection}{0}\relax
 \contentsline {listing}{\numberline {5.11}{\ignorespaces Parsing and generation of the connections with the parent}}{26}{listing.5.11}
 \defcounter {refsection}{0}\relax
-\contentsline {listing}{\numberline {6.1}{\ignorespaces Lift library example : a json DSL}}{28}{listing.6.1}
+\contentsline {listing}{\numberline {6.1}{\ignorespaces Lift library example : a JSON DSL}}{28}{listing.6.1}
 \defcounter {refsection}{0}\relax
 \contentsline {listing}{\numberline {6.2}{\ignorespaces KlugHDL example on how to generate a pdf diagram}}{28}{listing.6.2}
 \defcounter {refsection}{0}\relax
-\contentsline {listing}{\numberline {6.3}{\ignorespaces KlugHDL example on how to generate a json model}}{29}{listing.6.3}
+\contentsline {listing}{\numberline {6.3}{\ignorespaces KlugHDL example on how to generate a JSON model}}{29}{listing.6.3}
 \defcounter {refsection}{0}\relax
 \contentsline {listing}{\numberline {6.4}{\ignorespaces Component shape prototype of KlugHDL}}{30}{listing.6.4}
