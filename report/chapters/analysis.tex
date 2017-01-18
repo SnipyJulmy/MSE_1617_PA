@@ -68,8 +68,8 @@ connection's type.
 \label{sec:SpinalHDL}
 
 As explained in chapter \ref{cha:Introduction}, SpinalHDL is a DSL for VHDL
-programing. SpinalHDL run with various internals constructions such as an AST or
-a Component Tree. Those are the majors elements needed for the diagram generation.
+programing. SpinalHDL runs with various internals constructions such as an AST or
+a Component Tree. Those are the major elements needed for the diagram generation.
 
 \subsection{Component}
 \label{sub:Component}
@@ -90,9 +90,9 @@ because all the components are linked together with :
 
 A component could contain and communicate with other components, that's the
 parent-children relationship, and a component that could communicate with the
-component contained by his parent, it's a brother's relationship. Those two
+component contained by its parent, is a brother's relationship. Those two
 relations could be seen in listing \ref{lst:HierarchicComponent-solo}. The
-component communicate with its children which are communicating together.
+component communicates with its children which are communicating together.
 
 \begin{listing}
     \centering
@@ -134,7 +134,7 @@ component communicate with its children which are communicating together.
     \end{scalacode}
     \caption[Type of connection in SpinalHDL]{There are two different types of
 connections with SpinalHDL, from brother to brother or from a parent to
-one of his children. The corresponding diagram to this code is shown in figure
+one of its children. The corresponding diagram to this code is shown in figure
 \ref{fig:hierarchical-layout-simple}}
     \label{lst:HierarchicComponent-solo}
 \end{listing}
@@ -146,8 +146,8 @@ they are not relevant for the diagram generation.
 \label{sub:Abstract Syntax Tree}
 
 An abstract syntax tree is a tree where the nodes are marked by operator and the
-leafs are marked by the operand of those operators. For example, the expression $5
-* 2 + 3$ has his equivalent AST showed in figure \ref{fig:ast-example}.
+leaves are marked by the operand of those operators. For example, the expression $5
+* 2 + 3$ has its equivalent AST shown in figure \ref{fig:ast-example}.
 
 \begin{figure}[H]
     \centering

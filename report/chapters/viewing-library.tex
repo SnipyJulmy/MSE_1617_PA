@@ -5,10 +5,10 @@ This chapter will present some visualization libraries which could be used to
 generate and interact with the components diagram. The comparison between those
 libraries is based on the features we want to offer to the KlugHDL user (see
 chapter \ref{sec:Goal}). In order to compare those viewing libraries, we end by
-discuting the evaluation of all the libraries mentionned.
+discussing the evaluation of all the libraries mentioned.
 
 For the presentation of each of those libraries for graph visualization, we would
-use the same graph showed in figure \ref{fig:graph-base-model}.
+use the same graph shown in figure \ref{fig:graph-base-model}.
 
 \begin{figure}[H]
   \centering
@@ -40,7 +40,7 @@ use the same graph showed in figure \ref{fig:graph-base-model}.
 \section{GraphStream}
 \label{sec:GraphStream}
 
-GraphStream is a Java library used for the modelisation and analysis of dynamic
+GraphStream is a Java library used for the modeling and analysis of dynamic
 graphs\cite{graphstream}. The goal of the library is to provide a way to
 represent graphs and work on it\cite{graphstream}. GraphStream is an active
 project hosted by the University of Le Havre in France.
@@ -72,7 +72,7 @@ listing \ref{lst:graphstream-example}.
   graph.addEdge("BC", "B", "C");
   graph.addEdge("CA", "C", "A");
   \end{javacode}
-  \caption[A simple graph modelisation using GraphStream]{Modelisation of a
+  \caption[A simple graph modelisation using GraphStream]{Modeling of a
     simple graph using the GraphStream library}
   \label{lst:graphstream-example}
 \end{listing}
@@ -103,7 +103,7 @@ in listing \ref{lst:graphstream-edge-sprite}.
   edge.addAttribute("ui.label", "A --> B");
   graph.display(false);
   \end{javacode}
-  \caption[Add a label on an edge with GraphStream]{A complete example on how to
+  \caption[Adding a label on an edge with GraphStream]{A complete example on how to
 add a label to an edge with the GraphStream library.}
   \label{lst:graphstream-edge-label}
 \end{listing}
@@ -127,7 +127,7 @@ add a label to an edge with the GraphStream library.}
     label2.addAttribute("ui.label", "Label 2");
     label2.addAttribute("ui.style", "fill-mode:none;");
   \end{javacode}
-  \caption[Add two label on an edge with GraphStream]{A complete example on how
+  \caption[Adding two labels on an edge with GraphStream]{A complete example on how
 to add multiples labels to an edge with the GraphStream library. This time, we
 have to use sprites.}
   \label{lst:graphstream-edge-sprite}
@@ -240,7 +240,7 @@ figure \ref{fig:base-graph-model-html-draw2d}.
     canvas.add(newConnection(orGate.getPort("io.c"), output.getPort("io.c")));
   \end{jscode}
 
-  \caption[Base graph model implementation using the Draw2D library]{The necessary code to produce the base graph model with the Draw2d library.
+  \caption[Base graph modeling implementation using the Draw2D library]{The necessary code to produce the base graph model with the Draw2d library.
     The object \textbf{ComponentShape} and the functions \textbf{addPort()},
     \textbf{newConnection()} and \textbf{createConnection()} are not part of the
     Draw2d library, it's an extension added for this project.}
@@ -310,7 +310,7 @@ between some specific ports.
   \label{fig:multigraph-no-port}
 \end{figure}
 
-In order to solve this drawback, we need to layout the graph ourself by using a
+In order to solve this drawback, we need to layout the graph ourselves by using a
 library. We could also do it ourselves by implementing the algorithm for the kind
 of graph we have, but it's too much time-consuming for a project like this.
 
@@ -321,7 +321,7 @@ GraphStream looks like a really good library for manipulating graphs and visuali
 them. The problem is that there is no good way to visualize the ports of the
 components so we have to labelize the connections and it looks ugly (figure
 \ref{fig:graphstream-lot-of-edges}). Then we have to find a library which allows
-this idea of ports. We find them with Draw2D and choose it for the project. The
+this idea of ports. We found them with Draw2D and chose it for the project. The
 disadvantage of using this library is that we can't layout easily the graph by
 ourselves.
 

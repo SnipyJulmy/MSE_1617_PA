@@ -7,11 +7,11 @@
 \defcounter {refsection}{0}\relax
 \contentsline {listing}{\numberline {4.1}{\ignorespaces A simple graph modelisation using GraphStream}}{14}{listing.4.1}
 \defcounter {refsection}{0}\relax
-\contentsline {listing}{\numberline {4.2}{\ignorespaces Add a label on an edge with GraphStream}}{15}{listing.4.2}
+\contentsline {listing}{\numberline {4.2}{\ignorespaces Adding a label on an edge with GraphStream}}{15}{listing.4.2}
 \defcounter {refsection}{0}\relax
-\contentsline {listing}{\numberline {4.3}{\ignorespaces Add two label on an edge with GraphStream}}{15}{listing.4.3}
+\contentsline {listing}{\numberline {4.3}{\ignorespaces Adding two labels on an edge with GraphStream}}{15}{listing.4.3}
 \defcounter {refsection}{0}\relax
-\contentsline {listing}{\numberline {4.4}{\ignorespaces Base graph model implementation using the Draw2D library}}{17}{listing.4.4}
+\contentsline {listing}{\numberline {4.4}{\ignorespaces Base graph modeling implementation using the Draw2D library}}{17}{listing.4.4}
 \defcounter {refsection}{0}\relax
 \contentsline {listing}{\numberline {5.1}{\ignorespaces Model class declaration}}{20}{listing.5.1}
 \defcounter {refsection}{0}\relax
