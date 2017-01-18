@@ -2,9 +2,9 @@
 \label{cha:Analysis}
 
 In this chapter, we would discuss about the "What do we want ?" questions. It
-means what needs the final product based on the goal of the project. The other
+means what does need the final product based on the goal of the project. The other
 part is about the actual state of SpinalHDL. We are not presenting the whole
-implementation or conception, just a small part is useful for this
+implementation or conception, but a small part is useful for this
 project. Finally, we introduce the concept of the SpinalHDL's component and AST
 (Abstract Syntax Tree).
 
@@ -12,7 +12,7 @@ project. Finally, we introduce the concept of the SpinalHDL's component and AST
 \label{sec:What do we want ?}
 
 Based on the goal of the project at section \ref{sec:Goal}, we expose what the
-end user of SpinalHDL want to do with KlugHDL. The figure
+end user of SpinalHDL wants to do with KlugHDL. The figure
 \ref{fig:use_case_klughdl} shows the use case of KlugHDL.
 
 \begin{figure}[H]
@@ -30,8 +30,8 @@ end user of SpinalHDL want to do with KlugHDL. The figure
               the hierarchical tree view of the program}
             \umlusecase[x=4,y=2.6,name=UCD,width=180]{Filter the hierarchical view}
             \umlusecase[x=4,y=1.5,name=UCE,width=180]{Enter a component}
-            \umlusecase[x=4,y=0.4,name=UCF,width=180]{Go out of a component}
-            \umlusecase[x=4,y=-0.8,name=UCG,width=180]{Display, hide and toggle the type of the connections}
+            \umlusecase[x=4,y=0.4,name=UCF,width=180]{Exit of a component}
+            \umlusecase[x=4,y=-0.8,name=UCG,width=180]{Display, hide and toggle the type of connections}
             \umlusecase[x=4,y=-1.9,name=UCH,width=180]{Generate the RTL}
         \end{umlsystem}
 
@@ -89,11 +89,10 @@ because all the components are linked together with :
 \end{itemize}
 
 A component could contain and communicate with other components, that's the
-parent-children relationship, and a component could communicate with the
-component contained by his parent, that's the brother's relationship. Those two
+parent-children relationship, and a component that could communicate with the
+component contained by his parent, it's a brother's relationship. Those two
 relations could be seen in listing \ref{lst:HierarchicComponent-solo}. The
-component communicate with her children which are communicating between
-them.
+component communicate with its children which are communicating together.
 
 \begin{listing}
     \centering
@@ -140,7 +139,7 @@ one of his children. The corresponding diagram to this code is shown in figure
     \label{lst:HierarchicComponent-solo}
 \end{listing}
 
-A component may have other elements inside him too, like Area or Function. But
+A component may have other elements inside it too, like Area or Function. But
 they are not relevant for the diagram generation.
 
 \subsection{Abstract Syntax Tree}
@@ -148,7 +147,7 @@ they are not relevant for the diagram generation.
 
 An abstract syntax tree is a tree where the nodes are marked by operator and the
 leafs are marked by the operand of those operators. For example, the expression $5
-* 2 + 3$ has his equivalent AST showed in the figure \ref{fig:ast-example}.
+* 2 + 3$ has his equivalent AST showed in figure \ref{fig:ast-example}.
 
 \begin{figure}[H]
     \centering
@@ -167,7 +166,7 @@ leafs are marked by the operand of those operators. For example, the expression 
     \label{fig:ast-example}
   \end{figure}
 
-The understanding of the AST is a main concept of this project. With it, we are
+The understanding of the AST is the main concept of this project. With it, we are
 able to generate the whole model for further implementations.
 
 %%% Local Variables:

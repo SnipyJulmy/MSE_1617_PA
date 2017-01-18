@@ -49,7 +49,7 @@ project hosted by the University of Le Havre in France.
 \label{sub:Implementation}
 
 The figure \ref{fig:base-graph-model-graphstream} shows the base graph model
-realized with the GraphStream library.
+realised with the GraphStream library.
 
 \begin{figure}[H]
   \centering
@@ -162,7 +162,7 @@ type of the inputs and outputs, as shown in figure
 In order to overpass those problems, we need to visualize the type in another
 form : in the graph \ref{fig:graph-base-model} we had the idea to show the
 inputs and outputs as a port of the component. With GraphStream we can't do
-it, so we need another library which had this idea of port.
+it, so we need another library which has this idea of port.
 
 \section{Draw2D}
 \label{sec:Draw2D}
@@ -170,7 +170,7 @@ it, so we need another library which had this idea of port.
 Draw2D is a HTML5 and Javascript library for visualization and interaction with
 diagrams and graphs\cite{draw2d}. The goal of the library is to provide a way to
 represent diagrams and graphs and to manipulate those using the mouse or Javascript
-code. Some existing product already use Draw2d for diagrams manipulations :
+code. Some existing products already use Draw2d for diagrams manipulations :
 
 \begin{itemize}
 \item Shape Designer\cite{draw2d}
@@ -184,7 +184,7 @@ code. Some existing product already use Draw2d for diagrams manipulations :
 Before implementing directly the basic example of the graph \ref{fig:graph-base-model},
 we need to extend the library with a new component for our usage.
 In the chapter \ref{sub:Conclusion-gs} we indicate that the GraphStream library
-is lacking the idea of port, but Draw2d already had them.
+is lacking the idea of port, but Draw2d already has them.
 
 The listing \ref{lst:draw2d-base-graph-model} shows the realisation of the base
 graph model example. Note that the object \textbf{ComponentShape} and the
@@ -192,7 +192,7 @@ functions \textbf{ComponentShape.addPort()}, \textbf{newConnection()} and
 \textbf{createConnection()} are not part of the Draw2d library, it's an
 extension added for this project.
 
-The listing \ref{lst:draw2d-base-graph-model} is producing the HTML page shown in
+The code in the listing \ref{lst:draw2d-base-graph-model} is producing the HTML page shown in
 figure \ref{fig:base-graph-model-html-draw2d}.
 
 \begin{listing}[H]
@@ -271,24 +271,24 @@ say anything about the position of the node, Draw2D simply overlaps all the node
   \fbox{
     \includegraphics{img/overlap_draw2d}
   }
-  \caption[Overlapping of nodes by Draw2D]{When we specify nothing about the
-    node position with Draw2D, the engine just overlaps all the nodes.}
+  \caption[Overlapping of nodes by Draw2D]{When we don't specify the
+    nodes positions with Draw2D, the engine just overlaps all the nodes.}
   \label{fig:draw2d_overlapping}
 \end{figure}
 
 In order to produce a visualisable diagram, we need to layout ourself the
-diagram. We need to mention that's the layout algorithm is a NP-Hard problem in
+diagram. We need to mention that the layout algorithm is a NP-Hard problem in
 computing theory\cite{Tamassia:2007:HGD:1202383} and for our graph, we have some
 specialties :
 
 \begin{itemize}
 \item The graph could be cyclic
 \item The graph is oriented
-\item Nodes own ports, so we need to layout the edges on specific part of the graph
+\item Nodes own ports, so we need to layout the edges on a specific part of the graph.
 \end{itemize}
 
 The first two specialties aren't a big deal, but the last one is quite
-problematic, it involved a special layout algorithm which take care of the ports
+problematic. It involves a special layout algorithm which takes care of the ports
 position on the nodes. Otherwise the visual result could be chaotic like in
 figure \ref{fig:multigraph-no-port}, in which we can't see the connections
 between some specific ports.
@@ -312,7 +312,7 @@ between some specific ports.
 
 In order to solve this drawback, we need to layout the graph ourself by using a
 library. We could also do it ourselves by implementing the algorithm for the kind
-of graph we have, but it's too time-consuming for a project like this.
+of graph we have, but it's too much time-consuming for a project like this.
 
 \section{Conclusion}
 \label{sec:viewing-library-conclusion}

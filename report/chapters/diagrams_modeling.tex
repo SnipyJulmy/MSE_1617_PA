@@ -1,7 +1,7 @@
 \chapter{Diagrams modelisation}
 
 In order to produce a visual schema from a SpinalHDL program, we need to parse
-his AST and produce an intermediate model for the diagrams. The reason to use
+its AST and produce an intermediate model for the diagrams. The reason to use
 an intermediate model is that we could then build multiple output generators
 for multiple output targets. The complete pipeline of the generation is visible
 in figure \ref{fig:generation-pipeline}.
@@ -29,11 +29,11 @@ in figure \ref{fig:generation-pipeline}.
 \end{figure}
 
 We also need to introduce a crucial element to understand how the model is
-build : the hierarchy visualization.
+built : the hierarchy visualization.
 
 \section{Hierarchy visualization}
 
-The diagrams produced by KlugHDL are kind of special, they are hierarchical.
+The diagrams produced by KlugHDL are of a special kind, they are hierarchical.
 That means we need to find a way to show the hierarchy between the components
 of a SpinalHDL program. There are multiple ways to do this :
 \begin{itemize}
@@ -46,7 +46,7 @@ of a SpinalHDL program. There are multiple ways to do this :
 \label{sec:hierarchical-layout}
 
 The hierarchical layout is the simplest way to achieve the visualization of the
-hierarchy. The figure \ref{fig:hierarchical-layout-simple} illustrate a simple
+hierarchy. The figure \ref{fig:hierarchical-layout-simple} illustrates a simple
 hierarchical layout with some children and parents.
 
 \begin{figure}[H]
@@ -93,7 +93,7 @@ class AndXorGate extends Component {
 }
 \end{scalacode}
   \caption[The AndXorGate component written with SpinalHDL]{The AndXorGate
-component writtent with SpinalHDL. We can see that the ``c'' port is an output
+component written with SpinalHDL. We can see that the ``c'' port is an output
 of the components and in figure \ref{fig:hierarchical-layout-simple} the port is
 shown as an input port and as an output port.}
   \label{lst:andxorgate-problem}
@@ -111,7 +111,7 @@ component.
     \includegraphics[width=0.2\textwidth]{img/tree-view}
   }
   \caption[SpinalHDL's Component visualization with tree view]{A tree view
-    visualization of a SpinalHDL component, each child is under his parent and
+    visualization of a SpinalHDL component, each child is under its parent and
     eventually possesses itself some sub-components.}
   \label{fig:tree-view}
 \end{figure}
@@ -125,8 +125,8 @@ relationships.
 As seen with the hierarchical layout figure
 \ref{fig:hierarchical-layout-simple}, the problem is that sometimes a port is an
 output for some components and, in the other way, an input for some other
-ones. If we look closely to the problem we could notice that a port receive
-connections from her brothers and send connections to her childrens.
+ones. If we look closely to the problem we could notice that a port receives
+connections from its brothers and sends connections to its childrens.
 
 \begin{figure}[H]
   \centering
@@ -142,14 +142,14 @@ connections from her brothers and send connections to her childrens.
   \includegraphics[width=0.6\textwidth]{img/AndXorGate.pdf}
   \caption[SpinalHDL Component inside an another]{Component which is the
     sub-component of the component from figure \ref{fig:hierarchic-component},
-    the external inputs and outputs corresponding to the ones in the parent component}
+    the external inputs and outputs are corresponding to the ones in the parent component}
   \label{fig:and-xor-gate}
 \end{figure}
 
-Using such a representation solve the problem discuss in
+Using such a representation solves the problem discussed in
 \ref{sec:hierarchical-layout} : if we represent all the components just using
 one diagram, sometimes the ports are inputs and sometimes they are outputs. With
-multiple diagram this problem no longuer occurs.
+multiple diagrams this problem does not occur anymore.
 
 The major disadvantage is that we need an interactive diagram for exploring
 the children of a component or multiple static ones which is not practical.
@@ -166,7 +166,7 @@ The diagram we want to produce, as explained in chapter \ref{sec:graph-layout}, 
 \section{Model representation}
 \label{sec:model-representation} 
 
-The model representation is builded using the oriented-object paradigm. The
+The model representation is buildt using the object-oriented paradigm. The
 figure \ref{fig:model-class-diagram} shows the class diagram of the models.
 
 \begin{figure}[H]

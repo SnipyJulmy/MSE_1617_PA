@@ -9,7 +9,7 @@ representation is built, the rest is easily doable.
 The concept of AST has already been explained in chapter \ref{sub:Abstract Syntax
   Tree}. Using this, we are going to see the parsing of the SpinalHDL AST in
 order to generate an intermediate model. The parsing and the following
-generation into the intermediate model is separate in multiple
+generation into the intermediate model is separated in multiple
 phases :
 
 \begin{itemize}
@@ -24,8 +24,8 @@ As illustrated in the intermediate model class diagram
 \begin{itemize}
 \item A model possesses multiple diagrams (at least two : the ``toplevel'' component and the
   root component)
-\item A diagrams possesses at least one component with zero or more ports
-\item A diagrams possesses zero or more connections which are only brother to
+\item A diagram possesses at least one component with zero or more ports
+\item A diagram possesses zero or more connections which are only brother to
   brother connections
 \end{itemize}
 
@@ -79,8 +79,8 @@ implemented in listing \ref{lst:generate-diagram}.
     component.children.foreach(generateDiagrams)
   }
   \end{scalacode}
-  \caption[Parsing the diagrams form the AST]{This function parse the AST and
-    generate all the corresponding diagrams objects for a specific component}
+  \caption[Parsing the diagrams form the AST]{This function parses the AST and
+    generates all the corresponding diagrams objects for a specific component}
   \label{lst:generate-diagram}
 \end{listing}
 
@@ -128,7 +128,7 @@ in listing \ref{lst:component-scala}.
   \end{scalacode}
   \caption[Diagram class declaration]{Declaration of the components class (here
     named KlugHDLComponents). There are two types of components : the basic ones
-    and the ones who represent the external world input and output like in
+    and the ones that represent the external world input and output as in
     figure \ref{fig:and-xor-gate}.}
   \label{lst:component-scala}
 \end{listing}
@@ -159,15 +159,15 @@ in listing \ref{lst:component-scala}.
   \label{lst:component-parse-scala}
 \end{listing}
 
-Note that we generates the interface for the external world connections in the
-model. This two KlugHDLComponentIO aren't present in the SpinalHDL AST.
+Note that we generate the interface for the external world connections in the
+model. These two KlugHDLComponentIO aren't present in the SpinalHDL AST.
 
 \section{Ports parsing}
 \label{sec:ports-parsing}
 
 The ports generation is, again, easy to make. In the SpinalHDL model, the
-Component class already owns a \verb|getAllIo| function which return all the
-inputs and outputs nodes for a components. So we just need to create a port
+Component class already owns a \verb|getAllIo| function which returns all the
+inputs and outputs nodes for a component. So we just need to create a port
 object (listing \ref{lst:port-scala}) from those and add it to the correct
 KlugHDLComponents. The algorithm is implemented in the listing
 \ref{lst:port-parsing-scala}.
@@ -206,7 +206,7 @@ There are two types of ports : input and output.}
   }
   \end{scalacode}
   \caption[Implementation of the ports parsing]{Ports parsing and generation in
-    Scala for one diagram, the ports are generating components by components.}
+    Scala for one diagram, the ports are generated component by component.}
   \label{lst:port-parsing-scala}
 \end{listing}
 
@@ -223,7 +223,7 @@ have multiple types of connections :
 \end{itemize}
 
 In addition, to find the starting point of a connection, we have to parse
-recursively all the nodes of the AST until we found a \verb|Basetype| object
+recursively all the nodes of the AST until we find a \verb|Basetype| object
 which is the type for the inputs and outputs nodes of a SpinalHDL component.
 
 \subsection{Input connections}
@@ -269,7 +269,7 @@ implementation can be seen in listing \ref{lst:parse-input-connection-scala}.
   }
   \end{scalacode}
   \caption[Parsing and generation of the inputs connections]{Implementation in
-    Scala of the parsing and generation for all the inputs connections for a
+    Scala of the parsing and generation of all the inputs connections for a
     specific component}
   \label{lst:parse-input-connection-scala}
 \end{listing}
