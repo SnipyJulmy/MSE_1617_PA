@@ -222,9 +222,8 @@ have multiple types of connections :
 \item output connections from parent
 \end{itemize}
 
-In addition, to find the starting point of a connection, we have to parse
-recursively all the nodes of the AST until we find a \verb|Basetype| object
-which is the type for the inputs and outputs nodes of a SpinalHDL component.
+In order to find the starting or the ending point of a connection, we have to
+cross all the AST until we find all the inputs or outputs.
 
 \subsection{Input connections}
 \label{sec:input-connections}
