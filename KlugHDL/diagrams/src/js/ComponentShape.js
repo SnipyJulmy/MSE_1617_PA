@@ -27,7 +27,7 @@ ComponentShape = draw2d.shape.layout.VerticalLayout.extend({
             resizeable: true,
             editor: new draw2d.ui.LabelInplaceEditor(),
             onDoubleClick: function () {
-                _this.doubleClickCallBack()
+                _this.doubleClickCallBack();
             }
         });
 
@@ -59,7 +59,7 @@ ComponentShape = draw2d.shape.layout.VerticalLayout.extend({
             fontColor: "#000000",
             resizeable: true,
             onDoubleClick: function () {
-                _this.doubleClickCallBack()
+                _this.doubleClickCallBack();
             },
             editor: new draw2d.ui.LabelEditor()
         });
@@ -70,6 +70,11 @@ ComponentShape = draw2d.shape.layout.VerticalLayout.extend({
         this.add(label);
 
         return label;
+    },
+
+    setDoubleClickCallBack : function (func) {
+        console.log("set callback;");
+        this.doubleClickCallBack = func;
     },
 
     doubleClickCallBack: function () {

@@ -52,7 +52,9 @@ function buildModel(model) {
         }
         diagramsMap[diagram.name] = diagram;
     }
-    buildDiagram(topLevel);
+    crtDiagram = topLevel;
+    clearDiagramsView();
+    displayCrtDiagram();
 }
 
 function clearDiagramsView() {
@@ -61,29 +63,35 @@ function clearDiagramsView() {
     holder.innerHTML = "";
 }
 
-function viewStack() {
-}
-
 function pushAndDisplay(name) {
+    console.log("pushAndDisplay");
     displayStack.push(crtDiagram);
+    crtDiagram = name;
     clearDiagramsView();
-    buildDiagram(name);
+    displayCrtDiagram();
 }
 
 function popAndDisplay() {
+    console.log("popAndDisplay");
     var name = displayStack.pop();
+    crtDiagram = name;
     clearDiagramsView();
-    buildDiagram(name);
+    displayCrtDiagram();
 }
 
-function buildDiagram(name) {
+function displayStackF() {
+    displayStack.forEach(function (entry) {
+        console.log(entry);
+    });
+}
 
-    crtDiagram = name;
+function displayCrtDiagram() {
+
+    displayStackF();
+
     crtShapes = [];
 
-    var diagram = diagramsMap[name];
-
-    console.log(diagram);
+    var diagram = diagramsMap[crtDiagram];
 
     var graph = doLayout(diagram);
 
@@ -111,14 +119,13 @@ function buildDiagram(name) {
             canvas.add(shape);
 
             if (!(comp.name in diagramsMap)) {
-                shape.doubleClickCallBack = function () {
+                shape.setDoubleClickCallBack(function () {
                     console.log("No children !")
-                }
+                });
             } else {
-                shape.doubleClickCallBack = function () {
+                shape.setDoubleClickCallBack(function () {
                     pushAndDisplay(comp.name);
-                    console.log(displayStack);
-                };
+                });
             }
 
             crtShapes[comp.name] = shape;
@@ -142,18 +149,17 @@ function buildDiagram(name) {
             extI.setY(graph.node(extInputGlobal).y);
             extO.setX(graph.node(extOutputGlobal).x);
             extO.setY(graph.node(extOutputGlobal).y);
+
             canvas.add(extI);
             canvas.add(extO);
 
-            extI.doubleClickCallBack = function () {
+            extI.setDoubleClickCallBack(function () {
                 popAndDisplay();
-                console.log(displayStack);
-            };
+            });
 
-            extO.doubleClickCallBack = function () {
+            extO.setDoubleClickCallBack(function () {
                 popAndDisplay();
-                console.log(displayStack);
-            };
+            });
 
             crtShapes[extInputGlobal] = extI;
             crtShapes[extOutputGlobal] = extO;
