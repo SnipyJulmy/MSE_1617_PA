@@ -1,0 +1,43 @@
+{
+  "description": "Level 2 - State fields and segmentation",
+  "filter": {
+    "types": [
+      "/event-types/temperature"
+    ]
+  },
+  "state": {
+    "segmentationFn": "return event.source;",
+    "fields": {
+      "nbEvent": {
+        "description": "Simple event counter",
+        "initFn": "field.value = 0;",
+        "updateFn": "field.value++;",
+        "window": {
+          "type": "time",
+          "duration": "PT30S"
+        }
+      },
+      "totalTemp": {
+        "description": "Total temp",
+        "initFn": "field.value = 0.0;",
+        "updateFn": "field.value += event.properties.temperature;",
+        "window": {
+          "type": "time",
+          "duration": "PT30S"
+        }
+      }
+    },
+    "trigger": {
+      "onEvent": false,
+      "timeInterval": "PT30S"
+    }
+  },
+  "actions": [
+    {
+      "description": "You need at least one action. Your action description goes here",
+      "target": "/action-targets/logger",
+      "type": "/action-types/log",
+      "propertiesFn": "return { source: event.source,message : 'The temperate average is ' + state.fields.totalTemp.value / state.fields.nbEvent.value, timestamp : event.timestamp};"
+    }
+  ]
+}
